@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xanglong.Config;
+import com.xanglong.frame.config.Const;
 import com.xanglong.frame.exception.BizException;
 
 public class HttpUtil {
@@ -17,7 +17,7 @@ public class HttpUtil {
 	 * @param text 内容
 	 * */
 	public static void responseText(HttpServletResponse response, ContentType contentType, String text) {
-		response.setContentType(contentType.getCode() + ";charset=" + Config.DEFAUTL_CHARSET);
+		response.setContentType(contentType.getCode() + ";charset=" + Const.CHARSET_STR);
 		try (PrintWriter printWriter = response.getWriter();) {
 			printWriter.append(text);
 		} catch (IOException e) {

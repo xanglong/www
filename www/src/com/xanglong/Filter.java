@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xanglong.frame.config.ConfigManager;
+import com.xanglong.frame.config.Const;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
 import com.xanglong.frame.io.FileUtil;
@@ -20,15 +22,14 @@ import com.xanglong.frame.net.HttpUtil;
 import com.xanglong.frame.session.Session;
 import com.xanglong.frame.util.BaseUtil;
 import com.xanglong.frame.util.StringUtil;
-import com.xanglong.i18n.LanguageManager;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 public class Filter implements javax.servlet.Filter {
 	
 	public void init(FilterConfig filterConfig) {
 		try {
-			//初始化加载所有语言包
-			new LanguageManager().init();
+			//加载配置
+			new ConfigManager().loadConfig();
 		} catch (Throwable exception) {
 			ThrowableHandler.dealException(exception);
 			//配置加载失败的情况，整个应用退出，必须把异常处理好
@@ -59,7 +60,7 @@ public class Filter implements javax.servlet.Filter {
 
 		String uri = request.getRequestURI();
 		if ("/".equals(uri)) {
-			File file = new File(BaseUtil.getRootPath() + Config.WELCOME_FILE);
+			File file = new File(BaseUtil.getRootPath() + Const.WELCOME_FILE);
 			String html = FileUtil.read(file);
 			HttpUtil.responseText(response, ContentType.HTML, html);
 		}
