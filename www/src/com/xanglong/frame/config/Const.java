@@ -13,8 +13,11 @@ public class Const {
 	/**默认网页名*/
 	public static final String WELCOME_FILE = "index.html";
 	
+	/**网页类型*/
+	public static final String DOCUMENT_TYPE = "html";
+	
 	/**默认动作请求后缀*/
-	public static final String ACTION_ENDS_WITH = ",do,jsp,";
+	public static final String[] ACTION_TYPES = "do,jsp".split(",");
 	
 	/**静态脚本前缀*/
 	public static final String STATIC_JS_PREFIX = "/**/";

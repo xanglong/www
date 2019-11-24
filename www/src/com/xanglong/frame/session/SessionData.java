@@ -9,7 +9,7 @@ public class SessionData {
 	SessionData(HttpServletRequest request) {
 		this.id = request.getSession().getId();
 		this.language = Language.ZH_CN;
-		this.uri = request.getRequestURI();
+		this.requestStart = System.currentTimeMillis();
 	}
 	
 	/**会话ID*/
@@ -18,9 +18,12 @@ public class SessionData {
 	/**语言*/
 	private Language language;
 	
-	/**请求链接*/
-	private String uri;
-
+	/**请求开始时间*/
+	private long requestStart;
+	
+	/**请求结束时间*/
+	private long requestEnd;
+	
 	public String getId() {
 		return id;
 	}
@@ -29,8 +32,16 @@ public class SessionData {
 		return language;
 	}
 
-	public String getUri() {
-		return uri;
+	public long getRequestStart() {
+		return requestStart;
+	}
+
+	public long getRequestEnd() {
+		return requestEnd;
+	}
+
+	public void setRequestEnd(long requestEnd) {
+		this.requestEnd = requestEnd;
 	}
 
 }
