@@ -1,6 +1,6 @@
 package com.xanglong.frame.net;
 
-/**图片类型枚举*/
+/**图片类型*/
 public enum ImageType {
 	
 	TIFF("tiff", "标签", "image/tiff"),
