@@ -8,6 +8,8 @@ public enum FrameException implements IException, I18n {
 	FRAME_CAN_NOT_FIND_USER_AGENT("找不到请求的用户代理"),
 	FRAME_CAN_NOT_FIND_CONFIG_FOLDER("找不到配置文件夹：{0}"),
 	FRAME_CONFIG_FILE_INVALID("配置文件无效：{0}"),
+	FRAME_UNSUPPORTED_SOURCE_TYPE("不支持的请求资源类型：{0},请求地址：{1}"),
+	FRAME_CONT_NOT_FIND_FILE("找不到请求的文件：{0}"),
 	;
 	
 	private String code;
