@@ -54,6 +54,8 @@ public class BizException extends RuntimeException {
 			//支持替换枚举中的异常信息
 			if (this.message.equals(msg)) {
 				this.message = messages[0];
+			} else {
+				this.message = msg;
 			}
 		}
 	}

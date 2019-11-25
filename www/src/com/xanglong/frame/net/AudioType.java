@@ -1,6 +1,6 @@
 package com.xanglong.frame.net;
 
-/**图片类型枚举*/
+/**音频类型*/
 public enum AudioType {
 	
 	ACP("acp", "音频", "audio/x-mei-aac"),

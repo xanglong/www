@@ -17,6 +17,15 @@ public class Config {
 	/**数据库配置*/
 	private Database database;
 	
+	/**文件下载地址前缀*/
+	private String downloadUriPrefix;
+	
+	/**文件存储地址*/
+	private String dataPath;
+	
+	/**浏览器资源文件缓存失效时间*/
+	private long browseCacheExpireTime;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -55,6 +64,30 @@ public class Config {
 
 	public void setDatabase(Database database) {
 		this.database = database;
+	}
+
+	public String getDownloadUriPrefix() {
+		return downloadUriPrefix;
+	}
+
+	public void setDownloadUriPrefix(String downloadUriPrefix) {
+		this.downloadUriPrefix = downloadUriPrefix;
+	}
+
+	public String getDataPath() {
+		return dataPath;
+	}
+
+	public void setDataPath(String dataPath) {
+		this.dataPath = dataPath;
+	}
+
+	public long getBrowseCacheExpireTime() {
+		return browseCacheExpireTime;
+	}
+
+	public void setBrowseCacheExpireTime(long browseCacheExpireTime) {
+		this.browseCacheExpireTime = browseCacheExpireTime;
 	}
 
 }

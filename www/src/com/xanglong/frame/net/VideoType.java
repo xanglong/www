@@ -1,6 +1,6 @@
 package com.xanglong.frame.net;
 
-/**图片类型枚举*/
+/**视频类型*/
 public enum VideoType {
 	
 	ASF("asf", "视频", "video/x-ms-asf"),
@@ -43,7 +43,8 @@ public enum VideoType {
 	
 	WMX("wmx", "视频", "video/x-ms-wmx"),
 	
-	WVX("wvx", "视频", "video/x-ms-wvx");
+	WVX("wvx", "视频", "video/x-ms-wvx"),
+	;
 	
 	VideoType (String code, String name, String type) {
 		this.code = code;

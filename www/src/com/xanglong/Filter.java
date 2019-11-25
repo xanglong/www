@@ -66,7 +66,7 @@ public class Filter implements javax.servlet.Filter {
 	
 			//如果是资源请求，则返回资源
 			if (SourceType.ACTION != sourceInfo.getSourceType()) {
-				Source.execute(sourceInfo, response);
+				Source.execute(request, response, sourceInfo);
 			}
 			
 			//结束会话
