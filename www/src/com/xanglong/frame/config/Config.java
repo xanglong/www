@@ -26,6 +26,9 @@ public class Config {
 	/**浏览器资源文件缓存失效时间*/
 	private long browseCacheExpireTime;
 	
+	/**模板引擎配置*/
+	private Template template;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -88,6 +91,14 @@ public class Config {
 
 	public void setBrowseCacheExpireTime(long browseCacheExpireTime) {
 		this.browseCacheExpireTime = browseCacheExpireTime;
+	}
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Template template) {
+		this.template = template;
 	}
 
 }
