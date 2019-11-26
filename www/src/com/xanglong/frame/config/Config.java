@@ -29,6 +29,21 @@ public class Config {
 	/**模板引擎配置*/
 	private Template template;
 	
+	/**邮件配置*/
+	private Mail mail;
+	
+	/**错误页*/
+	private ErrorPages errorPages;
+	
+	/**回调重定向地址参数名称*/
+	private String redirectUriKey;
+	
+	/**登陆地址*/
+	private String loginUri;
+	
+	/**日志配置*/
+	private Log log;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -99,6 +114,46 @@ public class Config {
 
 	public void setTemplate(Template template) {
 		this.template = template;
+	}
+
+	public Mail getMail() {
+		return mail;
+	}
+
+	public void setMail(Mail mail) {
+		this.mail = mail;
+	}
+
+	public ErrorPages getErrorPages() {
+		return errorPages;
+	}
+
+	public void setErrorPages(ErrorPages errorPages) {
+		this.errorPages = errorPages;
+	}
+
+	public String getRedirectUriKey() {
+		return redirectUriKey;
+	}
+
+	public void setRedirectUriKey(String redirectUriKey) {
+		this.redirectUriKey = redirectUriKey;
+	}
+
+	public String getLoginUri() {
+		return loginUri;
+	}
+
+	public void setLoginUri(String loginUri) {
+		this.loginUri = loginUri;
+	}
+
+	public Log getLog() {
+		return log;
+	}
+
+	public void setLog(Log log) {
+		this.log = log;
 	}
 
 }

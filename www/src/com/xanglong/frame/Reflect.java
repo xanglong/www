@@ -2,7 +2,7 @@ package com.xanglong.frame;
 
 import java.lang.reflect.Field;
 
-import com.xanglong.frame.log.Logger;
+import com.xanglong.frame.exception.BizException;
 
 public class Reflect {
 
@@ -23,7 +23,7 @@ public class Reflect {
 				try {
 					target = field.get(obj);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
-					Logger.error(e);
+					throw new BizException(e);
 				}
 				field.setAccessible(isAccessible);
 				break;
@@ -31,5 +31,5 @@ public class Reflect {
 		}
 		return target;
 	}
-	
+
 }
