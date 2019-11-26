@@ -13,9 +13,10 @@ import com.xanglong.frame.net.MailUtil;
 import com.xanglong.frame.util.DateUtil;
 
 public class Logger {
-
+	
+	private static boolean hasConsumer = false;
 	private static Queue<LogData> logQueue = new LinkedList<LogData>();
-
+	
 	/**
 	 * 记录日志
 	 * @param logData 日志对象
@@ -81,19 +82,25 @@ public class Logger {
     	if (logQueue.size() == 0) {
     		//如果队列为空,则先添加到队列
     		logQueue.offer(logData);
-    		new Thread() {
-                public void run() {
-                	//循环发送邮件队列，发送时取出对象
-            		while (logQueue.size() > 0) {
-            			//获取一个对象，但不从队列删除
-            			LogData nextlogData = logQueue.peek();
-            			//写日志，这个过程阻塞的
-            			asyncWriteLog(nextlogData);
-            			//发送完移除对象，防止开启多个任务
-            			logQueue.poll();
-            		}
-                }
-            }.start();
+    		//如果没有消费者，则开启异步线程开始消费
+    		if (!hasConsumer) {
+    			hasConsumer = true;
+    			new Thread() {
+                    public void run() {
+                    	//循环发送邮件队列，发送时取出对象
+                		while (logQueue.size() > 0) {
+                			//获取一个对象，但不从队列删除
+                			LogData nextlogData = logQueue.peek();
+                			//写日志，这个过程阻塞的
+                			asyncWriteLog(nextlogData);
+                			//发送完移除对象，防止开启多个任务
+                			logQueue.poll();
+                		}
+                		//消费完了
+                		hasConsumer = false;
+                    }
+                }.start();
+    		}
     	} else {
     		//如果队列不为空，则只需要添加到队列即可
     		logQueue.add(logData);
