@@ -25,9 +25,9 @@ import com.xanglong.frame.util.StringUtil;
 /**邮件工具类*/
 public class MailUtil {
 	
-	private static Queue<Email> mailQueue = new LinkedList<Email>();
-
 	private static Mail mail = null;
+	private static boolean hasConsumer = false;
+	private static Queue<Email> mailQueue = new LinkedList<Email>();
 
     /**
      * 获取邮件Session对象
@@ -102,19 +102,25 @@ public class MailUtil {
     	if (mailQueue.size() == 0) {
     		//如果队列为空,则先添加到队列
     		mailQueue.offer(email);
-    		new Thread() {
-                public void run() {
-                	//循环发送邮件队列，发送时取出对象
-            		while (mailQueue.size() > 0) {
-            			//获取一个对象，但不从队列删除
-            			Email email = mailQueue.peek();
-            			//发送邮件，这个需要几秒时间
-            			asyncSend(email);
-            			//发送完移除对象，防止开启多个任务
-            			mailQueue.poll();
-            		}
-                }
-            }.start();
+    		//如果没有消费者，则开启异步线程开始消费
+    		if (!hasConsumer) {
+    			hasConsumer = true;
+    			new Thread() {
+                    public void run() {
+                    	//循环发送邮件队列，发送时取出对象
+                		while (mailQueue.size() > 0) {
+                			//获取一个对象，但不从队列删除
+                			Email email = mailQueue.peek();
+                			//发送邮件，这个需要几秒时间
+                			asyncSend(email);
+                			//发送完移除对象，防止开启多个任务
+                			mailQueue.poll();
+                		}
+                		//消费完了
+                		hasConsumer = false;
+                    }
+                }.start();
+    		}
     	} else {
     		//如果队列不为空，则只需要添加到队列即可
     		mailQueue.add(email);
