@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -18,16 +19,19 @@ import com.xanglong.frame.Current;
 import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Config;
 import com.xanglong.frame.config.Const;
+import com.xanglong.frame.config.Template;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.io.FileUtil;
 import com.xanglong.frame.util.BaseUtil;
 import com.xanglong.frame.util.DateUtil;
+import com.xanglong.frame.util.StringUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
 import com.xanglong.i18n.zh_cn.SystemException;
+
 import net.coobird.thumbnailator.Thumbnails;
 
 public class Source {
-	
+
 	/**
 	 * 获取请求资源类型：公开外部方法
 	 * @param uri 请求地址
@@ -43,7 +47,7 @@ public class Source {
 		Current.setSourceInfo(sourceInfo);
 		return sourceInfo;
 	}
-	
+
 	/**
 	 * 获取请求资源类型：私有内部方法
 	 * @param uri 请求地址
@@ -110,7 +114,7 @@ public class Source {
 		}
 		throw new BizException(FrameException.FRAME_UNSUPPORTED_SOURCE_TYPE, type, uri);
 	}
-	
+
 	/**
 	 * 执行资源请求响应
 	 * @param request 请求对象
@@ -129,13 +133,10 @@ public class Source {
 		File file = new File(filePath);
 		if (file.exists()) {
 			boolean isDebug = config.getIsDebug();
+			Template template = config.getTemplate();
 			if (SourceType.HTML == sourceInfo.getSourceType()) {
-				String html = FileUtil.read(file);
-				//运行模式，文件没已压缩标记，则压缩文件并打标记
-				if (!isDebug && !html.startsWith(Const.STATIC_HTML_PREFIX)) {
-					html = Const.STATIC_HTML_PREFIX + trims(html);
-					FileUtil.writeCover(file, html);
-				}
+				//处理网页压缩和网页模板，得到最终网页
+				String html = dealHtmlCompressAndTemplate(file, isDebug, template.getUseHtml());
 				HttpUtil.responseText(response, ContentType.HTML, html);
 			} else {
 				if (!isDebug) {
@@ -143,21 +144,12 @@ public class Source {
 					dealBrowseCache(request, response, file);
 				}
 				if (SourceType.CSS == sourceInfo.getSourceType()) {
-					String css = FileUtil.read(file);
-					//运行模式，文件没已压缩标记，则压缩文件并打标记
-					if (!isDebug && !css.startsWith(Const.STATIC_CSS_PREFIX)) {
-						css = Const.STATIC_CSS_PREFIX + trims(css);
-						FileUtil.writeCover(file, css);
-					}
+					//处理样式压缩和样式模板，得到最终样式
+					String css = dealCssCompressAndTemplate(file, isDebug, template.getUseCss());
 					HttpUtil.responseText(response, ContentType.CSS, css);
 				} else if (SourceType.JS == sourceInfo.getSourceType()) {
-					String js = FileUtil.read(file);
-					//运行模式，文件没已压缩标记，则压缩文件并打标记
-					if (!isDebug && !js.startsWith(Const.STATIC_JS_PREFIX)) {
-						//这里的压缩文件要用到谷歌的一款插件closure-compiler
-						js = Const.STATIC_JS_PREFIX + getMinJS(js);
-						FileUtil.writeCover(file, js);
-					}
+					//处理脚本压缩和脚本模板，得到最终脚本
+					String js = dealJsCompressAndTemplate(file, isDebug, template.getUseJs());
 					HttpUtil.responseText(response, ContentType.JS, js);
 				} else if (SourceType.IMAGE == sourceInfo.getSourceType()) {
 					byte[] bytes = FileUtil.readByte(file);
@@ -175,6 +167,113 @@ public class Source {
 				throw new BizException(FrameException.FRAME_CONT_NOT_FIND_FILE, uri);
 			}
 		}
+	}
+
+	/**
+	 * 处理脚本压缩和脚本模板：开放给后端渲染服务用
+	 * @param file 脚本文件
+	 * @return 最终脚本
+	 * */
+	public static String dealJsCompressAndTemplate(File file) {
+		Config config = Sys.getConfig();
+		Template template = config.getTemplate();
+		return dealJsCompressAndTemplate(file, config.getIsDebug(), template.getUseJs());
+	}
+
+	/**
+	 * 处理脚本压缩和脚本模板
+	 * @param file 脚本文件
+	 * @param isDebug 是否调试模式
+	 * @param useJs 是否启用脚本模板
+	 * @return 最终脚本
+	 * */
+	private static String dealJsCompressAndTemplate(File file, boolean isDebug, boolean useJs) {
+		String css = FileUtil.read(file);
+		if (isDebug && useJs) {
+			//调试模式下实时替换模板，支持持续开发编程修改原文件
+			css = setJsTemplate(css);
+		}
+		//运行模式，文件没已压缩标记，则压缩文件并打标记
+		if (!isDebug && !css.startsWith(Const.STATIC_CSS_PREFIX)) {
+			//先做模板替换，后做文件压缩
+			if (useJs) {
+				css = setJsTemplate(css);
+			}
+			css = Const.STATIC_CSS_PREFIX + trims(css);
+			FileUtil.writeCover(file, css);
+		}
+		return css;
+	}
+
+	/**
+	 * 处理样式压缩和样式模板：开放给后端渲染服务用
+	 * @param file 样式文件
+	 * @return 最终样式
+	 * */
+	public static String dealCssCompressAndTemplate(File file) {
+		Config config = Sys.getConfig();
+		Template template = config.getTemplate();
+		return dealCssCompressAndTemplate(file, config.getIsDebug(), template.getUseCss());
+	}
+
+	/**
+	 * 处理样式压缩和样式模板
+	 * @param file 样式文件
+	 * @param isDebug 是否调试模式
+	 * @param useCss 是否启用样式模板
+	 * */
+	private static String dealCssCompressAndTemplate(File file, boolean isDebug, boolean useCss) {
+		String css = FileUtil.read(file);
+		if (isDebug && useCss) {
+			//调试模式下实时替换模板，支持持续开发编程修改原文件
+			css = setCssTemplate(css);
+		}
+		//运行模式，文件没已压缩标记，则压缩文件并打标记
+		if (!isDebug && !css.startsWith(Const.STATIC_CSS_PREFIX)) {
+			//先做模板替换，后做文件压缩
+			if (useCss) {
+				css = setCssTemplate(css);
+			}
+			css = Const.STATIC_CSS_PREFIX + trims(css);
+			FileUtil.writeCover(file, css);
+		}
+		return css;
+	}
+
+	/**
+	 * 处理网页压缩和网页模板：开放给后端渲染服务用
+	 * @param file 网页文件
+	 * @return 最终网页
+	 * */
+	public static String dealHtmlCompressAndTemplate(File file) {
+		Config config = Sys.getConfig();
+		Template template = config.getTemplate();
+		return dealHtmlCompressAndTemplate(file, config.getIsDebug(), template.getUseHtml());
+	}
+
+	/**
+	 * 处理网页压缩和网页模板
+	 * @param file 网页文件
+	 * @param isDebug 是否调试模式
+	 * @param useHtml 是否启用网页模板
+	 * */
+	private static String dealHtmlCompressAndTemplate(File file, boolean isDebug, boolean useHtml) {
+		//读取文件
+		String html = FileUtil.read(file);
+		if (isDebug && useHtml) {
+			//调试模式下实时替换模板，支持持续开发编程修改原文件
+			html = setHtmlTemplate(html);
+		}
+		//运行模式，文件没已压缩标记，则压缩文件并打标记
+		if (!isDebug && !html.startsWith(Const.STATIC_HTML_PREFIX)) {
+			//先做模板替换，后做文件压缩
+			if (useHtml) {
+				html = setHtmlTemplate(html);
+			}
+			html = Const.STATIC_HTML_PREFIX + trims(html);
+			FileUtil.writeCover(file, html);
+		}
+		return html;
 	}
 	
 	/**
@@ -264,6 +363,216 @@ public class Source {
 			}
 		}
 		return stringBuilder.toString();
+	}
+	
+	/**
+	 * 对网页文档做模板替换,在网页中引入${文件相对地址}的字符就可以把网页模板文档作为内容替换
+	 * @param document 网页文档
+	 * @return 模板替换后的网页文档
+	 * */
+	private static String setHtmlTemplate(String document) {
+		return setHtmlTemplate(document, null);
+	}
+	
+	/**
+	 * 对网页文档做模板替换,在网页中引入${文件相对地址}或${全局唯一键}的字符就可以把网页模板文档或者值作为内容替换
+	 * @param document 网页文档
+	 * @param map 键值对缓存
+	 * @return 模板替换后的网页文档
+	 * */
+	public static String setHtmlTemplate(String document, Map<String, String> map) {
+		//如果原网页文档没内容，则返回空字符串
+		if (StringUtil.isBlank(document)) {
+			return "";
+		}
+		boolean isDebug = Sys.getConfig().getIsDebug();
+		char[] chars = document.toCharArray();
+		String rootPath = BaseUtil.getRootPath();
+		StringBuilder doc = new StringBuilder();
+		F:for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			//以$作为切入点，开始匹配模板配置
+			if (c == '$') {
+				//指向下一个字符
+				i++;
+				//如果$后面没字符了，则把$回写，退出循环
+				if (i == chars.length) { doc.append("$"); break F; }
+				//取出下一个字符
+				c = chars[i];
+				//如果匹配到了{说明离${key}更近了，进入匹配
+				if (c == '{') {
+					//模板配置字符串一般很短，直接用String定义变量
+					String temp = "";
+					while (true) {
+						//指向下一个字符
+						i++;
+						//如果$后面没字符了，则把${回写，退出循环
+						if (i == chars.length) { doc.append("${").append(temp); break F; }
+						//取出下一个字符
+						c = chars[i];
+						//如果匹配到了}说明${key}匹配成功，开始处理模板操作
+						if (c == '}') {
+							//如果模板配置是网页模板，则读文件替换
+							if (temp.endsWith(".html")) {
+								String text = FileUtil.read(new File(rootPath + temp));
+								//debug模式要换行
+								doc.append(isDebug ? "\n" : "").append(text).append(isDebug ? "\n" : "");
+							} else {
+								//map为null或者值不存在，说明匹配无效
+								if (map == null || !map.containsKey(temp)) {
+									doc.append("${").append(temp).append("}");
+								} else {
+									//后端静态渲染用，也用于国际化处理
+									doc.append(map.get(temp));
+								}
+							}
+							//处理当前模板结束，跳出死循环
+							break;
+						} else {
+							//前面匹配到了${，这里是${key}中key的一个字符
+							temp += c;
+						}
+					}
+				} else {
+					//没有匹配到{，则需要还原，判断调试模式特殊字符
+					doc.append("$").append(isDebug ? c : c != '\n' && c != '\t' ? c : "");
+				}
+			} else {
+				//没匹配到$，则是普通网页内容，直接写入即可，同时判断调试模式特殊字符
+				doc.append(isDebug ? c : c != '\n' && c != '\t' ? c : "");
+			}
+		}
+		return doc.toString();
+	}
+	
+	/**
+	 * 设置样式模板,用在网页模板中
+	 * @param document 网页文档
+	 * @return 模板替换后的网页文档
+	 * */
+	public static String setCssTemplate(String document) {
+		//如果原网页文档没内容，则返回空字符串
+		if (StringUtil.isBlank(document)) {
+			return "";
+		}
+		boolean isDebug = Sys.getConfig().getIsDebug();
+		char[] chars = document.toCharArray();
+		StringBuilder doc = new StringBuilder();
+		String rootPath = BaseUtil.getRootPath();
+		F:for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			//以$作为切入点，开始匹配模板配置
+			if (c == '$') {
+				//指向下一个字符
+				i++;
+				//如果$后面没字符了，则把$回写，退出循环
+				if (i == chars.length) { doc.append("$"); break F; }
+				//取出下一个字符
+				c = chars[i];
+				//如果匹配到了{说明离${key}更近了，进入匹配
+				if (c == '{') {
+					//模板配置字符串一般很短，直接用String定义变量
+					String temp = "";
+					while (true) {
+						//指向下一个字符
+						i++;
+						//如果$后面没字符了，则把${回写，退出循环
+						if (i == chars.length) { doc.append("${").append(temp); break F; }
+						//取出下一个字符
+						c = chars[i];
+						//如果匹配到了}说明${key}匹配成功，开始处理模板操作
+						if (c == '}') {
+							//如果模板配置是样式模板，则读文件替换
+							if (temp.endsWith(".css")) {
+								String text = FileUtil.read(new File(rootPath + temp));
+								//debug模式要换行，而且要对排版做整齐，经测试标准是两个制表位
+								doc.append(isDebug ? "\n" : "").append(text).append(isDebug ? "\n\t\t" : "");
+							} else {
+								//样式模板只做文件模板，匹配不到就回写还原
+								doc.append("${").append(temp).append("}");
+							}
+							//处理当前模板结束，跳出死循环
+							break;
+						} else {
+							//前面匹配到了${，这里是${key}中key的一个字符
+							temp += c;
+						}
+					}
+				} else {
+					//没有匹配到{，则需要还原，判断调试模式特殊字符
+					doc.append("$").append(isDebug ? c : c != '\n' && c != '\t' ? c : "");
+				}
+			} else {
+				//没匹配到$，则是普通样式内容，直接写入即可，同时判断调试模式特殊字符
+				doc.append(isDebug ? c : c != '\n' && c != '\t' ? c : "");
+			}
+		}
+		return doc.toString();
+	}
+
+	/**
+	 * 设置脚本模板,用在网页模板中
+	 * @param document 网页文档
+	 * @return 模板替换后的网页文档
+	 * */
+	public static String setJsTemplate (String document) {
+		//如果原网页文档没内容，则返回空字符串
+		if (StringUtil.isBlank(document)) {
+			return "";
+		}
+		boolean isDebug = Sys.getConfig().getIsDebug();
+		char[] chars = document.toCharArray();
+		StringBuilder doc = new StringBuilder();
+		String rootPath = BaseUtil.getRootPath();
+		F:for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			//以$作为切入点，开始匹配模板配置
+			if (c == '$') {
+				//指向下一个字符
+				i++;
+				//如果$后面没字符了，则把$回写，退出循环
+				if (i == chars.length) { doc.append("$"); break F; }
+				//取出下一个字符
+				c = chars[i];
+				//如果匹配到了}说明${key}匹配成功，开始处理模板操作
+				if (c == '{') {
+					//模板配置字符串一般很短，直接用String定义变量
+					String temp = "";
+					while (true) {
+						//指向下一个字符
+						i++;
+						//如果$后面没字符了，则把${回写，退出循环
+						if (i == chars.length) { doc.append("${").append(temp); break F; }
+						//取出下一个字符
+						c = chars[i];
+						//如果匹配到了}说明${key}匹配成功，开始处理模板操作
+						if (c == '}') {
+							//如果模板配置是脚本模板，则读文件替换
+							if (temp.endsWith(".js")) {
+								String text = FileUtil.read(new File(rootPath + temp));
+								//debug模式要换行
+								doc.append(isDebug ? "\n" : "").append(text).append(isDebug ? "\n" : "");
+							} else {
+								//脚本模板只做文件模板，匹配不到就回写还原
+								doc.append("${" + temp + "}");
+							}
+							//处理当前模板结束，跳出死循环
+							break;
+						} else {
+							//前面匹配到了${，这里是${key}中key的一个字符
+							temp += c;
+						}
+					}
+				} else {
+					//没有匹配到{，则需要还原，判断调试模式特殊字符
+					doc.append("$").append(isDebug ? c : c != '\n' && c != '\t' ? c : "");
+				}
+			} else {
+				//没匹配到$，则是普通样式内容，直接写入即可，同时判断调试模式特殊字符
+				doc.append(isDebug ? c : c != '\n' && c != '\t' ? c : "");
+			}
+		}
+		return doc.toString();
 	}
 
 }
