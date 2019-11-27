@@ -208,46 +208,39 @@ public class HttpUtil {
 	/**
 	 * 获取POST请求的参数的二进制格式
 	 * @param requestDto 请求参数
-	 * @param method 请求类型
 	 * @param BOUNDARY formData参数标志位
 	 * @return 参数的二进制
 	 * */
-	private static byte[] getPostBytes(RequestDto requestDto, Method method, String BOUNDARY) {
+	private static byte[] getPostBytes(RequestDto requestDto, String BOUNDARY) {
 		byte[] requestBytes = null;
 		String url = requestDto.getUrl();
 		ContentType contentType = requestDto.getContentType();
 		JSONObject bodyParams = requestDto.getBodyParams();
 		bodyParams = bodyParams == null ? new JSONObject() : bodyParams;
-		if (Method.GET == method) {
-			int idx = url.indexOf("?");
-			String origin = idx == -1 ? url : url.substring(0, idx);
-			url = origin + "?" + getQuery(url, bodyParams);
-		} else if (Method.POST == method) {
-			if (ContentType.FORM_URLENCODED == contentType) {
-				requestBytes = getQuery(url, bodyParams).getBytes(Const.CHARSET);
-			} else if (ContentType.FORM_DATA == contentType) {
-				bodyParams.putAll(getParams(url));
-				StringBuilder queryBuilder = new StringBuilder();
-				for (String key : bodyParams.keySet()) {
-					queryBuilder.append("\r\n--")
-					.append(BOUNDARY)
-					.append("\r\nContent-Disposition: form-data; name=\"")
-					.append(key).append("\"\r\n\r\n")
-					.append(bodyParams.getString(key));
-				}
-				requestBytes = queryBuilder.toString().getBytes(Const.CHARSET);
-			} else if (ContentType.FORM_TEXT == contentType) {
-				requestBytes = getQuery(url, bodyParams).getBytes(Const.CHARSET);
-			} else if (ContentType.JSON == contentType) {
-				bodyParams.putAll(getParams(url));
-				requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
+		if (ContentType.FORM_URLENCODED == contentType) {
+			requestBytes = getQuery(url, bodyParams).getBytes(Const.CHARSET);
+		} else if (ContentType.FORM_DATA == contentType) {
+			bodyParams.putAll(getParams(url));
+			StringBuilder queryBuilder = new StringBuilder();
+			for (String key : bodyParams.keySet()) {
+				queryBuilder.append("\r\n--")
+				.append(BOUNDARY)
+				.append("\r\nContent-Disposition: form-data; name=\"")
+				.append(key).append("\"\r\n\r\n")
+				.append(bodyParams.getString(key));
 			}
+			requestBytes = queryBuilder.toString().getBytes(Const.CHARSET);
+		} else if (ContentType.FORM_TEXT == contentType) {
+			requestBytes = getQuery(url, bodyParams).getBytes(Const.CHARSET);
+		} else if (ContentType.JSON == contentType) {
+			bodyParams.putAll(getParams(url));
+			requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
 		}
 		return requestBytes;
 	}
 	
 	/**
-	 * 请求设置
+	 * 获取HTTP连接
 	 * @param finallyUrl 最终请求的网址
 	 * @param requestDto 请求参数
 	 * @param BOUNDARY form-data请求标志位
@@ -261,7 +254,7 @@ public class HttpUtil {
 		}
         urlConnection.setDoInput(true);
 		urlConnection.setUseCaches(false);
-		urlConnection.setRequestProperty(Header.ENCODING, Const.CHARSET_STR);
+		urlConnection.setRequestProperty(Header.CONTENT_ENCODING, Const.CHARSET_STR);
 		//连接超时时间
 		int connectionTimeout = requestDto.getConnectionTimeout();
 		urlConnection.setConnectTimeout(connectionTimeout > 0 ? connectionTimeout : 30000);
@@ -274,7 +267,6 @@ public class HttpUtil {
 		} catch (ProtocolException e) {
 			throw new BizException(e);
 		}
-		
 		ContentType contentType = requestDto.getContentType();
 		String contentTypeValue = contentType.getCode() + "; charset=" + Const.CHARSET_STR;
 		if (ContentType.FORM_DATA == contentType) {
@@ -282,7 +274,7 @@ public class HttpUtil {
 		} else {
 			httpURLConnection.setRequestProperty(Header.CONTENT_TYPE, contentTypeValue);
 		}
-		 //默认请求头添加浏览器版本信息，因为像360问答没有这个就不会返回信息
+		//默认请求头添加浏览器版本信息，因为像360问答没有这个就不会返回信息
         httpURLConnection.setRequestProperty(Header.USER_AGENT, UserAgent.Chrome62.getCode());
 		return httpURLConnection;
 	}
@@ -305,20 +297,10 @@ public class HttpUtil {
 				if (StringUtil.isBlank(name)) {
 					name = fileName.replace("." + fileType, "");
 				}
-				String fileContentType = "";
-				for (ImageType imageType : ImageType.values()) {
-					if (imageType.getCode().equals(fileType)) {
-						fileContentType = imageType.getType();
-						break;
-					}
-				}
-				if (StringUtil.isBlank(fileContentType)) {
-					fileContentType = ContentType.STREAM.getCode();
-                }
 				StringBuilder paramBuilder = new StringBuilder();
 				paramBuilder.append("\r\n--").append(BOUNDARY)
 				.append("\r\nContent-Disposition: form-data; name=\"").append(name).append("\"; filename=\"").append(fileName).append("\"\r\n")
-				.append(Header.CONTENT_TYPE).append(":").append(fileContentType).append("\r\n\r\n");
+				.append(Header.CONTENT_TYPE).append(":").append(ContentType.STREAM.getCode()).append("\r\n\r\n");
 				dataOutputStream.write(paramBuilder.toString().getBytes());
 				//输入完文件头信息，再输入文件信息
 				dataOutputStream.write(file.getBytes());
@@ -373,17 +355,19 @@ public class HttpUtil {
 			byteArrayOutputStream.flush();
 			Charset charset = requestDto.getCharset();
 			responseDto.setBytes(byteArrayOutputStream.toByteArray());
-			responseDto.setContentType(httpURLConnection.getContentType());
 			responseDto.setCharset(charset);
-			JSONObject headers = new JSONObject();
+			JSONObject header = new JSONObject();
 			Map<String, List<String>> fieldsMap = httpURLConnection.getHeaderFields();
 			for (String key : fieldsMap.keySet()) {
 			    if (key != null) {
 			    	String value = fieldsMap.get(key).get(0);
-			    	headers.put(key, new String(value.getBytes("iso-8859-1"), Const.CHARSET));
+			    	header.put(key, new String(value.getBytes("iso-8859-1"), Const.CHARSET));
 			    }
 			}
-			responseDto.setHeaders(headers);
+			responseDto.setHeaders(header);
+			//获取响应头的文档类型,正常来说请求头是什么文档类型返回也应该是什么文档类型，但是以防万一还是要去取一下响应头的文档类型
+			String contentType = header.getString(Header.CONTENT_TYPE);
+			responseDto.setContentType(StringUtil.isBlank(contentType) ? httpURLConnection.getContentType() : contentType);
 			byteArrayOutputStream.close();
         } catch (IOException e) {
         	throw new BizException(e);
@@ -403,7 +387,6 @@ public class HttpUtil {
             }
         }
 	}
-	
 	
 	/**
 	 * 重定向请求
@@ -425,7 +408,6 @@ public class HttpUtil {
     	return doRequest(requestDto, method);
 	}
 	
-	
 	/**
 	 * 执行请求
 	 * @param requestDto 请求参数体
@@ -443,7 +425,7 @@ public class HttpUtil {
 			String origin = idx == -1 ? url : url.substring(0, idx);
 			url = origin + "?" + getQuery(url, requestDto.getBodyParams());
 		} else if (Method.POST == method && postBytes == null) {
-			postBytes = getPostBytes(requestDto, method, BOUNDARY);
+			postBytes = getPostBytes(requestDto, BOUNDARY);
 		}
 		//获取连接
 		HttpURLConnection httpURLConnection = getUrlConnection(url, requestDto, method, BOUNDARY);

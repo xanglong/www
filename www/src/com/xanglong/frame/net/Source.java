@@ -345,7 +345,7 @@ public class Source {
 		}
 		//如果走的不是缓存，则设置文件的缓存过期时间，因为这一次会读取最新的文件返回给前端
 		long browseCacheExpireTime = Sys.getConfig().getBrowseCacheExpireTime();
-		response.setDateHeader(Header.EXPRIES, System.currentTimeMillis() + browseCacheExpireTime);
+		response.setDateHeader(Header.EXPIRES, System.currentTimeMillis() + browseCacheExpireTime);
 	}
 	
 	/**
