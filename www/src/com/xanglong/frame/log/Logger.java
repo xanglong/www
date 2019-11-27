@@ -9,7 +9,6 @@ import java.util.Queue;
 import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Config;
 import com.xanglong.frame.io.FileUtil;
-import com.xanglong.frame.net.MailUtil;
 import com.xanglong.frame.util.DateUtil;
 
 public class Logger {
@@ -31,7 +30,8 @@ public class Logger {
 			throwable.printStackTrace(printWriter);
 			FileUtil.writeAppend(new File(logPath), dateTime + "\t" + stringWriter.toString() + "\n");
 		} catch(Throwable e) {
-			MailUtil.send(e);
+			//唯独这里的异常不处理
+			e.printStackTrace();
 		}
 	}
 

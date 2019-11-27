@@ -127,7 +127,10 @@ public class MailUtil {
     	}
     }
     
-    /**根据异常原因发送异常邮件*/
+    /**
+     * 发送异常邮件
+     * @param throwable 异常
+     * */
     public static void send(Throwable throwable) {
     	Mail mail = Sys.getConfig().getMail();
 		String dateTime = DateUtil.getDateTime();

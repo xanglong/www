@@ -7,6 +7,9 @@ public class Const {
 	/**默认编码格式*/
 	public static final String CHARSET_STR = "UTF-8";
 	
+	/**缓冲区默认独写一次大小8K*/
+	public static final int BUFFER_SIZE = 8192;
+	
 	/**默认编码格式*/
 	public static final Charset CHARSET = Charset.forName(CHARSET_STR);
 	

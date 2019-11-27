@@ -10,6 +10,9 @@ public enum FrameException implements IException, I18n {
 	FRAME_CONFIG_FILE_INVALID("配置文件无效：{0}"),
 	FRAME_UNSUPPORTED_SOURCE_TYPE("不支持的请求资源类型：{0},请求地址：{1}"),
 	FRAME_CONT_NOT_FIND_FILE("找不到请求的文件：{0}"),
+	FRAME_URL_ILLEGAL("URL地址非法：{0}"),
+	FRAME_CONTENT_TYPE_CANT_NOT_NULL("接口请求文档类型不能为空"),
+	FRAME_REQUEST_PARAM_CANT_NOT_NULL("接口请求参数不能为空")
 	;
 	
 	private String code;

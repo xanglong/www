@@ -37,8 +37,16 @@ public class ThrowableHandler {
 			throwable = superThrowable;
 		}
 		if (throwable instanceof BizException) {
-			dealBizException((BizException) throwable, request, response);
-		} else if (throwable instanceof Exception) {
+			BizException bizException = (BizException) throwable;
+			//处理系统异常抛出的错误，需要获取系统异常信息
+			Throwable innerThrowable = bizException.getThrowable();
+			if (innerThrowable == null) {
+				dealBizException(bizException, request, response);
+			} else {
+				throwable = innerThrowable;
+			}
+		}
+		if (throwable instanceof Exception) {
 			dealException((Exception) throwable, request, response);
 		} else if (throwable instanceof Error) {
 			dealError((Error) throwable, request, response);
