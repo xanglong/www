@@ -25,8 +25,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jsoup.Jsoup;
-
 import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.config.Const;
 import com.xanglong.frame.exception.BizException;
@@ -115,6 +113,17 @@ public class HttpUtil {
 		} catch (IOException e) {
 			throw new BizException(e);
 		}
+	}
+	
+	/**
+	 * 执行GET请求
+	 * @param url 请求地址
+	 * @return 响应结果
+	 * */
+	public static ResponseDto doGet(String url) {
+		RequestDto requestDto = new RequestDto();
+		requestDto.setUrl(url);
+		return doRequest(requestDto, Method.GET);
 	}
 	
 	/**
@@ -364,7 +373,7 @@ public class HttpUtil {
 			    	header.put(key, new String(value.getBytes("iso-8859-1"), Const.CHARSET));
 			    }
 			}
-			responseDto.setHeaders(header);
+			responseDto.setHeaderParams(header);
 			//获取响应头的文档类型,正常来说请求头是什么文档类型返回也应该是什么文档类型，但是以防万一还是要去取一下响应头的文档类型
 			String contentType = header.getString(Header.CONTENT_TYPE);
 			responseDto.setContentType(StringUtil.isBlank(contentType) ? httpURLConnection.getContentType() : contentType);
@@ -386,26 +395,6 @@ public class HttpUtil {
             	httpURLConnection.setRequestProperty(key, headerParams.getString(key));
             }
         }
-	}
-	
-	/**
-	 * 重定向请求
-	 * @param responseDto 响应结果
-	 * @param method 请求方式
-	 * */
-	private static ResponseDto doReRequest(ResponseDto responseDto, Method method) {
-		RequestDto requestDto = new RequestDto();
-    	String html = new String(responseDto.getBytes());
-    	String href = Jsoup.parse(html).selectFirst("a").attr("href");
-    	requestDto.setUrl(href);
-    	JSONObject headers = responseDto.getHeaders();
-    	try {
-			headers.put("Host", new URI(responseDto.getUrl()).getHost());
-		} catch (URISyntaxException e) {
-			throw new BizException(e);
-		}
-    	requestDto.setHeaderParams(headers);
-    	return doRequest(requestDto, method);
 	}
 	
 	/**
@@ -459,9 +448,28 @@ public class HttpUtil {
         }
         //如果是重定向则递归调用请求方法
         if (HttpURLConnection.HTTP_MOVED_TEMP == responseCode) {
-        	responseDto = doReRequest(responseDto, method);
+        	responseDto = doRedirectRequest(responseDto, method);
         }
 		return responseDto;
 	}
-	
+
+	/**
+	 * 重定向请求
+	 * @param responseDto 响应结果
+	 * @param method 请求方式
+	 * */
+	private static ResponseDto doRedirectRequest(ResponseDto responseDto, Method method) {
+		RequestDto requestDto = new RequestDto();
+		JSONObject headerParams = responseDto.getHeaderParams();
+		requestDto.setUrl(responseDto.getHeader(Header.LOCATION));
+    	try {
+    		//记录原始请求地址
+    		headerParams.put(Header.HOST, new URI(responseDto.getUrl()).getHost());
+		} catch (URISyntaxException e) {
+			throw new BizException(e);
+		}
+    	requestDto.setHeaderParams(headerParams);
+    	return doRequest(requestDto, method);
+	}
+
 }

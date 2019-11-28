@@ -3,6 +3,8 @@ package com.xanglong.frame.net;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import org.jsoup.helper.StringUtil;
+
 import com.alibaba.fastjson.JSONObject;
 
 /**请求对象*/
@@ -104,6 +106,22 @@ public class RequestDto {
 
 	public void setFiles(List<RequestFileDto> files) {
 		this.files = files;
+	}
+	
+	/**
+	 * 不分区大小写获取请求头参数
+	 * @param headerKey 参数名
+	 * @return 参数值
+	 * */
+	public String getHeader(String headerKey) {
+		if (!StringUtil.isBlank(headerKey) && headerParams != null && !headerParams.isEmpty()) {
+			for (String key : headerParams.keySet()) {
+				if (key.toLowerCase().equals(headerKey.toLowerCase())) {
+					return headerParams.getString(key);
+				}
+			}
+		}
+		return "";
 	}
 
 }
