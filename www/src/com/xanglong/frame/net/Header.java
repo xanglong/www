@@ -110,8 +110,8 @@ public class Header {
 	public static final String X_UA_COMPATIBLE = "X-UA-Compatible";//建议使用首选的呈现引擎（通常是向后兼容模式）来显示内容
 	public static final String X_XSS_PROTECTION = "X-XSS-Protection";//跨站点脚本（XSS）筛选器
 	
-	/**未找到定义字段*/
-	public static final String PROXY_CLIENT_IP = "proxy-client-ip";//代理客户端ID
-	public static final String WL_PROXY_CLIENT_IP = "wl-proxy-client-ip";//代理来源IP
+	/**Apache HTTP服务*/
+	public static final String PROXY_CLIENT_IP = "Proxy-Client-IP";//代理客户端ID
+	public static final String WL_PROXY_CLIENT_IP = "WL- Proxy-Client-IP";//代理来源IP
 
 }
