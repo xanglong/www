@@ -5,14 +5,18 @@ import com.xanglong.i18n.I18n;
 
 public enum FrameException implements IException, I18n {
 	
-	FRAME_CAN_NOT_FIND_USER_AGENT("找不到请求的用户代理"),
-	FRAME_CAN_NOT_FIND_CONFIG_FOLDER("找不到配置文件夹：{0}"),
+	FRAME_USER_AGENT_NULL("找不到请求的用户代理"),
+	FRAME_CONFIG_FOLDER_NULL("找不到配置文件夹：{0}"),
 	FRAME_CONFIG_FILE_INVALID("配置文件无效：{0}"),
 	FRAME_UNSUPPORTED_SOURCE_TYPE("不支持的请求资源类型：{0},请求地址：{1}"),
-	FRAME_CONT_NOT_FIND_FILE("找不到请求的文件：{0}"),
+	FRAME_FILE_NULL("找不到请求的文件：{0}"),
 	FRAME_URL_ILLEGAL("URL地址非法：{0}"),
-	FRAME_CONTENT_TYPE_CANT_NOT_NULL("接口请求文档类型不能为空"),
-	FRAME_REQUEST_PARAM_CANT_NOT_NULL("接口请求参数不能为空")
+	FRAME_CONTENT_TYPE_NULL("接口请求文档类型不能为空"),
+	FRAME_REQUEST_PARAM_NULL("接口请求参数不能为空"),
+	FRAME_PROXY_AUTHORIZATION_NULL("转发凭证不能为空"),
+	FRAME_PROXY_AUTHORIZATION_INVALID("转发凭证无效：{0}"),
+	FRAME_PROXY_IP_INVALID("当前请求IP非法：{0}"),
+	FRAME_REQUEST_METHOD_INVALID("请求类型不支持：{0}"),
 	;
 	
 	private String code;

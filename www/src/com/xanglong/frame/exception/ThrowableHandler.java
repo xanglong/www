@@ -32,11 +32,9 @@ public class ThrowableHandler {
 	 * @param response 响应对象
 	 * */
 	public static void dealException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) {
-		Throwable superThrowable = throwable.getCause();
-		if (superThrowable != null) {
-			throwable = superThrowable;
-		}
+		boolean isBizException = false;
 		if (throwable instanceof BizException) {
+			isBizException = true;
 			BizException bizException = (BizException) throwable;
 			//处理系统异常抛出的错误，需要获取系统异常信息
 			Throwable innerThrowable = bizException.getThrowable();
@@ -46,7 +44,7 @@ public class ThrowableHandler {
 				throwable = innerThrowable;
 			}
 		}
-		if (throwable instanceof Exception) {
+		if (!isBizException && throwable instanceof Exception) {
 			dealException((Exception) throwable, request, response);
 		} else if (throwable instanceof Error) {
 			dealError((Error) throwable, request, response);
@@ -79,10 +77,13 @@ public class ThrowableHandler {
 	 * @return 是否继续响应
 	 * */
 	private static void dealException(Exception exception, HttpServletRequest request, HttpServletResponse response) {
-		if (Sys.getConfig().getLog().getIsSystemException()) {
+		Config config = Sys.getConfig();
+		if (config.getLog().getIsSystemException()) {
 			Logger.danger(exception);
 		}
-		MailUtil.send(exception);
+		if (!config.getIsDebug()) {
+			MailUtil.send(exception);
+		}
 		String message = exception.getMessage();
 		message = StringUtil.isBlank(message) ? SystemException.E500.getMessage() : message;
 		responseResult("500", exception.getMessage(), response);
@@ -114,16 +115,16 @@ public class ThrowableHandler {
 		} else if (SystemException.E401.name() == code) {
 			//需要登陆或者指定身份才可以访问的异常
 			isResponse = false;
-			String loginUri = config.getLoginUri();
+			String loginUrl = config.getLoginUri();
 			//特殊处理，需要登陆才可以访问的页面，异常消息为回调地址
 			if (!StringUtil.isBlank(message)) {
-				loginUri += "?" + config.getRedirectUriKey() + "=" + message;
+				loginUrl += "?" + config.getRedirectUriKey() + "=" + message;
 			}
-			HttpUtil.forward(request, response, loginUri);
+			HttpUtil.redirect(request, response, loginUrl);
 		} else if (SystemException.E404.name() == code) {
 			if (Method.GET.name().equals(request.getMethod()) && response != null) {
 				isResponse = false;
-				HttpUtil.forward(request, response, config.getErrorPages().getE404());
+				HttpUtil.redirect(request, response, config.getErrorPages().getE404());
 			}
 		}
 		if (isResponse) {

@@ -78,11 +78,11 @@ public class LanguageManager {
 		}
 		Map<String, String> languageMap = languageMapCache.get(language.name());
 		if (languageMap == null) {
-			throw new BizException(I18nException.I18N_CAN_NOT_FIND_LANGUAGE_RESOURCE);
+			throw new BizException(I18nException.I18N_LANGUAGE_RESOURCE_NULL);
 		}
 		String message = languageMap.get(code);
 		if (StringUtil.isBlank(message)) {
-			throw new BizException(I18nException.I18N_CAN_NOT_FIND_LANGUAGE_MESSAGE);
+			throw new BizException(I18nException.I18N_LANGUAGE_MESSAGE_NULL);
 		}
 		return message;
 	}

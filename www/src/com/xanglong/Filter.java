@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xanglong.frame.Current;
+import com.xanglong.frame.MyProxy;
+import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.ConfigManager;
+import com.xanglong.frame.config.Proxy;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
 import com.xanglong.frame.net.Header;
@@ -23,7 +26,7 @@ import com.xanglong.frame.util.StringUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 public class Filter implements javax.servlet.Filter {
-
+	
 	public void init(FilterConfig filterConfig) {
 		try {
 			//加载配置
@@ -39,38 +42,37 @@ public class Filter implements javax.servlet.Filter {
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
-		//转换请求对象、响应对象
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
-
 		try {
-			//发现如果在本地开发时，像迅雷、优酷、腾讯视频等软件会发起本地请求造成一定开发干扰，拦截这些请求
-			//有些刚入门的爬虫选手会用代码或者工具进行抓包爬虫，也拦截部分没有用户代理的请求，减小服务器压力
 			String userAgent = request.getHeader(Header.USER_AGENT);
 			if (StringUtil.isBlank(userAgent)) {
-				throw new BizException(FrameException.FRAME_CAN_NOT_FIND_USER_AGENT);
+				throw new BizException(FrameException.FRAME_USER_AGENT_NULL);
 			}
-	
-			//开始会话
-			Session.start(request);
-			//获取请求资源类型
-			SourceInfo sourceInfo = Source.getSourceInfo(request.getRequestURI());
-	
-			if (SourceType.ACTION == sourceInfo.getSourceType()) {
-				//执行请求链，默认被servlet拦截器拦截然后分发请求，所以也可以引入Spring这样的框架来托管
-				filterChain.doFilter(servletRequest, servletResponse);
-				//如果要做网页后端渲染要介入代码渲染的话会配置网页也是动作请求，如果找不到对应的处理器则需要返回为网页请求
-				sourceInfo = Current.getSourceInfo();
+			Proxy proxy = Sys.getConfig().getProxy();
+			if (proxy.getIsOpen() && proxy.getIsProxy()) {
+				//代理的非业务异常会被系统捕获处理
+				MyProxy.forward(request, response);
+			} else {
+				//如果开启了代理，则需要做授权
+				if (proxy.getIsOpen()) {
+					MyProxy.authorize(request);
+				}
+				//会话开始
+				Session.start(request);
+				SourceInfo sourceInfo = Source.getSourceInfo(request.getRequestURI());
+				if (SourceType.ACTION == sourceInfo.getSourceType()) {
+					filterChain.doFilter(servletRequest, servletResponse);
+					//判断页面不需要做后端渲染时会重置资源类型为网页
+					sourceInfo = Current.getSourceInfo();
+				}
+				if (SourceType.ACTION != sourceInfo.getSourceType()) {
+					//执行资源请求
+					Source.execute(request, response, sourceInfo);
+				}
+				//会话结束
+				Session.end(request);
 			}
-	
-			//如果是资源请求，则返回资源
-			if (SourceType.ACTION != sourceInfo.getSourceType()) {
-				Source.execute(request, response, sourceInfo);
-			}
-			
-			//结束会话
-			Session.end(request);
 		} catch (Throwable exception) {
 			ThrowableHandler.dealException(exception, request, response);
 		}

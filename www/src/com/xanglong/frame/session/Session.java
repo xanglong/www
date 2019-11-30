@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.xanglong.frame.Current;
 import com.xanglong.frame.Sys;
+import com.xanglong.frame.config.Config;
 import com.xanglong.frame.util.DateUtil;
 
 
@@ -36,8 +37,9 @@ public class Session {
 		long requestStart = sessionData.getRequestStart();
 		long requestEnd = System.currentTimeMillis();
 		sessionData.setRequestEnd(requestEnd);
-		if (Sys.getConfig().getIsDebug()) {
-			System.out.println(DateUtil.getDateTime() + " " + request.getRequestURI() + " " + (requestEnd - requestStart) + "ms ");
+		Config config = Sys.getConfig();
+		if (config.getIsDebug()) {
+			System.out.println(DateUtil.getDateTime() + " " + config.getBaseUrl() + request.getRequestURI() + " " + (requestEnd - requestStart) + "ms ");
 		}
 	}
 

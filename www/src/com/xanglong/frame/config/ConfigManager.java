@@ -43,7 +43,7 @@ public class ConfigManager {
 		String savePath = BaseUtil.getSavePath();
 		File configFile = new File(savePath + Const.CONFIG_FOLDER_NAME + "/");
 		if (!configFile.exists()) {
-			throw new BizException(FrameException.FRAME_CAN_NOT_FIND_CONFIG_FOLDER, savePath);
+			throw new BizException(FrameException.FRAME_CONFIG_FOLDER_NULL, savePath);
 		}
 		File[] fileList = configFile.listFiles();
 		for (File file : fileList) {

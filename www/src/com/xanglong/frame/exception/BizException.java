@@ -52,7 +52,7 @@ public class BizException extends RuntimeException {
 				msg = msg.replace("{" + i + "}", messages[i]);
 			}
 			//支持替换枚举中的异常信息
-			if (this.message.equals(msg)) {
+			if (this.message.equals(msg) && messages.length > 0) {
 				this.message = messages[0];
 			} else {
 				this.message = msg;
