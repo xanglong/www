@@ -3,8 +3,6 @@ package com.xanglong.frame.net;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,13 +16,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.config.Const;
 import com.xanglong.frame.exception.BizException;
@@ -42,6 +44,8 @@ public class HttpUtil {
 	 * @param text 内容
 	 * */
 	public static void responseText(HttpServletResponse response, ContentType contentType, String text) {
+		response.resetBuffer();
+		response.addHeader(Header.CONTENT_LENGTH, "" + text.length());
 		response.setContentType(contentType.getCode() + ";charset=" + Const.CHARSET_STR);
 		try (PrintWriter printWriter = response.getWriter();) {
 			printWriter.append(text);
@@ -49,15 +53,30 @@ public class HttpUtil {
 			throw new BizException(e);
 		}
 	}
-
+	
 	/**
-	 * 重定向
+	 * 请求转发
 	 * @param request 请求对象
 	 * @param response 响应对象
 	 * */
-	public static void forward(HttpServletRequest request, HttpServletResponse response, String uri) {
+	public static void forward(HttpServletRequest request, HttpServletResponse response) {
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(request.getRequestURI());
 		try {
-			response.sendRedirect(request.getContextPath() + uri);
+			requestDispatcher.forward(request, response);
+		} catch (ServletException | IOException e) {
+			throw new BizException(e);
+		}    
+	}
+	
+
+	/**
+	 * 请求重定向
+	 * @param request 请求对象
+	 * @param response 响应对象
+	 * */
+	public static void redirect(HttpServletRequest request, HttpServletResponse response, String url) {
+		try {
+			response.sendRedirect(request.getContextPath() + url);
 		} catch (IOException e) {
 			throw new BizException(e);
 		}
@@ -93,22 +112,19 @@ public class HttpUtil {
 	/**
 	 * 返回文件
 	 * @param response 响应对象
-	 * @param file 文件对象
+	 * @param bytes 二进制数据
 	 * @param 文件名称
 	 * */
-	public static void responseFile(HttpServletResponse response, File file, String fileName) {
+	public static void responseFile(HttpServletResponse response, byte[] bytes, String fileName) {
+		response.resetBuffer();
 		response.setContentType(ContentType.FORM_DATA.getCode());
+		response.addHeader(Header.CONTENT_LENGTH, "" + bytes.length);
 		try (
 			OutputStream outputStream = response.getOutputStream();
-			InputStream inputStream = new FileInputStream(file);
 		){
 			fileName = new String(fileName.getBytes("iso8859-1"), Const.CHARSET);
 			response.setHeader(Header.CONTENT_DISPOSITION, "attachment;filename=" + fileName);
-			byte[] buffer = new byte[Const.BUFFER_SIZE];
-			int i = -1;
-			while ((i = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, i);
-			}
+			outputStream.write(bytes);
 			outputStream.flush();
 		} catch (IOException e) {
 			throw new BizException(e);
@@ -150,7 +166,7 @@ public class HttpUtil {
 	 * */
 	private static void doRequestCheck(RequestDto requestDto) {
 		if (requestDto == null) {
-			throw new BizException(FrameException.FRAME_REQUEST_PARAM_CANT_NOT_NULL);
+			throw new BizException(FrameException.FRAME_REQUEST_PARAM_NULL);
 		}
 		String url = requestDto.getUrl();
 		if (!RegExpUtil.isUrl(url)) {
@@ -158,7 +174,7 @@ public class HttpUtil {
 		}
 		ContentType contentType = requestDto.getContentType();
 		if (contentType == null) {
-			throw new BizException(FrameException.FRAME_CONTENT_TYPE_CANT_NOT_NULL);
+			throw new BizException(FrameException.FRAME_CONTENT_TYPE_NULL);
 		}
 	}
 	
@@ -470,6 +486,165 @@ public class HttpUtil {
 		}
     	requestDto.setHeaderParams(headerParams);
     	return doRequest(requestDto, method);
+	}
+	
+	/**
+	 * 获取请求IP地址
+	 * @param request 请求对象
+	 * @return IP地址
+	 * */
+	public static String getIP(HttpServletRequest request) {
+		String ip = request.getHeader(Header.X_FORWARDED_FOR);
+		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader(Header.PROXY_CLIENT_IP);
+		}
+		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader(Header.WL_PROXY_CLIENT_IP);
+		}
+		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+			ip = ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
+		}
+		if (ip.indexOf(",") > 0) {
+			ip = ip.substring(0, ip.indexOf(","));  
+		}
+		return ip;
+	}
+
+	/**
+	 * 获取请求头参数参数
+	 * @param request 请求对象
+	 * @return 返回请求参数
+	 * */
+	public static JSONObject getHeaderParams(HttpServletRequest request) {
+		JSONObject headerParams = new JSONObject();
+		Enumeration<String> headerNames = request.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String key = (String) headerNames.nextElement();
+			String value = request.getHeader(key);
+			headerParams.put(key, value);
+	    }
+	    return headerParams;
+	}
+	
+	/**
+	 * 获取请求对象中的流
+	 * @param request 请求对象
+	 * @return 二进制数据
+	 * */
+	public static byte[] getBytes(HttpServletRequest request) {
+		try (InputStream inputStream = request.getInputStream();
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		){
+			byte[] buffer = new byte[Const.BUFFER_SIZE];
+			int length;
+			while ((length = inputStream.read(buffer)) > -1) {
+				byteArrayOutputStream.write(buffer, 0, length);
+			}
+			byteArrayOutputStream.flush();
+			return byteArrayOutputStream.toByteArray();
+		} catch (IOException e) {
+			throw new BizException(e);
+		}
+	}
+	
+	/**
+	 * 获取请求类型
+	 * @param request 请求对象
+	 * @return 请求类型
+	 * */
+	public static ContentType getContentType(HttpServletRequest request) {
+		String requestContentType = request.getContentType();
+		if (!StringUtil.isBlank(requestContentType)) {
+			for (ContentType contentType : ContentType.values()) {
+				if (requestContentType.contains(contentType.getCode())) {
+					return contentType;
+				}
+			}
+		}
+		return ContentType.JSON;
+	}
+	
+	/**
+	 * 提取请求体参数
+	 * @param request 请求对象
+	 * @return 请求体参数
+	 * */
+	public static BodyParam getBodyParams(HttpServletRequest request) {
+		BodyParam bodyParam = new BodyParam();
+		JSONObject object = new JSONObject();
+		Enumeration<String> parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String key = (String) parameterNames.nextElement();
+			String value = request.getParameter(key);
+			object.put(key, value);
+		}
+		String method = request.getMethod();
+		if (Method.POST.getCode().equals(method)) {
+			//如果请求头标记类型位JSONl类型，则读取二进制参数，否则不读取
+			String contentType = request.getContentType().toLowerCase();
+			if (contentType.contains(ContentType.JSON.getCode())) {
+				String json = null;
+				try (InputStream inputStream = request.getInputStream();
+					ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				){
+					byte[] buffer = new byte[Const.BUFFER_SIZE];
+					int length;
+					while ((length = inputStream.read(buffer)) > -1) {
+						byteArrayOutputStream.write(buffer, 0, length);
+					}
+					byteArrayOutputStream.flush();
+					json = new String(byteArrayOutputStream.toByteArray(), Const.CHARSET);
+				} catch (IOException e) {
+					throw new BizException(e);
+				}
+				if (!StringUtil.isBlank(json)) {
+					if (json.charAt(0) == '{') {
+						object.putAll(JSONObject.parseObject(json));
+					} else {
+						bodyParam.setArray(JSONArray.parseArray(json));
+					}
+				}
+			}
+		}
+		bodyParam.setObejct(object);
+		return bodyParam;
+	}
+	
+	/**
+	 * 返回返回结果
+	 * @param response 响应对象
+	 * @param responseDto 返回对象
+	 * */
+	public static void responseDto(HttpServletResponse response, ResponseDto responseDto) {
+		String responseContentType = responseDto.getContentType();
+		if (responseContentType.contains(ContentType.JSON.getCode())) {
+			HttpUtil.responseText(response, ContentType.JSON, new String(responseDto.getBytes()));
+		} else if (responseContentType.contains(ContentType.HTML.getCode())) {
+			HttpUtil.responseText(response, ContentType.HTML, new String(responseDto.getBytes()));
+		} else if (responseContentType.contains(ContentType.CSS.getCode())) {
+			HttpUtil.responseText(response, ContentType.CSS, new String(responseDto.getBytes()));
+		} else if (responseContentType.contains(ContentType.JS.getCode())) {
+			HttpUtil.responseText(response, ContentType.JS, new String(responseDto.getBytes()));
+		} else if (responseContentType.contains(ContentType.FORM_TEXT.getCode())) {
+			HttpUtil.responseText(response, ContentType.FORM_TEXT, new String(responseDto.getBytes()));
+		} else if (responseContentType.contains(ContentType.FORM_DATA.getCode())) {
+			String disposition = responseDto.getHeader(Header.CONTENT_DISPOSITION);
+			String fileName = disposition.substring(disposition.indexOf("filename") + 8);
+			HttpUtil.responseFile(response, responseDto.getBytes(), fileName);
+		} else {
+			String disposition = responseDto.getHeader(Header.CONTENT_DISPOSITION);
+			String fileName = null;
+			if (!StringUtil.isBlank(disposition)) {
+				fileName = disposition.substring(disposition.indexOf("filename") + 8);
+			}
+			for (ImageType imageType : ImageType.values()) {
+				if (responseContentType.contains(imageType.getCode())) {
+					HttpUtil.responseImage(response, responseDto.getBytes(), imageType, fileName);
+					break;
+				}
+			}
+		}
 	}
 
 }

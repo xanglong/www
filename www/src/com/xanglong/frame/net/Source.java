@@ -156,7 +156,7 @@ public class Source {
 					//不设置文件名称在浏览器用新窗口打开就不会变成图片下载了
 					HttpUtil.responseImage(response, bytes, sourceInfo.getImageType(), null);
 				} else if (SourceType.FONT == sourceInfo.getSourceType()) {
-					HttpUtil.responseFile(response, file, file.getName());
+					HttpUtil.responseFile(response, FileUtil.readByte(file), file.getName());
 				}
 			}
 		} else {
@@ -164,7 +164,7 @@ public class Source {
 				throw new BizException(SystemException.E404);
 			} else {
 				response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
-				throw new BizException(FrameException.FRAME_CONT_NOT_FIND_FILE, uri);
+				throw new BizException(FrameException.FRAME_FILE_NULL, uri);
 			}
 		}
 	}
