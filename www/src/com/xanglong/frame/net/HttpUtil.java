@@ -242,7 +242,19 @@ public class HttpUtil {
 		ContentType contentType = requestDto.getContentType();
 		JSONObject bodyParams = requestDto.getBodyParams();
 		bodyParams = bodyParams == null ? new JSONObject() : bodyParams;
-		if (ContentType.FORM_URLENCODED == contentType) {
+		if (ContentType.JSON == contentType) {
+			bodyParams.putAll(getParams(url));
+			requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
+		} else if (ContentType.CSS == contentType) {
+			bodyParams.putAll(getParams(url));
+			requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
+		} else if (ContentType.JS == contentType) {
+			bodyParams.putAll(getParams(url));
+			requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
+		} else if (ContentType.HTML == contentType) {
+			bodyParams.putAll(getParams(url));
+			requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
+		} else if (ContentType.FORM_URLENCODED == contentType) {
 			requestBytes = getQuery(url, bodyParams).getBytes(Const.CHARSET);
 		} else if (ContentType.FORM_DATA == contentType) {
 			bodyParams.putAll(getParams(url));
@@ -257,9 +269,6 @@ public class HttpUtil {
 			requestBytes = queryBuilder.toString().getBytes(Const.CHARSET);
 		} else if (ContentType.FORM_TEXT == contentType) {
 			requestBytes = getQuery(url, bodyParams).getBytes(Const.CHARSET);
-		} else if (ContentType.JSON == contentType) {
-			bodyParams.putAll(getParams(url));
-			requestBytes = bodyParams.toJSONString().getBytes(Const.CHARSET);
 		}
 		return requestBytes;
 	}
