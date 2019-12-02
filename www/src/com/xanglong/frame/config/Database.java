@@ -26,9 +26,6 @@ public class Database {
 	/**数据库驱动*/
 	private String driver;
 
-	/**数据库连接*/
-	private String url;
-
 	/**连接超时时间*/
 	private long waitTimeout;
 	
@@ -100,14 +97,6 @@ public class Database {
 
 	public void setDriver(String driver) {
 		this.driver = driver;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 	public long getWaitTimeout() {
