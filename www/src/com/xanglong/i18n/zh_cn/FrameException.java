@@ -17,6 +17,7 @@ public enum FrameException implements IException, I18n {
 	FRAME_PROXY_AUTHORIZATION_INVALID("转发凭证无效：{0}"),
 	FRAME_PROXY_IP_INVALID("当前请求IP非法：{0}"),
 	FRAME_REQUEST_METHOD_INVALID("请求类型不支持：{0}"),
+	FRAME_DATABASE_TYPE_INVALID("不支持的数据库类型：{0}")
 	;
 	
 	private String code;
