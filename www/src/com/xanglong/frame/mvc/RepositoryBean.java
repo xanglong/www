@@ -20,7 +20,7 @@ import com.xanglong.frame.proxy.MyProxy;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 /**DAO层Bean*/
-public class Repository {
+public class RepositoryBean {
 
 	private static Map<String, Object> daos = new HashMap<String, Object>();
 	private static List<Class<?>> cacheDaos = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Repository {
 	public void init() throws IOException, ClassNotFoundException {
 		String[] daoPackages = Sys.getConfig().getPackages().getDao();
 		for (String daoPackage : daoPackages) {
-			Enumeration<URL> urls = Repository.class.getClassLoader().getResources(daoPackage.replace('.', '/'));
+			Enumeration<URL> urls = RepositoryBean.class.getClassLoader().getResources(daoPackage.replace('.', '/'));
 			while (urls.hasMoreElements()) {
 				URL url = urls.nextElement();
 				String protocol = url.getProtocol();
