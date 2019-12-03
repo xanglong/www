@@ -23,7 +23,7 @@ public class MvcManager {
 	/**初始化*/
 	public void init() throws IOException, ClassNotFoundException {
 		//DAO层
-		new Repository().init();
+		new RepositoryBean().init();
 	}
 
 }
