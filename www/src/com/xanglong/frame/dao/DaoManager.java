@@ -17,7 +17,7 @@ import com.xanglong.i18n.zh_cn.FrameException;
 public class DaoManager {
 	
 	/**数据库连接池*/
-	private static Stack<ConnectionData> connections = new Stack<>();
+	private static Stack<DaoConnection> connections = new Stack<>();
 
 	/**
 	 * 创建连接池管理单例
@@ -54,7 +54,7 @@ public class DaoManager {
 	 * 创建一个新的连接
 	 * @return 一个数据库连接信息对象
 	 * */
-	private static ConnectionData getNewConnection() {
+	private static DaoConnection getNewConnection() {
 		Database database = Sys.getConfig().getDatabase();
 		Connection connection = null;
 		try {
@@ -63,39 +63,39 @@ public class DaoManager {
 		} catch (ClassNotFoundException | SQLException e) {
 			throw new BizException(e);
 		}
-		ConnectionData connectionData = new ConnectionData();
-		connectionData.setConnection(connection);
-		connectionData.setTime(System.currentTimeMillis());
-		return connectionData;
+		DaoConnection daoConnection = new DaoConnection();
+		daoConnection.setConnection(connection);
+		daoConnection.setTime(System.currentTimeMillis());
+		return daoConnection;
 	}
 
 	/**
 	 * 获取一个连接
 	 * @return 一个数据库连接信息对象
 	 * */
-	public static synchronized ConnectionData getConnection() {
+	public static synchronized DaoConnection getConnection() {
 		Database database = Sys.getConfig().getDatabase();
-		ConnectionData connectionData = null;
+		DaoConnection daoConnection = null;
 		if (connections.size() > 0) {
-			connectionData = connections.pop();
-			long lastTime = connectionData.getTime();
+			daoConnection = connections.pop();
+			long lastTime = daoConnection.getTime();
 			if (System.currentTimeMillis() - lastTime > database.getWaitTimeout()) {
-				connectionData = getNewConnection();
+				daoConnection = getNewConnection();
 			}
 		} else {
-			connectionData = getNewConnection();
+			daoConnection = getNewConnection();
 			database.setTotalConnSize(database.getTotalConnSize() + 1);
 		}
-		return connectionData;
+		return daoConnection;
 	}
 
 	/**
 	 * 释放一个链接
-	 * @param connectionData 一个数据库连接信息对象
+	 * @param daoConnection 一个数据库连接信息对象
 	 * */
-	protected static void freeConnection(ConnectionData connectionData) {
-		connectionData.setTime(System.currentTimeMillis());
-		connections.push(connectionData);
+	protected static void freeConnection(DaoConnection daoConnection) {
+		daoConnection.setTime(System.currentTimeMillis());
+		connections.push(daoConnection);
 	}
 
 }

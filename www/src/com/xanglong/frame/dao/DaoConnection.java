@@ -3,7 +3,7 @@ package com.xanglong.frame.dao;
 import java.sql.Connection;
 
 /**数据库连接实体*/
-public class ConnectionData {
+public class DaoConnection {
 
 	/**数据库连接对象*/
 	private Connection connection;

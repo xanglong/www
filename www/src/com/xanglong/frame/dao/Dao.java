@@ -17,11 +17,11 @@ public class Dao {
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
-			ConnectionData connectionData = Current.getConnection();
-			if (connectionData.getIsBegin()) {
+			DaoConnection daoConnection = Current.getConnection();
+			if (daoConnection.getIsBegin()) {
 				return;
 			}
-			connectionData.setIsBegin(true);
+			daoConnection.setIsBegin(true);
 			String[] sqls = new String[2];
 			sqls[0] = "SET AUTOCOMMIT = 0";
 			sqls[1] = "START TRANSACTION";
@@ -45,15 +45,15 @@ public class Dao {
 	/**业务级别提交事务，用于在业务中提交事务，提交后数据库连接不释放*/
 	public static void commit() {
 		//如果事务没有开启，则不做提交和释放操作
-		ConnectionData connectionData = Current.getConnection();
-		if (!connectionData.getIsBegin()) {
+		DaoConnection daoConnection = Current.getConnection();
+		if (!daoConnection.getIsBegin()) {
 			return;
 		}
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
 			String[] sqls = new String[2];
-			if (!connectionData.getIsError()) {
+			if (!daoConnection.getIsError()) {
 				sqls[0] = "COMMIT";
 			}
 			//阶段性提交事务之后，继续开启事务，当前连接不变

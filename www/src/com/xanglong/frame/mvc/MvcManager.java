@@ -19,11 +19,17 @@ public class MvcManager {
 	public void setIndex(String key, BeanType beanType) {
 		indexs.put(key, beanType);
 	}
-	
+
 	/**初始化*/
 	public void init() throws IOException, ClassNotFoundException {
 		//DAO层
 		new RepositoryBean().init();
+		//Service层
+		new ServiceBean().init();
+	}
+
+	/**设置类的内部成员变量Bean*/
+	public void setAutowiredBean(Object obj) {
 	}
 
 }
