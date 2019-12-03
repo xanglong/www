@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.dao.DaoManager;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
+import com.xanglong.frame.mvc.MvcManager;
 import com.xanglong.frame.util.BaseUtil;
 import com.xanglong.frame.util.EntityUtil;
 import com.xanglong.i18n.LanguageManager;
@@ -29,11 +30,13 @@ public class ConfigManager {
 			return;
 		}
 		try {
-			//[1]加载配置
+			//[1]配置
 			init();
-			//[2]加载语言
+			//[2]语言
 			new LanguageManager().init();
-			//[3]初始化数据库连接池
+			//[3]MVC框架
+			new MvcManager().init();
+			//[4]数据库连接池
 			new DaoManager().init();
 		} catch (Throwable throwable) {
 			ThrowableHandler.dealException(throwable);

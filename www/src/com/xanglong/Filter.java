@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xanglong.frame.Current;
-import com.xanglong.frame.MyProxy;
 import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.ConfigManager;
 import com.xanglong.frame.config.Proxy;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
 import com.xanglong.frame.net.Header;
+import com.xanglong.frame.net.HttpProxy;
 import com.xanglong.frame.net.Method;
 import com.xanglong.frame.net.Source;
 import com.xanglong.frame.net.SourceInfo;
@@ -51,11 +51,11 @@ public class Filter implements javax.servlet.Filter {
 			Proxy proxy = Sys.getConfig().getProxy();
 			if (proxy.getIsOpen() && proxy.getIsProxy()) {
 				//代理的非业务异常会被系统捕获处理
-				MyProxy.forward(request, response);
+				HttpProxy.forward(request, response);
 			} else {
 				//如果开启了代理，则需要做授权
 				if (proxy.getIsOpen()) {
-					MyProxy.authorize(request);
+					HttpProxy.authorize(request);
 				}
 				//会话开始
 				Session.start(request);

@@ -1,21 +1,17 @@
-package com.xanglong.frame;
+package com.xanglong.frame.net;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Proxy;
 import com.xanglong.frame.exception.BizException;
-import com.xanglong.frame.net.Header;
-import com.xanglong.frame.net.HttpUtil;
-import com.xanglong.frame.net.Method;
-import com.xanglong.frame.net.RequestDto;
-import com.xanglong.frame.net.ResponseDto;
 import com.xanglong.frame.util.MathUtil;
 import com.xanglong.frame.util.StringUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
 
-public class MyProxy {
+public class HttpProxy {
 	
 	/**
 	 * 执行代理转发服务，作为代理不应该处理异常，所以抛出所有异常
