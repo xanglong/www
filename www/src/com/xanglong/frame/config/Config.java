@@ -44,6 +44,9 @@ public class Config {
 	/**代理配置*/
 	private Proxy proxy;
 	
+	/**包扫描配置*/
+	private Packages packages;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -154,6 +157,14 @@ public class Config {
 
 	public void setProxy(Proxy proxy) {
 		this.proxy = proxy;
+	}
+
+	public Packages getPackages() {
+		return packages;
+	}
+
+	public void setPackages(Packages packages) {
+		this.packages = packages;
 	}
 
 }
