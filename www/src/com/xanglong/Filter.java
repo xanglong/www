@@ -18,6 +18,7 @@ import com.xanglong.frame.config.Proxy;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
 import com.xanglong.frame.net.Header;
+import com.xanglong.frame.net.Method;
 import com.xanglong.frame.net.Source;
 import com.xanglong.frame.net.SourceInfo;
 import com.xanglong.frame.net.SourceType;
@@ -45,10 +46,8 @@ public class Filter implements javax.servlet.Filter {
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 		try {
-			String userAgent = request.getHeader(Header.USER_AGENT);
-			if (StringUtil.isBlank(userAgent)) {
-				throw new BizException(FrameException.FRAME_USER_AGENT_NULL);
-			}
+			//校验请求
+			checkRequest(request);
 			Proxy proxy = Sys.getConfig().getProxy();
 			if (proxy.getIsOpen() && proxy.getIsProxy()) {
 				//代理的非业务异常会被系统捕获处理
@@ -75,6 +74,23 @@ public class Filter implements javax.servlet.Filter {
 			}
 		} catch (Throwable exception) {
 			ThrowableHandler.dealException(exception, request, response);
+		}
+	}
+	
+	/**
+	 * 校验请求
+	 * @param request 请求对象
+	 * */
+	private void checkRequest(HttpServletRequest request) {
+		//校验浏览器代理
+		String userAgent = request.getHeader(Header.USER_AGENT);
+		if (StringUtil.isBlank(userAgent)) {
+			throw new BizException(FrameException.FRAME_USER_AGENT_NULL);
+		}
+		//校验请求方法
+		String method = request.getMethod();
+		if (!Method.GET.name().equals(method) && !Method.POST.name().equals(method)) {
+			throw new BizException(FrameException.FRAME_REQUEST_METHOD_INVALID, method);
 		}
 	}
 	

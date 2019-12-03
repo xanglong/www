@@ -39,15 +39,15 @@ public class MyProxy {
 		query = query == null ? "" : "?" + query;
 		String url = host + request.getRequestURI() + query;
 		requestDto.setUrl(url);
-		String mehtod = request.getMethod();
+		String method = request.getMethod();
 		ResponseDto responseDto = null;
-		if (Method.GET.getCode().equals(mehtod)) {
+		if (Method.GET.getCode().equals(method)) {
 			responseDto = HttpUtil.doGet(requestDto);
-		} else if (Method.POST.getCode().equals(mehtod)) {
+		} else if (Method.POST.getCode().equals(method)) {
 			requestDto.setBytes(HttpUtil.getBytes(request));
 			responseDto = HttpUtil.doPost(requestDto);
 		} else {
-			throw new BizException(FrameException.FRAME_REQUEST_METHOD_INVALID, mehtod);
+			throw new BizException(FrameException.FRAME_REQUEST_METHOD_INVALID, method);
 		}
 		//返回代理返回的结果
 		HttpUtil.responseDto(response, responseDto);
