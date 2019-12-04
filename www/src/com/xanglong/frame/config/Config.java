@@ -47,6 +47,9 @@ public class Config {
 	/**包扫描配置*/
 	private Packages packages;
 	
+	/**事务控制*/
+	private Transaction transaction;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -165,6 +168,14 @@ public class Config {
 
 	public void setPackages(Packages packages) {
 		this.packages = packages;
+	}
+
+	public Transaction getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
 	}
 
 }
