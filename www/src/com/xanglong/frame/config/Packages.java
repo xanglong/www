@@ -14,6 +14,9 @@ public class Packages {
 	/**DAO层包路径*/
 	private String[] dao;
 
+	/**打了@MyComponent注解的类所在的包路径*/
+	private String[] component;
+	
 	public String[] getController() {
 		return controller;
 	}
@@ -44,6 +47,14 @@ public class Packages {
 
 	public void setDao(String[] dao) {
 		this.dao = dao;
+	}
+
+	public String[] getComponent() {
+		return component;
+	}
+
+	public void setComponent(String[] component) {
+		this.component = component;
 	}
 
 }
