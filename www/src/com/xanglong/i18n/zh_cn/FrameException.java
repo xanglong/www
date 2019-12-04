@@ -21,7 +21,11 @@ public enum FrameException implements IException, I18n {
 	FRAME_SQL_MISS_RIGHT_CURLY_BRACE("预编译SQL语句缺失右花括号"),
 	FRAME_SQL_PARAM_NULL("SQL参数不能为空"),
 	FRAME_SQL_MISS_PARAM("SQL缺失参数：{0}"),
-	FRAME_CLASS_MISS_ANNOTATION_MYREPOSITORY("{0}：类头部缺少注解@MyRepository"),
+	FRAME_CLASS_MISS_ANNOTATION_MYREPOSITORY("{0}：类缺少注解@MyRepository"),
+	FRAME_CLASS_MISS_ANNOTATION_MYCONTROLLER("{0}：类缺少注解@MyController"),
+	FRAME_CLASS_MISS_ANNOTATION_MYREQUESTMAPPING("{0}：类缺少注解@MyRequestMapping"),
+	FRAME_METHOD_MISS_ANNOTATION_MYREQUESTMAPPING("{0}：方法缺少注解@MyRequestMapping"),
+	FRAME_METHOD_ANNOTATION_MYREQUESTMAPPING_REPEAT("{0}：方法@yRequestMapping注解重复"),
 	;
 	
 	private String code;
