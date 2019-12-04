@@ -60,7 +60,7 @@ public class RepositoryBean {
 	private void handlerRepositoryByClass(Class<?> clazz) {
 		MyRepository myRepository = clazz.getDeclaredAnnotation(MyRepository.class);
 		if (myRepository == null) {
-			throw new BizException(FrameException.FRAME_CLASS_MISS_ANNOTATION_MYREPOSITORY);
+			throw new BizException(FrameException.FRAME_CLASS_MISS_ANNOTATION_MYREPOSITORY, clazz.getName());
 		}
 		//注解标记为缓存的类
 		MyCacheDao myCacheDao = clazz.getDeclaredAnnotation(MyCacheDao.class);

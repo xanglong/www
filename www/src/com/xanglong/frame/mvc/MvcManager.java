@@ -21,11 +21,16 @@ public class MvcManager {
 	}
 
 	/**初始化*/
-	public void init() throws IOException, ClassNotFoundException {
-		//DAO层
+	public void init() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		//数据层
 		new RepositoryBean().init();
-		//Service层
+		//业务层
 		new ServiceBean().init();
+		//组件层
+		new ComponentBean().init();
+		//控制层
+		new ControllerBean().init();
+		
 	}
 
 	/**设置类的内部成员变量Bean*/
