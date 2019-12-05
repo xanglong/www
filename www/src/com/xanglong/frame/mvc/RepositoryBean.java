@@ -34,22 +34,26 @@ public class RepositoryBean {
 	}
 
 	/**初始化*/
-	public void init() throws IOException, ClassNotFoundException {
+	public void init() {
 		String[] daoPackages = Sys.getConfig().getPackages().getDao();
-		for (String daoPackage : daoPackages) {
-			Enumeration<URL> urls = RepositoryBean.class.getClassLoader().getResources(daoPackage.replace('.', '/'));
-			while (urls.hasMoreElements()) {
-				URL url = urls.nextElement();
-				String protocol = url.getProtocol();
-				String filePath = URLDecoder.decode(url.getFile(), Const.CHARSET_STR);
-				if ("file".equals(protocol)) {
-					//根据类来解析
-					findClasssByFile(daoPackage, filePath);
-				} else if ("jar".equals(protocol)) {
-					//根据jar包来解析
-					findClasssByJar(url, daoPackage);
+		try {
+			for (String daoPackage : daoPackages) {
+				Enumeration<URL> urls = RepositoryBean.class.getClassLoader().getResources(daoPackage.replace('.', '/'));
+				while (urls.hasMoreElements()) {
+					URL url = urls.nextElement();
+					String protocol = url.getProtocol();
+					String filePath = URLDecoder.decode(url.getFile(), Const.CHARSET_STR);
+					if ("file".equals(protocol)) {
+						//根据类来解析
+						findClasssByFile(daoPackage, filePath);
+					} else if ("jar".equals(protocol)) {
+						//根据jar包来解析
+						findClasssByJar(url, daoPackage);
+					}
 				}
 			}
+		} catch (IOException e) {
+			throw new BizException(e);
 		}
 	}
 
@@ -89,20 +93,24 @@ public class RepositoryBean {
 	 * @param packageName 扫描包名
 	 * @param filePath 文件路径
 	 * */
-	private void findClasssByFile(String packageName, String filePath) throws ClassNotFoundException {
+	private void findClasssByFile(String packageName, String filePath) {
 		File folder = new File(filePath);
 		if (!folder.exists() || !folder.isDirectory()) {
 			return;
 		}
-		for (File file : folder.listFiles()) {
-			String fileName = file.getName();
-			if (file.isDirectory()) {
-				//递归查找文件夹下的类文件
-				findClasssByFile(packageName + "." + fileName, file.getAbsolutePath());
-			} else if (fileName.endsWith(".class")) {
-				String className = fileName.substring(0, fileName.length() - 6);
-				handlerRepositoryByClass(Class.forName(packageName + '.' + className));
+		try {
+			for (File file : folder.listFiles()) {
+				String fileName = file.getName();
+				if (file.isDirectory()) {
+					//递归查找文件夹下的类文件
+					findClasssByFile(packageName + "." + fileName, file.getAbsolutePath());
+				} else if (fileName.endsWith(".class")) {
+					String className = fileName.substring(0, fileName.length() - 6);
+					handlerRepositoryByClass(Class.forName(packageName + '.' + className));
+				}
 			}
+		} catch (ClassNotFoundException e) {
+			throw new BizException(e);
 		}
 	}
 
@@ -111,27 +119,31 @@ public class RepositoryBean {
 	 * @param url 资源对象
 	 * @param packageName 扫描包名
 	 * */
-	private void findClasssByJar(URL url, String packageName) throws ClassNotFoundException, IOException {
-		JarFile jarFile = ((JarURLConnection) url.openConnection()).getJarFile();
-		Enumeration<JarEntry> entries = jarFile.entries();
-		while (entries.hasMoreElements()) {
-			JarEntry entry = entries.nextElement();
-			String name = entry.getName();
-			if (name.charAt(0) == '/') {
-				name = name.substring(1);
+	private void findClasssByJar(URL url, String packageName) {
+		try {
+			JarFile jarFile = ((JarURLConnection) url.openConnection()).getJarFile();
+			Enumeration<JarEntry> entries = jarFile.entries();
+			while (entries.hasMoreElements()) {
+				JarEntry entry = entries.nextElement();
+				String name = entry.getName();
+				if (name.charAt(0) == '/') {
+					name = name.substring(1);
+				}
+				if (!name.startsWith(packageName)) {
+					continue;
+				}
+				int idx = name.lastIndexOf('/');
+				if (idx == -1) {
+					continue;
+				}
+				String pathName = name.substring(0, idx).replace('/', '.');
+				if (name.endsWith(".class") && !entry.isDirectory()) {
+					String className = name.substring(pathName.length() + 1, name.length() - 6);
+					handlerRepositoryByClass(Class.forName(packageName + '.' + className));
+				}
 			}
-			if (!name.startsWith(packageName)) {
-				continue;
-			}
-			int idx = name.lastIndexOf('/');
-			if (idx == -1) {
-				continue;
-			}
-			String pathName = name.substring(0, idx).replace('/', '.');
-			if (name.endsWith(".class") && !entry.isDirectory()) {
-				String className = name.substring(pathName.length() + 1, name.length() - 6);
-				handlerRepositoryByClass(Class.forName(packageName + '.' + className));
-			}
+		} catch (IOException | ClassNotFoundException e) {
+			throw new BizException(e);
 		}
 	}
 

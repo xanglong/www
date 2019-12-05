@@ -44,7 +44,7 @@ public class ServiceBean {
 	 * 缓存有@MyService注解的类
 	 * @param clazz 类
 	 * */
-	private void handlerServiceByClass(Class<?> clazz) {
+	protected void handlerServiceByClass(Class<?> clazz) {
 		MyService myService = clazz.getDeclaredAnnotation(MyService.class);
 		if (myService == null) {
 			return;
