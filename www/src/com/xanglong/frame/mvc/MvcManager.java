@@ -12,7 +12,7 @@ import com.xanglong.i18n.zh_cn.FrameException;
 public class MvcManager {
 	
 	/**类名、类型缓存索引*/
-	private static Map<String, BeanType> indexs = new HashMap<>();
+	private static Map<String, BeanType> beanIndexs = new HashMap<>();
 	
 	/**缓存除控制层、业务层、数据层、组件层之外的所有Bean*/
 	private static Map<String, Object> otherBeans = new HashMap<>();
@@ -24,7 +24,7 @@ public class MvcManager {
 	 * @return 是否已存在
 	 * */
 	public boolean isExist(String key) {
-		return indexs.containsKey(key);
+		return beanIndexs.containsKey(key);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class MvcManager {
 	 * @param beanType 实例类型
 	 * */
 	public void setIndex(String key, BeanType beanType) {
-		indexs.put(key, beanType);
+		beanIndexs.put(key, beanType);
 	}
 
 	/**初始化*/
@@ -68,14 +68,13 @@ public class MvcManager {
 				field.setAccessible(true);
 				Class<?> fieldClass = field.getType();
 				String key = fieldClass.getName();
-				BeanType beanTypeEnum = indexs.get(key);
-				if (beanTypeEnum == null) {
+				BeanType beanType = beanIndexs.get(key);
+				if (beanType == null) {
 					Class<?> clazz = Class.forName(key);
 					MyService myService = clazz.getDeclaredAnnotation(MyService.class);
 					if (myService != null) {
 						new ServiceBean().handlerServiceByClass(clazz);
-							field.set(bean, serviceBean.getService(key));
-						
+						field.set(bean, serviceBean.getService(key));
 						continue;
 					}
 					MyComponent myComponent = clazz.getDeclaredAnnotation(MyComponent.class);
@@ -86,29 +85,25 @@ public class MvcManager {
 					}
 					Object other = fieldClass.newInstance();
 					otherBeans.put(key, other);
-					indexs.put(key, BeanType.OTHER);
+					beanIndexs.put(key, BeanType.OTHER);
 					field.set(bean, other);
 				} else {
-					if (BeanType.CONTROLLER == beanTypeEnum) {
+					if (BeanType.CONTROLLER == beanType) {
 						throw new BizException(FrameException.FRAME_CLASS_ANNOTATION_MYCONTROLLER_INVALID);
-					} else if (BeanType.SERVICE == beanTypeEnum) {
+					} else if (BeanType.SERVICE == beanType) {
 						field.set(bean, serviceBean.getService(key));
-					} else if (BeanType.REPOSITORY == beanTypeEnum) {
+					} else if (BeanType.REPOSITORY == beanType) {
 						field.set(bean, repositoryBean.getRepository(key));
-					} else if (BeanType.COMPONENT == beanTypeEnum) {
+					} else if (BeanType.COMPONENT == beanType) {
 						field.set(bean, componentBean.getComponent(key));
-					} else if (BeanType.OTHER == beanTypeEnum) {
+					} else if (BeanType.OTHER == beanType) {
 						field.set(bean, otherBeans.get(key));
 					}
 				}
 				field.setAccessible(isAccessible);
 			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException | InstantiationException e) {
+			throw new BizException(e);
 		}
 	}
 
