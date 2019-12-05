@@ -28,20 +28,24 @@ public class ControllerBean {
 	private static Map<String, Method> methods = new HashMap<String, Method>();
 
 	/**初始化*/
-	public void init() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public void init() {
 		String[] controllerPackages = Sys.getConfig().getPackages().getController();
-		for (String controllerPackage : controllerPackages) {
-			Enumeration<URL> urls = ControllerBean.class.getClassLoader().getResources(controllerPackage.replace('.', '/'));
-			while (urls.hasMoreElements()) {
-				URL url = urls.nextElement();
-				String protocol = url.getProtocol();
-				String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
-				if ("file".equals(protocol)) {
-					findClasssByFile(controllerPackage, filePath);
-				} else if ("jar".equals(protocol)) {
-					findClasssByJar(url, controllerPackage, filePath);
+		try {
+			for (String controllerPackage : controllerPackages) {
+				Enumeration<URL> urls = ControllerBean.class.getClassLoader().getResources(controllerPackage.replace('.', '/'));
+				while (urls.hasMoreElements()) {
+					URL url = urls.nextElement();
+					String protocol = url.getProtocol();
+					String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
+					if ("file".equals(protocol)) {
+						findClasssByFile(controllerPackage, filePath);
+					} else if ("jar".equals(protocol)) {
+						findClasssByJar(url, controllerPackage, filePath);
+					}
 				}
 			}
+		} catch (IOException e) {
+			throw new BizException(e);
 		}
 	}
 	
@@ -79,7 +83,7 @@ public class ControllerBean {
 	 * 缓存有@MyController注解的类
 	 * @param clazz 类
 	 * */
-	private void handlerControllerByClass(Class<?> clazz) throws InstantiationException, IllegalAccessException {
+	private void handlerControllerByClass(Class<?> clazz) {
 		MyController myController = clazz.getDeclaredAnnotation(MyController.class);
 		if (myController == null) {
 			throw new BizException(FrameException.FRAME_CLASS_MISS_ANNOTATION_MYCONTROLLER, clazz.getName());
@@ -89,7 +93,12 @@ public class ControllerBean {
 			throw new BizException(FrameException.FRAME_CLASS_MISS_ANNOTATION_MYREQUESTMAPPING, clazz.getName());
 		}
 		String baseUrl = myRequestMappingClass.value().trim();
-		Object object = clazz.newInstance();
+		Object object = null;
+		try {
+			object = clazz.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new BizException(e);
+		}
 		MvcManager mvcManager = new MvcManager();
 		//设置索引
 		mvcManager.setIndex(clazz.getName(), BeanType.CONTROLLER);
@@ -116,19 +125,23 @@ public class ControllerBean {
 	 * @param packageName 包扫描路径
 	 * @param filePath 文件地址
 	 * */
-	private void findClasssByFile(String packageName, String filePath) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	private void findClasssByFile(String packageName, String filePath) {
 		File folder = new File(filePath);
 		if (!folder.exists() || !folder.isDirectory()) {
 			return;
 		}
-		for (File file : folder.listFiles()) {
-			String fileName = file.getName();
-			if (file.isDirectory()) {
-				findClasssByFile(packageName + "." + fileName, file.getAbsolutePath());
-			} else if (fileName.endsWith(".class")) {
-				String className = fileName.substring(0, fileName.length() - 6);
-				handlerControllerByClass(Class.forName(packageName + '.' + className));
+		try {
+			for (File file : folder.listFiles()) {
+				String fileName = file.getName();
+				if (file.isDirectory()) {
+					findClasssByFile(packageName + "." + fileName, file.getAbsolutePath());
+				} else if (fileName.endsWith(".class")) {
+					String className = fileName.substring(0, fileName.length() - 6);
+						handlerControllerByClass(Class.forName(packageName + '.' + className));
+				}
 			}
+		} catch (ClassNotFoundException e) {
+			throw new BizException(e);
 		}
 	}
 
@@ -138,27 +151,36 @@ public class ControllerBean {
 	 * @param packageName 包扫描路径
 	 * @param filePath 文件地址
 	 * */
-	private void findClasssByJar(URL url, String packageName, String filePath) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		JarFile jarFile = ((JarURLConnection) url.openConnection()).getJarFile();
-		Enumeration<JarEntry> entries = jarFile.entries();
-		while (entries.hasMoreElements()) {
-			JarEntry entry = entries.nextElement();
-			String name = entry.getName();
-			if (name.charAt(0) == '/') {
-				name = name.substring(1);
+	private void findClasssByJar(URL url, String packageName, String filePath) {
+		JarFile jarFile;
+		try {
+			jarFile = ((JarURLConnection) url.openConnection()).getJarFile();
+		} catch (IOException e) {
+			throw new BizException(e);
+		}
+		try {
+			Enumeration<JarEntry> entries = jarFile.entries();
+			while (entries.hasMoreElements()) {
+				JarEntry entry = entries.nextElement();
+				String name = entry.getName();
+				if (name.charAt(0) == '/') {
+					name = name.substring(1);
+				}
+				if (!name.startsWith(packageName)) {
+					continue;
+				}
+				int idx = name.lastIndexOf('/');
+				if (idx == -1) {
+					continue;
+				}
+				String pathName = name.substring(0, idx).replace('/', '.');
+				if (name.endsWith(".class") && !entry.isDirectory()) {
+					String className = name.substring(pathName.length() + 1, name.length() - 6);
+					handlerControllerByClass(Class.forName(packageName + '.' + className));
+				}
 			}
-			if (!name.startsWith(packageName)) {
-				continue;
-			}
-			int idx = name.lastIndexOf('/');
-			if (idx == -1) {
-				continue;
-			}
-			String pathName = name.substring(0, idx).replace('/', '.');
-			if (name.endsWith(".class") && !entry.isDirectory()) {
-				String className = name.substring(pathName.length() + 1, name.length() - 6);
-				handlerControllerByClass(Class.forName(packageName + '.' + className));
-			}
+		} catch (ClassNotFoundException e) {
+			throw new BizException(e);
 		}
 	}
 

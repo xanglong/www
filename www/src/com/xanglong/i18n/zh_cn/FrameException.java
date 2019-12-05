@@ -26,6 +26,7 @@ public enum FrameException implements IException, I18n {
 	FRAME_CLASS_MISS_ANNOTATION_MYREQUESTMAPPING("{0}：类缺少注解@MyRequestMapping"),
 	FRAME_METHOD_MISS_ANNOTATION_MYREQUESTMAPPING("{0}：方法缺少注解@MyRequestMapping"),
 	FRAME_METHOD_ANNOTATION_MYREQUESTMAPPING_REPEAT("{0}：方法@yRequestMapping注解重复"),
+	FRAME_CLASS_ANNOTATION_MYCONTROLLER_INVALID("{0}：类不支持引入有@MyController注解的Bean"),
 	;
 	
 	private String code;
