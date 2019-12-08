@@ -11,6 +11,7 @@ import java.util.Properties;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.dao.DaoManager;
+import com.xanglong.frame.dao.DaoMapper;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
 import com.xanglong.frame.mvc.MvcManager;
@@ -36,7 +37,9 @@ public class ConfigManager {
 			new LanguageManager().init();
 			//[3]MVC框架
 			new MvcManager().init();
-			//[4]数据库连接池
+			//[4]Mapper解析
+			new DaoMapper().init();
+			//[5]数据库连接池
 			new DaoManager().init();
 		} catch (Throwable throwable) {
 			ThrowableHandler.dealException(throwable);
