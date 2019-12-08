@@ -1,5 +1,6 @@
 package com.xanglong.frame.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.config.Const;
 
 public class BaseUtil {
@@ -19,7 +20,7 @@ public class BaseUtil {
 	public static String getRootPath() {
 		return getClassPath().replace("/WEB-INF/classes", "");
 	}
-	
+
 	/**
 	 * 获取存储目录
 	 * @return 存储目录
@@ -34,7 +35,7 @@ public class BaseUtil {
 		}
 		return savePath;
 	}
-	
+
 	/**
 	 * 二进制数组合并
 	 * @param byte1 二进制数组1
@@ -46,6 +47,30 @@ public class BaseUtil {
 		System.arraycopy(byte1, 0, byte3, 0, byte1.length);
 		System.arraycopy(byte2, 0, byte3, byte1.length, byte2.length);
 		return byte3;  
+	}
+
+	/**
+	 * 根据字符串键获取对象里面的值，键可以是链式的
+	 * @param data 对象数据
+	 * @param key 链式key
+	 * @return 字符串值
+	 * */
+	public static Object getChainValue(JSONObject data, String key) {
+		if (StringUtil.isBlank(key)) {
+			return null;
+		}
+		if (key.contains(".")) {
+			String[] keys = key.split("\\.");
+			for (int i = 0; i < keys.length - 1; i++) {
+				key = keys[i];
+				data = data.getJSONObject(key);
+				if (data == null || data.isEmpty()) {
+					return "";
+				}
+			}
+			key = keys[keys.length - 1];
+		}
+		return data.get(key);
 	}
 
 }
