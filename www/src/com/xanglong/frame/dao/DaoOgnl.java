@@ -12,10 +12,15 @@ import ognl.Ognl;
 import ognl.OgnlContext;
 import ognl.OgnlException;
 
-/**XML标签表单式解析*/
+/**XML标签表达式解析*/
 public class DaoOgnl {
 	
-	/**test表达式*/
+	/**
+	 * test表达式
+	 * @param express 表达式
+	 * @param params 参数
+	 * @return 是否为真
+	 * */
 	public static boolean test(String express, JSONObject params) {
 		boolean success = false;
 		OgnlContext context = new OgnlContext(null, null, new DaoMemberAccess(true));
@@ -29,7 +34,13 @@ public class DaoOgnl {
 		return success;
 	}
 	
-	/**forEach表达式*/
+	/**
+	 * forEach表达式
+	 * @param express 表达式
+	 * @param params 参数
+	 * @param attributes 属性枚举
+	 * @return 拼接后的片段SQL
+	 * */
 	public static String foreach(String express, JSONObject params, NamedNodeMap attributes) {
 		String collection = null, index = null, open = null, separator = null, close = null, item = null;
 		for (int i = 0, length = attributes.getLength(); i< length; i++) {
@@ -79,7 +90,13 @@ public class DaoOgnl {
 		return stringBuilder.append(close).toString();
 	}
 	
-	/**格式化*/
+	/**
+	 * #{}和${}占位符格式化
+	 * @param open 开始
+	 * @param close 结束
+	 * @param text 字符串文本
+	 * @param data 参数
+	 * */
 	public static String format(String open, String close, String text, JSONObject data) {
 		if (data == null || data.isEmpty()) {
 			return text;

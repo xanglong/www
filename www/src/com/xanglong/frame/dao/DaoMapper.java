@@ -93,7 +93,12 @@ public class DaoMapper {
 		roots = null;
 	}
 
-	/**获取预编译SQL语句*/
+	/**
+	 * 获取预编译SQL语句
+	 * @param namespace 命名空间
+	 * @param id 节点id
+	 * @param webParams 参数
+	 * */
 	protected static MapperSql getMapperSqlJo(String namespace, String id, JSONObject webParams) {
 		Map<String, Node> nodes = nodeCaches.get(namespace);
 		if (nodes == null) {
@@ -106,10 +111,10 @@ public class DaoMapper {
 		String nodeName = node.getNodeName();
 		MapperSql mapperSqlJo = new MapperSql();
 		boolean isFindSqlType = false;
-		for (SqlType sqlTypeEnum : SqlType.values()) {
-			if (sqlTypeEnum.getCode().equals(nodeName)) {
+		for (SqlType sqlType : SqlType.values()) {
+			if (sqlType.getCode().equals(nodeName)) {
 				isFindSqlType = true;
-				mapperSqlJo.setSqlType(sqlTypeEnum);
+				mapperSqlJo.setSqlType(sqlType);
 				break;
 			}
 		}
@@ -127,7 +132,13 @@ public class DaoMapper {
 		return mapperSqlJo;
 	}
 
-	/**递归获取节点文本*/
+	/**
+	 * 递归获取节点文本
+	 * @param namespace 命名空间
+	 * @param node 节点
+	 * @param preSql 预编译SQL
+	 * @param webParams 参数
+	 * */
 	private static void deepSetSubNodeText(String namespace, Node node, StringBuilder preSql, JSONObject webParams) {
 		short nodeType = node.getNodeType();
 		if (nodeType == 3) {
@@ -186,7 +197,7 @@ public class DaoMapper {
 						break;
 					}
 				}
-				//如果表单式校验通过，则递归获取节点内容
+				//如果表达式校验通过，则递归获取节点内容
 				if (DaoOgnl.test(express, webParams)) {
 					NodeList nodeList = node.getChildNodes();
 					for (int i = 0, length = nodeList.getLength(); i < length; i++) {
@@ -235,15 +246,20 @@ public class DaoMapper {
 					if (nodeCache.containsKey(id)) {
 						throw new BizException(FrameException.FRAME_MAPPER_NAMESPACE_ID_REPEAT, nameSpace, id);
 					}
+					//每个节点明细按照id划分
 					nodeCache.put(id, node);
 					break;
 				}
 			}
+			//节点缓存按照命名空间划分
 			nodeCaches.put(nameSpace, nodeCache);
 		}
 	}
 
-	/**递归校验XML节点是否合理*/
+	/**
+	 * 递归校验XML节点是否合理
+	 * @param node 节点对象
+	 * */
 	private void deepChekNode(Node node) {
 		if (node.getNodeType() != 1) {
 			return;
@@ -265,7 +281,10 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验XML节点是否合法*/
+	/**
+	 * 校验XML节点是否合法
+	 * @param node XML文档节点
+	 * */
 	private void checkNode(Node node) {
 		if (node.getNodeType() != 1) {
 			return;
@@ -274,32 +293,32 @@ public class DaoMapper {
 		MapperTag mapperTag = checkTag(node.getNodeName());
 		NamedNodeMap attributes = node.getAttributes();
 		if (attributes.getLength() > 0) {
-			for (MapperNode mapperNodeEnum : MapperNode.values()) {
-				if (mapperNodeEnum.getTag() != mapperTag) {
+			for (MapperNode mapperNode : MapperNode.values()) {
+				if (mapperNode.getTag() != mapperTag) {
 					continue;
 				}
-				MapperAttribute attributeEnum = mapperNodeEnum.getAttribute();
+				MapperAttribute mapperAttribute = mapperNode.getAttribute();
 				//校验节点下的属性是否合法，只能限定的属性才可以配置
 				boolean isAttributeExist = false;
 				String nodeValue = null;
 				for (int i = 0; i < attributes.getLength(); i++) {
-					Node attribute = attributes.item(i);
-					MapperAttribute MapperAttribute = checkAttribute(attribute.getNodeName());
+					Node nodeAttribute = attributes.item(i);
+					MapperAttribute attribute = checkAttribute(nodeAttribute.getNodeName());
 					//找到目标属性及其值
-					if (mapperNodeEnum.getAttribute() == MapperAttribute) {
+					if (mapperNode.getAttribute() == attribute) {
 						isAttributeExist = true;
-						nodeValue = attribute.getNodeValue();
+						nodeValue = nodeAttribute.getNodeValue();
 						break;
 					}
 				}
 				//必填属性的键不能为空
-				if (mapperNodeEnum.getIsRequire()) {
+				if (mapperNode.getIsRequire()) {
 					if (isAttributeExist) {
 						//存在则校验合法性
-						checkNodeAttribute(mapperTag, attributeEnum, nodeValue);
+						checkNodeAttribute(mapperTag, mapperAttribute, nodeValue);
 					} else {
 						//不存在则提示异常
-						throw new BizException(FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_VALUE_NULL, currentMapperName, mapperTag.getCode(), attributeEnum.getCode());
+						throw new BizException(FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_VALUE_NULL, currentMapperName, mapperTag.getCode(), mapperAttribute.getCode());
 					}
 				}
 			}
@@ -309,54 +328,80 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验节点必填属性值*/
-	private void checkNodeAttribute(MapperTag mapperTag, MapperAttribute MapperAttribute, String nodeValue) {
+	/**
+	 * 校验节点必填属性值
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
+	private void checkNodeAttribute(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (MapperTag.SELECT == mapperTag) {//校验查询
-			checkIdNotPoint(mapperTag, MapperAttribute, nodeValue);
+			checkIdNotPoint(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.INSERT == mapperTag) {//校验新增
-			checkIdNotPoint(mapperTag, MapperAttribute, nodeValue);
+			checkIdNotPoint(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.UPDATE == mapperTag) {//校验编辑
-			checkIdNotPoint(mapperTag, MapperAttribute, nodeValue);
+			checkIdNotPoint(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.IF == mapperTag) {//判断条件
-			checkTestNoNull(mapperTag, MapperAttribute, nodeValue);
+			checkTestNoNull(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.WHERE == mapperTag) {
 		} else if (MapperTag.DELETE == mapperTag) {//校验删除
-			checkIdNotPoint(mapperTag, MapperAttribute, nodeValue);
+			checkIdNotPoint(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.MAPPER == mapperTag) {//校验命名空间
-			checkNamespace(mapperTag, MapperAttribute, nodeValue);
+			checkNamespace(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.INCLUDE == mapperTag) {//校验依赖语句
-			checkRefId(mapperTag, MapperAttribute, nodeValue);
+			checkRefId(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.SQL == mapperTag) {//校验SQL语句
-			checkIdNotPoint(mapperTag, MapperAttribute, nodeValue);
+			checkIdNotPoint(mapperTag, mapperAttribute, nodeValue);
 		} else if (MapperTag.FOREACH == mapperTag) {//校验集合
-			checkCollectionNotNull(mapperTag, MapperAttribute, nodeValue);//校验集合键
-			checkIndexNotNull(mapperTag, MapperAttribute, nodeValue);//校验集合索引
+			checkCollectionNotNull(mapperTag, mapperAttribute, nodeValue);//校验集合键
+			checkIndexNotNull(mapperTag, mapperAttribute, nodeValue);//校验集合索引
 		} else if (MapperTag.SELECTKEY == mapperTag) {//校验键
-			checkResultType(mapperTag, MapperAttribute, nodeValue);
+			checkResultType(mapperTag, mapperAttribute, nodeValue);
 		} else {
 			throw new BizException(FrameException.FRAME_MAPPER_NODE_CHECK_NULL, currentMapperName, mapperTag.getCode());
 		}
 	}
 
-	/**校验集合索引*/
+	/**
+	 * 校验集合索引
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkIndexNotNull(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.INDEX == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
-				throw new BizException(FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_VALUE_NULL, currentMapperName, mapperTag.getCode(), MapperAttribute.INDEX.getCode());
+				throw new BizException(
+					FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_VALUE_NULL,
+					currentMapperName, mapperTag.getCode(), MapperAttribute.INDEX.getCode()
+				);
 			}
 		}
 	}
 
-	/**校验集合键*/
+	/**
+	 * 校验集合键
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkCollectionNotNull(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.COLLECTION == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
-				throw new BizException(FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_VALUE_NULL, currentMapperName, mapperTag.getCode(), MapperAttribute.COLLECTION.getCode());
+				throw new BizException(
+					FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_VALUE_NULL,
+					currentMapperName, mapperTag.getCode(), MapperAttribute.COLLECTION.getCode()
+				);
 			}
 		}
 	}
 
-	/**校验依赖ID*/
+	/**
+	 * 校验依赖ID
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkRefId(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.REFID == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
@@ -381,7 +426,12 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验判断条件不能为空*/
+	/**
+	 * 校验判断条件不能为空
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkTestNoNull(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.TEST == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
@@ -390,7 +440,12 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验返回类型*/
+	/**
+	 * 校验返回类型
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkResultType(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.RESULTTYPE == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
@@ -401,7 +456,12 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验ID*/
+	/**
+	 * 校验ID
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkIdNotPoint(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.ID == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
@@ -412,7 +472,12 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验命名空间*/
+	/**
+	 * 校验命名空间
+	 * @param mapperTag 标签枚举
+	 * @param mapperAttribute 属性枚举
+	 * @param nodeValue 属性值
+	 * */
 	private void checkNamespace(MapperTag mapperTag, MapperAttribute mapperAttribute, String nodeValue) {
 		if (mapperAttribute == null || MapperAttribute.NAMESPACE == mapperAttribute) {
 			if (StringUtil.isBlank(nodeValue)) {
@@ -426,7 +491,11 @@ public class DaoMapper {
 		}
 	}
 
-	/**校验属性*/
+	/**
+	 * 校验属性
+	 * @param attributeName 属性名称
+	 * @return 支持的属性枚举
+	 * */
 	private MapperAttribute checkAttribute(String attributeName) {
 		for (MapperAttribute MapperAttribute : MapperAttribute.values()) {
 			if (MapperAttribute.getCode().equals(attributeName)) {
@@ -436,7 +505,11 @@ public class DaoMapper {
 		throw new BizException(FrameException.FRAME_MAPPER_NODE_ATTRIBUTE_INVALID, currentMapperName, attributeName);
 	}
 
-	/**校验节点*/
+	/**
+	 * 校验节点标签
+	 * @param nodeName 标签名称
+	 * @return 支持的标签枚举
+	 * */
 	private MapperTag checkTag(String nodeName) {
 		for (MapperTag mapperTag : MapperTag.values()) {
 			if (mapperTag.getCode().equals(nodeName)) {
@@ -446,7 +519,10 @@ public class DaoMapper {
 		throw new BizException(FrameException.FRAME_MAPPER_NODE_INVALID, currentMapperName, nodeName);
 	}
 
-	/**解析获取所有XML文件*/
+	/**
+	 * 解析获取所有XML文件，根据文件数量分配每个线程处理的文件数量
+	 * @param listFiles 文件列表
+	 * */
 	private void setAllMapperFiles(List<File> listFiles) {
 		int threadSize = 30, fileSize = listFiles.size();
 		HandelThreadFactory handelThreadFactory = new HandelThreadFactory();
@@ -525,7 +601,6 @@ public class DaoMapper {
 			return null;
 		}
 	}
-
 
 	/**线程解析XML文件类*/
 	class ThredMapper implements Runnable {
