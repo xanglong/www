@@ -11,4 +11,13 @@
 		<filter-name>filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>com.xanglong.frame.mvc.MyDispatcher</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 </web-app>

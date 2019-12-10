@@ -18,6 +18,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -590,7 +591,7 @@ public class HttpUtil {
 		}
 		String method = request.getMethod();
 		if (Method.POST.getCode().equals(method)) {
-			//如果请求头标记类型位JSONl类型，则读取二进制参数，否则不读取
+			//如果请求头标记类型位JSON类型，则读取二进制参数，否则不读取
 			String contentType = request.getContentType().toLowerCase();
 			if (contentType.contains(ContentType.JSON.getCode())) {
 				String json = null;
@@ -618,6 +619,27 @@ public class HttpUtil {
 		}
 		bodyParam.setObejct(object);
 		return bodyParam;
+	}
+	
+	/**
+	 * 是否是多文件请求
+	 * @param request 请求对象
+	 * @return 是否
+	 * */
+	public static boolean isMultipartContent(HttpServletRequest request) {
+		//只有POST请求支持多文件传输
+		if (!Method.POST.getCode().equals(request.getMethod())) {
+			return false;
+		}
+		String contentType = request.getContentType();
+		if (StringUtil.isBlank(contentType)) {
+			return false;
+		}
+		//多文件请求目前标准是包含特殊字符串multipart
+		if (contentType.toLowerCase(Locale.ENGLISH).startsWith(Header.MULTIPART)) {
+            return true;
+        }
+		return false;
 	}
 	
 	/**

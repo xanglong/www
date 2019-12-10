@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -23,16 +21,7 @@ import com.xanglong.i18n.zh_cn.FrameException;
 public class RepositoryBean {
 
 	private static Map<String, Object> daos = new HashMap<String, Object>();
-	private static List<Class<?>> cacheDaos = new ArrayList<>();
 	
-	/**
-	 * 获取缓存DAO
-	 * @return 所有缓存类型DAO
-	 * */
-	public List<Class<?>> getCacheDaos() {
-		return cacheDaos;
-	}
-
 	/**初始化*/
 	public void init() {
 		String[] daoPackages = Sys.getConfig().getPackages().getDao();
@@ -65,11 +54,6 @@ public class RepositoryBean {
 		MyRepository myRepository = clazz.getDeclaredAnnotation(MyRepository.class);
 		if (myRepository == null) {
 			throw new BizException(FrameException.FRAME_CLASS_MISS_ANNOTATION_MYREPOSITORY, clazz.getName());
-		}
-		//注解标记为缓存的类
-		MyCacheDao myCacheDao = clazz.getDeclaredAnnotation(MyCacheDao.class);
-		if (myCacheDao != null) {
-			cacheDaos.add(clazz);
 		}
 		Object object = new ProxyManager().getDaoInstance(clazz);
 		MvcManager mvcManager = new MvcManager();
