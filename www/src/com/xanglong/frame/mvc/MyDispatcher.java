@@ -111,7 +111,7 @@ public class MyDispatcher extends HttpServlet {
 				List<Object> listParams = new ArrayList<>(listBodyParams.size());
 				for (int j = 0, size = listBodyParams.size(); j < size; j++) {
 					//只支持在数组中嵌套对象，嵌套数组这种复杂操作不支持
-					Object param = setJsonParams(parameterType, listBodyParams.getJSONObject(j), paramName);
+					Object param = getMethodParam(parameterType, listBodyParams.getJSONObject(j), paramName);
 					if (param == null) {
 						throw new BizException(FrameException.FRAME_REQUEST_ARRAY_PARAMETER_CONVERT_ERROR, paramName);
 					}
@@ -127,20 +127,20 @@ public class MyDispatcher extends HttpServlet {
 			} else if (HttpServletResponse.class == parameterType) {
 				args[i] = response;
 			} else {
-				args[i] = setJsonParams(parameter.getType(), bodyParams, paramName);
+				args[i] = getMethodParam(parameter.getType(), bodyParams, paramName);
 			}
 		}
 		return args;
 	}
 	
 	/**
-	 * 反射JSON参数
+	 * 获取方法体映射的参数
 	 * @param parameterType 参数类型
 	 * @param bodyParams 单个参数实体数据
 	 * @param paramName 参数名
 	 * @return 参数实体对象
 	 * */
-	private Object setJsonParams(Class<?> parameterType, JSONObject bodyParams, String paramName) {
+	private Object getMethodParam(Class<?> parameterType, JSONObject bodyParams, String paramName) {
 		if (BasePo.class.isAssignableFrom(parameterType)) {
 			Object obj = EntityUtil.getPo(bodyParams, parameterType);
 			if (obj == null) {
