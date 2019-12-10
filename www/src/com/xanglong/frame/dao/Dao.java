@@ -21,7 +21,6 @@ public class Dao {
 			if (daoConnection.getIsBegin()) {
 				return;
 			}
-			daoConnection.setIsBegin(true);
 			String[] sqls = new String[2];
 			sqls[0] = "SET AUTOCOMMIT = 0";
 			sqls[1] = "START TRANSACTION";
@@ -37,6 +36,7 @@ public class Dao {
 				rollback();
 				throw new BizException(e);
 			}
+			daoConnection.setIsBegin(true);
 		} else {
 			throw new BizException(FrameException.FRAME_DATABASE_TYPE_INVALID);
 		}
@@ -53,9 +53,7 @@ public class Dao {
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
 			String[] sqls = new String[2];
-			if (!daoConnection.getIsError()) {
-				sqls[0] = "COMMIT";
-			}
+			sqls[0] = "COMMIT";
 			//阶段性提交事务之后，继续开启事务，当前连接不变
 			sqls[1] = "START TRANSACTION";
 			try {
@@ -70,7 +68,6 @@ public class Dao {
 				rollback();
 				throw new BizException(e);
 			}
-			Current.getConnection().setIsError(false);
 		} else {
 			throw new BizException(FrameException.FRAME_DATABASE_TYPE_INVALID);
 		}
@@ -79,17 +76,15 @@ public class Dao {
 	/**系统级别提交事务,用于系统级别事务控制，提交后数据库连接释放*/
 	public static void sysCommit() {
 		//如果事务没有开启，则不做提交和释放操作
-		if (!Current.getConnection().getIsBegin()) {
+		DaoConnection daoConnection = Current.getConnection();
+		if (!daoConnection.getIsBegin()) {
 			return;
 		}
+		String[] sqls = new String[2];
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
-			Current.getConnection().setIsBegin(false);
-			String[] sqls = new String[2];
-			if (Current.getConnection().getIsError()) {
-				sqls[0] = "COMMIT";
-			}
+			sqls[0] = "COMMIT";
 			//设置自动提交事务，如果查询也开启了事务，那么会卡死
 			sqls[1] = "SET AUTOCOMMIT = 1";
 			try {
@@ -104,7 +99,7 @@ public class Dao {
 				rollback();
 				throw new BizException(e);
 			}
-			Current.getConnection().setIsError(false);
+			daoConnection.setIsBegin(false);
 			freeConn();
 		} else {
 			throw new BizException(FrameException.FRAME_DATABASE_TYPE_INVALID);
@@ -121,19 +116,22 @@ public class Dao {
 	/**回滚事务*/
 	public static void rollback() {
 		Config config = Sys.getConfig();
-		Current.getConnection().setIsError(true);
+		DaoConnection daoConnection = Current.getConnection();
+		//如果事务没有开启，则不做提交和释放操作
+		if (!daoConnection.getIsBegin()) {
+			return;
+		}
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
 			try {
 				DaoFactory.executeSQL4MySQL("ROLLBACK");
-				//事务回滚之后，标记没有错误
-				Current.getConnection().setIsError(false);
 			} catch (Exception e) {
 				if (config.getIsDebug()) {
 					e.printStackTrace();
 				}
 				throw new BizException(e);
 			}
+			daoConnection.setIsBegin(false);
 		} else {
 			throw new BizException(FrameException.FRAME_DATABASE_TYPE_INVALID);
 		}
@@ -194,9 +192,6 @@ public class Dao {
 	 * */
 	public static DaoData select(DaoParam daoParam) {
 		DaoData daoVo = new DaoData();
-		if (Current.getConnection().getIsError()) {
-			return daoVo;
-		}
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
@@ -208,7 +203,6 @@ public class Dao {
 					e.printStackTrace();
 					console(start, daoParam);
 				}
-				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
@@ -238,9 +232,6 @@ public class Dao {
 	 * */
 	public static int insert(DaoParam daoParam) {
 		int rt = -1;
-		if (Current.getConnection().getIsError()) {
-			return rt;
-		}
 		begin();
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
@@ -253,7 +244,6 @@ public class Dao {
 					e.printStackTrace();
 					console(start, daoParam);
 				}
-				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
@@ -283,9 +273,6 @@ public class Dao {
 	 * */
 	public static int update(DaoParam daoParam) {
 		int rt = -1;
-		if (Current.getConnection().getIsError()) {
-			return rt;
-		}
 		begin();
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
@@ -298,7 +285,6 @@ public class Dao {
 					e.printStackTrace();
 					console(start, daoParam);
 				}
-				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
@@ -328,9 +314,6 @@ public class Dao {
 	 * */
 	public static int delete(DaoParam daoParam) {
 		int rt = -1;
-		if (Current.getConnection().getIsError()) {
-			return rt;
-		}
 		begin();
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
@@ -343,7 +326,6 @@ public class Dao {
 					e.printStackTrace();
 					console(start, daoParam);
 				}
-				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {

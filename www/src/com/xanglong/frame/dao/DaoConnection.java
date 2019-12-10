@@ -14,9 +14,6 @@ public class DaoConnection {
 	/**是否开启事务*/
 	private boolean isBegin;
 
-	/**是否出现异常*/
-	private boolean isError;
-	
 	public Connection getConnection() {
 		return connection;
 	}
@@ -41,12 +38,4 @@ public class DaoConnection {
 		this.isBegin = isBegin;
 	}
 
-	public boolean getIsError() {
-		return isError;
-	}
-
-	public void setIsError(boolean isError) {
-		this.isError = isError;
-	}
-	
 }
