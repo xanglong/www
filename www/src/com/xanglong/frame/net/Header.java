@@ -113,5 +113,8 @@ public class Header {
 	/**Apache HTTP服务*/
 	public static final String PROXY_CLIENT_IP = "Proxy-Client-IP";//代理客户端ID
 	public static final String WL_PROXY_CLIENT_IP = "WL- Proxy-Client-IP";//代理来源IP
+	
+	/**其它请求头*/
+	public static final String MULTIPART = "multipart/";//多文件请求
 
 }

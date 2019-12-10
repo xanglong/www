@@ -1,6 +1,11 @@
 package com.xanglong.frame;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.xanglong.frame.exception.BizException;
 
@@ -30,6 +35,25 @@ public class Reflect {
 			}
 		}
 		return target;
+	}
+	
+	/**
+	* 获取方法泛型参数类型
+	* @param method 方法
+	* @return typeList 参数类型列表
+	*/
+	public static List<Class<?>> getParameterTypeClassList(Method method) {
+		List<Class<?>> typeList = new ArrayList<>();
+		Type[] genericParameterTypes = method.getGenericParameterTypes();
+		for (Type genericParameterType : genericParameterTypes) {
+			if (genericParameterType instanceof ParameterizedType) {
+				Type[] parameterizedTypes = ((ParameterizedType) genericParameterType).getActualTypeArguments();
+				for (Type parameterizedType : parameterizedTypes) {
+					typeList.add((Class<?>) parameterizedType);
+				}
+			}
+		}
+		return typeList;
 	}
 
 }
