@@ -11,13 +11,13 @@ import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import com.xanglong.frame.exception.BizException;
+import com.xanglong.frame.net.ImageType;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -121,12 +121,12 @@ public class ImageUtil {
 	
 	/**
 	 * 图片灰度算法
-	 * @param bytes 图片二进制数据
+	 * @param bufferedImage 图片对象
+	 * @param imageType 图片类型
+	 * @param averageGray 灰度均值，平均128
 	 * @return 图片二进制数据
 	 * */
-	public static byte[] getGrayBytes(File file) {
-		byte[] bytes = FileUtil.readByte(file);
-		BufferedImage bufferedImage = getBufferedImage(bytes);
+	public static byte[] getGrayBytes(BufferedImage bufferedImage, ImageType imageType, int averageGray) {
 		int h = bufferedImage.getHeight();
 		int w = bufferedImage.getWidth();
 		int[][] gray = new int[w][h];
@@ -136,10 +136,9 @@ public class ImageUtil {
 			}
 		}
 		BufferedImage emptyBufferedImage = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_BINARY);
-		int SW=160;
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
-				if (getAverageColor(gray, x, y, w, h) > SW) {
+				if (getAverageColor(gray, x, y, w, h) > averageGray) {
 					int max=new Color(255, 255, 255).getRGB();
 					emptyBufferedImage.setRGB(x, y, max);
 				} else {
@@ -148,13 +147,12 @@ public class ImageUtil {
 				}
 			}
 		}
-		String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
 		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			ImageIO.write(emptyBufferedImage, type, baos);
+			ImageIO.write(emptyBufferedImage, imageType.getCode(), baos);
 			baos.flush();
 			return baos.toByteArray();
-		} catch (IOException e2) {
-			e2.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
