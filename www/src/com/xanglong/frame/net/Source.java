@@ -1,13 +1,9 @@
 package com.xanglong.frame.net;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,8 +23,6 @@ import com.xanglong.frame.util.DateUtil;
 import com.xanglong.frame.util.StringUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
 import com.xanglong.i18n.zh_cn.SystemException;
-
-import net.coobird.thumbnailator.Thumbnails;
 
 public class Source {
 
@@ -289,39 +283,6 @@ public class Source {
 		SourceFile input = SourceFile.fromCode("input", javaScript);
 		compiler.compile(extern, input, compilerOptions);
 		return compiler.toSource();
-	}
-	
-	/**
-	 * 压缩图片：默认模式
-	 * @param bytes 图片二进制数据
-	 * @param height 图片高度
-	 * @param width 图片宽度
-	 * @return 二进制数据
-	 * */
-	public static byte[] getImageBySize(byte[] bytes, int height, int width) {
-		return getImageBySize(bytes, height, width, "jpg");
-	}
-	
-	/**
-	 * 压缩图片：带图片格式
-	 * @param bytes 图片二进制数据
-	 * @param height 图片高度
-	 * @param width 图片宽度
-	 * @return 二进制数据
-	 * */
-	public static byte[] getImageBySize(byte[] bytes, int height, int width, String type) {
-		byte[] minBytes = null;
-		try {
-			BufferedImage bufferedImage = FileUtil.getBufferedImage(bytes);
-			try(ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-				bufferedImage = Thumbnails.of(bufferedImage).size(height, width).asBufferedImage();
-				ImageIO.write(bufferedImage, type, byteArrayOutputStream);
-				minBytes = byteArrayOutputStream.toByteArray();
-            }
-		} catch (IOException e) {
-			throw new BizException(e);
-		}
-		return minBytes;
 	}
 	
 	/**
