@@ -11,6 +11,12 @@ import com.xanglong.i18n.zh_cn.FrameException;
 public class Dao {
 	
 	private Dao() {}
+	
+	/* 1.如果后续支持全局不开启事务，则开启和回滚方法不处理逻辑即可
+	 * 2.方法发生任何异常都调用一次事务回滚方法，如果没有开启会跳过
+	 * 3.增、删、改的操作都调用一次事务开启方法，如果已经开启会跳过
+	 * 4.配置了不同切面的方法体在执行完代码后都要做一次事务提交操作
+	 */
 
 	/**开启事务*/
 	public static void begin() {
@@ -30,9 +36,6 @@ public class Dao {
 					System.out.println(DateUtil.getDateTime() + " 开启事务");
 				}
 			} catch (Exception e) {
-				if (config.getIsDebug()) {
-					e.printStackTrace();
-				}
 				rollback();
 				throw new BizException(e);
 			}
@@ -62,9 +65,6 @@ public class Dao {
 					System.out.println(DateUtil.getDateTime() + " 手动提交事务");
 				}
 			} catch (Exception e) {
-				if (config.getIsDebug()) {
-					e.printStackTrace();
-				}
 				rollback();
 				throw new BizException(e);
 			}
@@ -93,9 +93,6 @@ public class Dao {
 					System.out.println(DateUtil.getDateTime() + " 系统提交事务");
 				}
 			} catch (Exception e) {
-				if (config.getIsDebug()) {
-					e.printStackTrace();
-				}
 				rollback();
 				throw new BizException(e);
 			}
@@ -126,9 +123,6 @@ public class Dao {
 			try {
 				DaoFactory.executeSQL4MySQL("ROLLBACK");
 			} catch (Exception e) {
-				if (config.getIsDebug()) {
-					e.printStackTrace();
-				}
 				throw new BizException(e);
 			}
 			daoConnection.setIsBegin(false);
@@ -200,9 +194,9 @@ public class Dao {
 				daoVo = DaoFactory.select4MySQL(daoParam);
 			} catch (Exception e) {
 				if (config.getIsDebug()) {
-					e.printStackTrace();
 					console(start, daoParam);
 				}
+				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
@@ -241,9 +235,9 @@ public class Dao {
 				rt = DaoFactory.insert4MySQL(daoParam);
 			} catch (Exception e) {
 				if (config.getIsDebug()) {
-					e.printStackTrace();
 					console(start, daoParam);
 				}
+				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
@@ -282,9 +276,9 @@ public class Dao {
 				rt = DaoFactory.update4MySQL(daoParam);
 			} catch (Exception e) {
 				if (config.getIsDebug()) {
-					e.printStackTrace();
 					console(start, daoParam);
 				}
+				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
@@ -323,9 +317,9 @@ public class Dao {
 				rt = DaoFactory.delete4MySQL(daoParam);
 			} catch (Exception e) {
 				if (config.getIsDebug()) {
-					e.printStackTrace();
 					console(start, daoParam);
 				}
+				rollback();
 				throw new BizException(e);
 			}
 			if (config.getIsDebug()) {
