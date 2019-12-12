@@ -60,10 +60,12 @@ public class MyDispatcher extends HttpServlet {
 		//这是好参方法反射的参数
 		Object[] args = getParameters(request, response, method);
 		try {
+			//进入控制层切面
+			MvcManager.aopEnter(BeanType.CONTROLLER);
 			//执行反射方法调用controller的方法
 			Object result = method.invoke(controller, args);
-			//事务提交控制，如果没开启则不会做提交
-			Dao.sysCommit();
+			//离开控制层切面
+			MvcManager.aopExit();
 			//约定，返回类型是void的不返回
 			Class<?> returnType = method.getReturnType();
 			if (returnType != void.class) {

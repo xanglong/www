@@ -55,12 +55,8 @@ public class Dao {
 		Config config = Sys.getConfig();
 		String type = config.getDatabase().getType();
 		if (DatabaseType.MYSQL.getCode().equals(type)) {
-			String[] sqls = new String[2];
-			sqls[0] = "COMMIT";
-			//阶段性提交事务之后，继续开启事务，当前连接不变
-			sqls[1] = "START TRANSACTION";
 			try {
-				DaoFactory.executeBatchSQL4MySQL(sqls);
+				DaoFactory.executeSQL4MySQL("COMMIT");
 				if (config.getIsDebug()) {
 					System.out.println(DateUtil.getDateTime() + " 手动提交事务");
 				}
@@ -97,17 +93,15 @@ public class Dao {
 				throw new BizException(e);
 			}
 			daoConnection.setIsBegin(false);
-			freeConn();
+			freeConn(daoConnection);
 		} else {
 			throw new BizException(FrameException.FRAME_DATABASE_TYPE_INVALID);
 		}
 	}
 
 	/**释放连接*/
-	public static void freeConn() {
-		if (Current.getConnection() != null) {
-			DaoManager.freeConnection(Current.getConnection());
-		}
+	public static void freeConn(DaoConnection daoConnection) {
+		DaoManager.freeConnection(daoConnection);
 	}
 
 	/**回滚事务*/

@@ -33,6 +33,6 @@ public class ProxyManager {
 	 * */
 	public Object getServiceInstance(Class<?> clazz) {
 		return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new ServiceHandler());
-	} 
+	}
 
 }
