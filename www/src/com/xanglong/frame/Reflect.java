@@ -55,5 +55,5 @@ public class Reflect {
 		}
 		return typeList;
 	}
-
+	
 }

@@ -7,8 +7,11 @@ public class Transaction {
 	
 	/**在业务层*/
 	private boolean onService;
+	
+	/**在业务层方法上*/
+	private boolean onServiceMethod;
 
-	public boolean isOnController() {
+	public boolean getOnController() {
 		return onController;
 	}
 
@@ -16,12 +19,20 @@ public class Transaction {
 		this.onController = onController;
 	}
 
-	public boolean isOnService() {
+	public boolean getOnService() {
 		return onService;
 	}
 
 	public void setOnService(boolean onService) {
 		this.onService = onService;
+	}
+
+	public boolean getOnServiceMethod() {
+		return onServiceMethod;
+	}
+
+	public void setOnServiceMethod(boolean onServiceMethod) {
+		this.onServiceMethod = onServiceMethod;
 	}
 
 }

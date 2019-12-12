@@ -60,6 +60,7 @@ public enum FrameException implements IException, I18n {
 	FRAME_VALIDATION_VALUE_INVALID("{0}的值非法，不符合规则"),
 	FRAME_COPY_FILE_EXIST("目标文件{0}已存在，但是是个文件夹"),
 	FRAME_COPY_FILE_FAIL("从文件{0}复制到文件{1}失败"),
+	FRAME_MYAUTOWIRED_CANNOT_BE_INTERFACE("@MyAutowired不允许自动注入类{0}，请换成实现类"),
 	;
 	
 	private String code;

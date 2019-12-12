@@ -5,6 +5,10 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.xanglong.frame.Current;
+import com.xanglong.frame.Sys;
+import com.xanglong.frame.config.Transaction;
+import com.xanglong.frame.dao.Dao;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.i18n.zh_cn.FrameException;
 
@@ -17,7 +21,6 @@ public class MvcManager {
 	/**缓存除控制层、业务层、数据层、组件层之外的所有Bean*/
 	private static Map<String, Object> otherBeans = new HashMap<>();
 	
-
 	/**
 	 * 类的实例缓存是否已存在
 	 * @param key 类的名称
@@ -46,9 +49,8 @@ public class MvcManager {
 		new ComponentBean().init();
 		//控制层
 		new ControllerBean().init();
-		
 	}
-
+	
 	/**
 	 * 给类设置自动注入的Bean对象到缓存
 	 * @param bean 实例对象
@@ -70,6 +72,10 @@ public class MvcManager {
 				String key = fieldClass.getName();
 				BeanType beanType = beanIndexs.get(key);
 				if (beanType == null) {
+					//反查接口实现类太消耗性能了，为了启动时间更快，必须注入实现类
+					if (fieldClass.isInterface()) {
+						throw new BizException(FrameException.FRAME_MYAUTOWIRED_CANNOT_BE_INTERFACE);
+					}
 					Class<?> clazz = Class.forName(key);
 					MyService myService = clazz.getDeclaredAnnotation(MyService.class);
 					if (myService != null) {
@@ -113,6 +119,45 @@ public class MvcManager {
 
 	public static void setOtherBeans(Map<String, Object> otherBeans) {
 		MvcManager.otherBeans = otherBeans;
+	}
+	
+	/**
+	 * 进入切面
+	 * @param beanType 代码层类型
+	 * */
+	public static void aopEnter(BeanType beanType) {
+		//进入切面目前其实就控制层和业务层，暂时不需要处理逻辑
+		Current.aopEnter(beanType);
+	}
+	
+	/**离开切面*/
+	public static void aopExit() {
+		BeanType prevBeanType = Current.aopExit();
+		BeanType nextBeanType = Current.getAop();
+		if (nextBeanType == null) {
+			//如果下一层没了，那么提交事务
+			Dao.sysCommit();
+			return;
+		}
+		//前面如果退出到最后一层了，事务会提交且释放连接
+		//下面的提交事务不释放连接，确保有问题的连接不被快速扩散，好断点跟踪问题
+		Transaction transaction = Sys.getConfig().getTransaction();
+		if (transaction.getOnController()) {
+			//如果当前退出的是控制层，则提交事务
+			if (BeanType.CONTROLLER == prevBeanType) {
+				Dao.commit();
+			}
+		} else if (transaction.getOnService()) {
+			//只要下一层不是业务层就提交事务
+			if (BeanType.SERVICE != nextBeanType) {
+				Dao.commit();
+			}
+		} else if (transaction.getOnServiceMethod()) {
+			//如果当前层是业务层就提交事务
+			if (BeanType.SERVICE == prevBeanType) {
+				Dao.commit();
+			}
+		}
 	}
 
 }
