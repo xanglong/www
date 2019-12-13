@@ -1,8 +1,6 @@
 package com.xanglong.frame.mvc;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.net.HttpURLConnection;
@@ -57,7 +55,7 @@ public class MyDispatcher extends HttpServlet {
 		}
 		//获取请求对应的方法和方法定义的参数
 		Method method = ControllerBean.getMethod(requestURI);
-		//这是好参方法反射的参数
+		//这是入参方法反射的参数
 		Object[] args = getParameters(request, response, method);
 		try {
 			//进入控制层切面
@@ -77,7 +75,7 @@ public class MyDispatcher extends HttpServlet {
 					printWriter.append(JSONObject.toJSONString(resultVo));
 				}
 			}
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | IOException e) {
+		} catch(Throwable e) {
 			//如果有事务开启则要回滚事务
 			Dao.rollback();
 			throw new BizException(e);

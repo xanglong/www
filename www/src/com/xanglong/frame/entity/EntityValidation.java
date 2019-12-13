@@ -27,88 +27,98 @@ public class EntityValidation {
 			}
 			boolean isAccessible = field.isAccessible();
 			field.setAccessible(true);
-			Class<?> fieldClass = field.getType();
 			try {
-				if (int.class == fieldClass) {
-					checkInt(myVerification, field.getInt(obj));
-					continue;
-				} else if (long.class == fieldClass) {
-					checkLong(myVerification, field.getLong(obj));
-					continue;
-				} else if (boolean.class == fieldClass) {
-					checkBoolean(myVerification, field.getBoolean(obj));
-					continue;
-				} else if (double.class == fieldClass) {
-					checkDouble(myVerification, field.getDouble(obj));
-					continue;
-				} else if (float.class == fieldClass) {
-					checkFloat(myVerification, field.getFloat(obj));
-					continue;
-				} else if (short.class == fieldClass) {
-					checkShort(myVerification, field.getShort(obj));
-				} else if (byte.class == fieldClass) {
-					continue;
-				} else if (char.class == fieldClass) {
-					checkChar(myVerification, field.getChar(obj));
-					continue;
-				} else {
-					Object value = field.get(obj);
-					if (value == null) {
-						if (myVerification.notNull()) {
-							throw new BizException(FrameException.FRAME_VALIDATION_VALUE_CONNOT_BE_NULL, field.getName());
-						}
-					} else {
-						if (String.class == fieldClass) {
-							//防跨站XSS攻击
-							boolean XSS = myVerification.XSS();
-							if (XSS) {
-								value = ((String) value).trim();
-								field.set(obj, Jsoup.clean((String) value, new Whitelist()));
-							}
-							//如果字符串要首位去除空格，那么必然应该防跨站攻击
-							checkString(myVerification, (String) value);
-							continue;
-						} else if (Integer.class == fieldClass) {
-							checkInt(myVerification, ((Integer) value).intValue());
-							continue;
-						} else if (Long.class == fieldClass) {
-							checkLong(myVerification, ((Long) value).longValue());
-							continue;
-						} else if (Boolean.class == fieldClass) {
-							checkBoolean(myVerification, ((Boolean) value).booleanValue());
-							continue;
-						} else if (Double.class == fieldClass) {
-							checkDouble(myVerification, ((Double) value).doubleValue());
-							continue;
-						} else if (Float.class == fieldClass) {
-							checkFloat(myVerification, ((Float) value).floatValue());
-							continue;
-						} else if (Short.class == fieldClass) {
-							checkShort(myVerification, ((Short) value).shortValue());
-							continue;
-						} else if (Character.class == fieldClass) {
-							checkChar(myVerification, ((Character) value).charValue());
-							continue;
-						} else if (Byte.class == fieldClass) {
-							continue;
-						} else {
-							//递归校验内部对象
-							if (fieldClass.isArray()) {
-								//校验数组
-								for (int i = 0, length = Array.getLength(value); i < length; i++) {
-									doVerificatio(Array.get(value, 0));
-								}
-							} else {
-								doVerificatio(value);
-							}
-						}
-					}
+				//检查基础类型，返回是否是基础类型，不是的话检查封装类型
+				if (!checkBaseParam(obj, field, myVerification)) {
+					checkEncapsulationParam(obj, field, myVerification);
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				throw new BizException(e);
 			}
 			field.setAccessible(isAccessible);
 		}
+	}
+	
+	/**
+	 * 检查封装类参数
+	 * @param obj 实体对象
+	 * @param field 字段对象
+	 * @param myVerification 校验注解配置
+	 * */
+	private static void checkEncapsulationParam(Object obj, Field field, MyVerification myVerification) throws IllegalArgumentException, IllegalAccessException {
+		Class<?> fieldClass = field.getType();
+		Object value = field.get(obj);
+		if (value == null) {
+			if (myVerification.notNull()) {
+				throw new BizException(FrameException.FRAME_VALIDATION_VALUE_CONNOT_BE_NULL, field.getName());
+			}
+		} else {
+			if (String.class == fieldClass) {
+				//防跨站XSS攻击
+				boolean XSS = myVerification.XSS();
+				if (XSS) {
+					value = ((String) value).trim();
+					field.set(obj, Jsoup.clean((String) value, new Whitelist()));
+				}
+				//如果字符串要首位去除空格，那么必然应该防跨站攻击
+				checkString(myVerification, (String) value);
+			} else if (Integer.class == fieldClass) {
+				checkInt(myVerification, ((Integer) value).intValue());
+			} else if (Long.class == fieldClass) {
+				checkLong(myVerification, ((Long) value).longValue());
+			} else if (Boolean.class == fieldClass) {
+				checkBoolean(myVerification, ((Boolean) value).booleanValue());
+			} else if (Double.class == fieldClass) {
+				checkDouble(myVerification, ((Double) value).doubleValue());
+			} else if (Float.class == fieldClass) {
+				checkFloat(myVerification, ((Float) value).floatValue());
+			} else if (Short.class == fieldClass) {
+				checkShort(myVerification, ((Short) value).shortValue());
+			} else if (Character.class == fieldClass) {
+				checkChar(myVerification, ((Character) value).charValue());
+			} else if (Byte.class == fieldClass) {
+			} else {
+				//递归校验内部对象
+				if (fieldClass.isArray()) {
+					//校验数组
+					for (int i = 0, length = Array.getLength(value); i < length; i++) {
+						doVerificatio(Array.get(value, 0));
+					}
+				} else {
+					doVerificatio(value);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 检查基础类参数
+	 * @param obj 实体对象
+	 * @param field 字段对象
+	 * @param myVerification 校验注解配置
+	 * @return 是否是基础类
+	 * */
+	private static boolean checkBaseParam(Object obj, Field field, MyVerification myVerification) throws IllegalArgumentException, IllegalAccessException {
+		Class<?> fieldClass = field.getType();
+		if (int.class == fieldClass) {
+			checkInt(myVerification, field.getInt(obj));
+		} else if (long.class == fieldClass) {
+			checkLong(myVerification, field.getLong(obj));
+		} else if (boolean.class == fieldClass) {
+			checkBoolean(myVerification, field.getBoolean(obj));
+		} else if (double.class == fieldClass) {
+			checkDouble(myVerification, field.getDouble(obj));
+		} else if (float.class == fieldClass) {
+			checkFloat(myVerification, field.getFloat(obj));
+		} else if (short.class == fieldClass) {
+			checkShort(myVerification, field.getShort(obj));
+		} else if (byte.class == fieldClass) {
+		} else if (char.class == fieldClass) {
+			checkChar(myVerification, field.getChar(obj));
+		} else {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
