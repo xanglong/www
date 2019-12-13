@@ -61,6 +61,8 @@ public enum FrameException implements IException, I18n {
 	FRAME_COPY_FILE_EXIST("目标文件{0}已存在，但是是个文件夹"),
 	FRAME_COPY_FILE_FAIL("从文件{0}复制到文件{1}失败"),
 	FRAME_MYAUTOWIRED_CANNOT_BE_INTERFACE("@MyAutowired不允许自动注入类{0}，请换成实现类"),
+	FRAME_METHOD_PARAMETER_INVALID("不支持的对象类型{0}"),
+	FRAME_MOST_ONE_KEY_IN_THE_RESULT("查询结果最多只能有一个字段才可以正确返回集合结构"),
 	;
 	
 	private String code;

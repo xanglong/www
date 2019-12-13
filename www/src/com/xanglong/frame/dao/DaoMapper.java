@@ -97,9 +97,9 @@ public class DaoMapper {
 	 * 获取预编译SQL语句
 	 * @param namespace 命名空间
 	 * @param id 节点id
-	 * @param webParams 参数
+	 * @param params 参数
 	 * */
-	protected static MapperSql getMapperSqlJo(String namespace, String id, JSONObject webParams) {
+	public static MapperSql getMapperSql(String namespace, String id, JSONObject params) {
 		Map<String, Node> nodes = nodeCaches.get(namespace);
 		if (nodes == null) {
 			throw new BizException(FrameException.FRAME_NAMESPACE_NULL, namespace);
@@ -123,10 +123,10 @@ public class DaoMapper {
 		}
 		StringBuilder preSql = new StringBuilder();
 		NodeList nodeList = node.getChildNodes();
-		webParams = webParams == null ? new JSONObject() : webParams;
+		params = params == null ? new JSONObject() : params;
 		for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 			Node subNode = nodeList.item(i);
-			deepSetSubNodeText(namespace, subNode, preSql, webParams);
+			deepSetSubNodeText(namespace, subNode, preSql, params);
 		}
 		mapperSqlJo.setPreSql(preSql.toString());
 		return mapperSqlJo;
@@ -137,9 +137,9 @@ public class DaoMapper {
 	 * @param namespace 命名空间
 	 * @param node 节点
 	 * @param preSql 预编译SQL
-	 * @param webParams 参数
+	 * @param params 参数
 	 * */
-	private static void deepSetSubNodeText(String namespace, Node node, StringBuilder preSql, JSONObject webParams) {
+	private static void deepSetSubNodeText(String namespace, Node node, StringBuilder preSql, JSONObject params) {
 		short nodeType = node.getNodeType();
 		if (nodeType == 3) {
 			String text = node.getTextContent();
@@ -168,24 +168,24 @@ public class DaoMapper {
 					String nodeId = refid.substring(lastIndexOfPoint + 1);
 					Node includeNode = nodeCahce.get(nodeId);
 					//找到远程节点，继续递归
-					deepSetSubNodeText(otherNamespace, includeNode, preSql, webParams);
+					deepSetSubNodeText(otherNamespace, includeNode, preSql, params);
 				} else {
 					Map<String, Node> nodeCahce = nodeCaches.get(namespace);
 					Node includeNode = nodeCahce.get(refid);
-					deepSetSubNodeText(namespace, includeNode, preSql, webParams);
+					deepSetSubNodeText(namespace, includeNode, preSql, params);
 				}
 			} else if (MapperTag.SQL.getCode().equals(nodeName)) {
 				NodeList nodeList = node.getChildNodes();
 				for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 					Node subNode = nodeList.item(i);
-					deepSetSubNodeText(namespace, subNode, preSql, webParams);
+					deepSetSubNodeText(namespace, subNode, preSql, params);
 				}
 			} else if (MapperTag.WHERE.getCode().equals(nodeName)) {
 				preSql.append("WHERE 1 = 1 \n");
 				NodeList nodeList = node.getChildNodes();
 				for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 					Node subNode = nodeList.item(i);
-					deepSetSubNodeText(namespace, subNode, preSql, webParams);
+					deepSetSubNodeText(namespace, subNode, preSql, params);
 				}
 			} else if (MapperTag.IF.getCode().equals(nodeName)) {
 				NamedNodeMap namedNodeMap = node.getAttributes();
@@ -198,11 +198,11 @@ public class DaoMapper {
 					}
 				}
 				//如果表达式校验通过，则递归获取节点内容
-				if (DaoOgnl.test(express, webParams)) {
+				if (DaoOgnl.test(express, params)) {
 					NodeList nodeList = node.getChildNodes();
 					for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 						Node subNode = nodeList.item(i);
-						deepSetSubNodeText(namespace, subNode, preSql, webParams);
+						deepSetSubNodeText(namespace, subNode, preSql, params);
 					}
 				}
 			} else if (MapperTag.FOREACH.getCode().equals(nodeName)) {
@@ -211,11 +211,11 @@ public class DaoMapper {
 				NodeList nodeList = node.getChildNodes();
 				for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 					Node subNode = nodeList.item(i);
-					deepSetSubNodeText(namespace, subNode, forEachPreSql, webParams);
+					deepSetSubNodeText(namespace, subNode, forEachPreSql, params);
 				}
 				String sql = forEachPreSql.toString();
 				NamedNodeMap attributes = node.getAttributes();
-				String sqls = DaoOgnl.foreach(sql, webParams, attributes);
+				String sqls = DaoOgnl.foreach(sql, params, attributes);
 				preSql.append(sqls);
 			} else {
 				throw new BizException(FrameException.FRAME_MAPPER_NODE_SQL_INVALID, nodeName);

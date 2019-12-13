@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.Current;
+import com.xanglong.frame.entity.BasePage;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.i18n.zh_cn.FrameException;
 
@@ -59,7 +60,7 @@ public class DaoFactory {
 	 * */
 	private static PrepareSql getPrepareSql(DaoParam daoParam) {
 		/*参数准备*/
-		JSONObject webParams = daoParam.getWebParams();//前端入参
+		JSONObject params = daoParam.getParams();//前端入参
 		PrepareSql prepareSql = new PrepareSql();//预编译SQL对象
 		StringBuilder prepareSB = new StringBuilder();//预编译SQL
 		StringBuilder executeSB = new StringBuilder();//可执行SQL
@@ -80,12 +81,12 @@ public class DaoFactory {
 						c = sqlChars[i];
 						if (c == '}') {
 							//当匹配到了有参数名称时，则参数不能为空
-							if (webParams == null || webParams.isEmpty()) {
+							if (params == null || params.isEmpty()) {
 								throw new BizException(FrameException.FRAME_SQL_PARAM_NULL);
 							}
 							//参数对象中必须包含指定参数名称的参数
 							String key = keyTempSB.toString();
-							if (!webParams.containsKey(key)) {
+							if (!params.containsKey(key)) {
 								throw new BizException(FrameException.FRAME_SQL_MISS_PARAM, key);
 							}
 							if (start == '#') {
@@ -94,10 +95,10 @@ public class DaoFactory {
 								//缓存参数名称
 								keySB.append(keyTempSB).append(",");
 								//所有参数值都包裹上英文单引号符号，保证SQL语句不报类型错误
-								executeSB.append("'").append(webParams.getString(keyTempSB.toString())).append("'");
+								executeSB.append("'").append(params.getString(keyTempSB.toString())).append("'");
 							} else if (start == '$') {
 								//这里面就不能再有#{}这种操作了，递归搞死人，然后校验也不做了，开发的时候自测即可
-								String value = webParams.getString(key);
+								String value = params.getString(key);
 								//预编译SQL语句完整替换
 								prepareSB.append(value);
 								//可执行SQL语句完整替换
@@ -149,11 +150,11 @@ public class DaoFactory {
 		PrepareSql prepareSql = getPrepareSql(daoParam);
 		String preSql = prepareSql.getPreSql();
 		String[] keys = prepareSql.getKeys();
-		JSONObject webParams = daoParam.getWebParams();
+		JSONObject params = daoParam.getParams();
 		int rt = -1;
 		try (PreparedStatement preparedStatement = connection.prepareStatement(preSql);) {
 			for (int i = 0; i < keys.length; i++) {
-				preparedStatement.setObject(i + 1, webParams.get(keys[i]));
+				preparedStatement.setObject(i + 1, params.get(keys[i]));
 			}
 			rt = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -172,11 +173,11 @@ public class DaoFactory {
 		PrepareSql prepareSql = getPrepareSql(daoParam);
 		String preSql = prepareSql.getPreSql();
 		String[] keys = prepareSql.getKeys();
-		JSONObject webParams = daoParam.getWebParams();
+		JSONObject params = daoParam.getParams();
 		int rt = -1;
 		try (PreparedStatement preparedStatement = connection.prepareStatement(preSql);) {
 			for (int i = 0; i < keys.length; i++) {
-				preparedStatement.setObject(i + 1, webParams.get(keys[i]));
+				preparedStatement.setObject(i + 1, params.get(keys[i]));
 			}
 			rt = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -195,11 +196,11 @@ public class DaoFactory {
 		PrepareSql prepareSql = getPrepareSql(daoParam);
 		String preSql = prepareSql.getPreSql();
 		String[] keys = prepareSql.getKeys();
-		JSONObject webParams = daoParam.getWebParams();
+		JSONObject params = daoParam.getParams();
 		int rt = -1;
 		try (PreparedStatement preparedStatement = connection.prepareStatement(preSql);) {
 			for (int i = 0; i < keys.length; i++) {
-				preparedStatement.setObject(i + 1, webParams.get(keys[i]));
+				preparedStatement.setObject(i + 1, params.get(keys[i]));
 			}
 			rt = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -219,12 +220,12 @@ public class DaoFactory {
 		PrepareSql prepareSql = getPrepareSql(daoParam);
 		String preSql = prepareSql.getPreSql();
 		String[] keys = prepareSql.getKeys();
-		PageParam pageParam = daoParam.getPageParam();
-		JSONObject webParams = daoParam.getWebParams();
+		BasePage basePage = daoParam.getPage();
+		JSONObject webParams = daoParam.getParams();
 		//分页参数不为空，则要处理分页查询数据
-		if (pageParam != null && pageParam.getLength() != 0) {
+		if (basePage != null && basePage.getLength() != 0) {
 			//如果统计总条数
-			if (pageParam.getIsCount()) {
+			if (basePage.getIsCount()) {
 				String upperPreSql = Pattern.compile("\r|\n").matcher(preSql.toUpperCase()).replaceAll("");
 				//考虑到ORDER BY中间可以写空格，所以这里只能用ORDER快捷处理
 				int indexOfOrder = upperPreSql.lastIndexOf("ORDER");
@@ -248,7 +249,7 @@ public class DaoFactory {
 						daoVo.setTotalCount(resultSet.getInt("TOTALCOUNT"));
 					}
 				}
-				preSql += " LIMIT " + pageParam.getStart() + " , " + pageParam.getLength();
+				preSql += " LIMIT " + basePage.getStart() + " , " + basePage.getLength();
 			}
 		}
 		try (PreparedStatement preparedStatement = connection.prepareStatement(preSql);) {

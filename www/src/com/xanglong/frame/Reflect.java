@@ -38,11 +38,11 @@ public class Reflect {
 	}
 	
 	/**
-	* 获取方法泛型参数类型
+	* 获取方法泛型参数返回类型
 	* @param method 方法
 	* @return typeList 参数类型列表
 	*/
-	public static List<Class<?>> getParameterTypeClassList(Method method) {
+	public static List<Class<?>> getReturnTypes(Method method) {
 		List<Class<?>> typeList = new ArrayList<>();
 		Type[] genericParameterTypes = method.getGenericParameterTypes();
 		for (Type genericParameterType : genericParameterTypes) {
@@ -54,6 +54,25 @@ public class Reflect {
 			}
 		}
 		return typeList;
+	}
+	
+	/**
+	 * 获取对象所有定义字段
+	 * @param clazz 类对象
+	 * @return fields 字段数组
+	 * */
+	public static Field[] getAllDeclaredFields(Class<?> clazz){
+		List<Field> fieldList = new ArrayList<>();
+		while (clazz != null){
+			Field[] fields = clazz.getDeclaredFields();
+			for (Field field : fields) {
+				fieldList.add(field);
+			}
+			clazz = clazz.getSuperclass();
+		}
+		Field[] fields = new Field[fieldList.size()];
+		fieldList.toArray(fields);
+		return fields;
 	}
 	
 }

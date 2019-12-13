@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.Reflect;
 import com.xanglong.frame.config.Const;
 import com.xanglong.frame.dao.Dao;
+import com.xanglong.frame.entity.BasePage;
 import com.xanglong.frame.entity.BasePo;
 import com.xanglong.frame.entity.BaseSo;
 import com.xanglong.frame.entity.BaseVo;
@@ -107,7 +108,7 @@ public class MyDispatcher extends HttpServlet {
 					throw new BizException(FrameException.FRAME_REQUEST_NOT_ARRAY_PARAMETER, paramName);
 				}
 				//如果是数组参数，则其一定有泛型类型，获取其泛型类型结构，我就不做成Spring那样强大了，只支持一维数组
-				parameterType = Reflect.getParameterTypeClassList(method).get(0);
+				parameterType = Reflect.getReturnTypes(method).get(0);
 				List<Object> listParams = new ArrayList<>(listBodyParams.size());
 				for (int j = 0, size = listBodyParams.size(); j < size; j++) {
 					//只支持在数组中嵌套对象，嵌套数组这种复杂操作不支持
@@ -142,7 +143,7 @@ public class MyDispatcher extends HttpServlet {
 	 * */
 	private Object getMethodParam(Class<?> parameterType, JSONObject bodyParams, String paramName) {
 		if (BasePo.class.isAssignableFrom(parameterType)) {
-			Object obj = EntityUtil.getPo(bodyParams, parameterType);
+			Object obj = EntityUtil.getBean(bodyParams, parameterType);
 			if (obj == null) {
 				throw new BizException(FrameException.FRAME_REQUEST_PARAMETER_NULL, paramName);
 			}
@@ -150,7 +151,7 @@ public class MyDispatcher extends HttpServlet {
 			EntityValidation.doVerificatio(obj);
 			return obj;
 		} else if (BaseVo.class.isAssignableFrom(parameterType)) {
-			Object obj = EntityUtil.getVo(bodyParams, parameterType);
+			Object obj = EntityUtil.getBean(bodyParams, parameterType);
 			if (obj == null) {
 				throw new BizException(FrameException.FRAME_REQUEST_PARAMETER_NULL, paramName);
 			}
@@ -158,7 +159,15 @@ public class MyDispatcher extends HttpServlet {
 			EntityValidation.doVerificatio(obj);
 			return obj;
 		} else if (BaseSo.class.isAssignableFrom(parameterType)) {
-			Object obj = EntityUtil.getSo(bodyParams, parameterType);
+			Object obj = EntityUtil.getBean(bodyParams, parameterType);
+			if (obj == null) {
+				throw new BizException(FrameException.FRAME_REQUEST_PARAMETER_NULL, paramName);
+			}
+			//实体参数校验
+			EntityValidation.doVerificatio(obj);
+			return obj;
+		} else if (BasePage.class.isAssignableFrom(parameterType)) {
+			Object obj = EntityUtil.getBean(bodyParams, parameterType);
 			if (obj == null) {
 				throw new BizException(FrameException.FRAME_REQUEST_PARAMETER_NULL, paramName);
 			}

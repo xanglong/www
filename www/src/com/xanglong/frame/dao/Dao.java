@@ -154,8 +154,8 @@ public class Dao {
 				sqlSB3.append(line).append("\n");
 			}
 		}
-		JSONObject webParams = daoParam.getWebParams();
-		System.out.println(dateTime + " 参数：" + (webParams == null ? null : webParams.toJSONString()));
+		JSONObject params = daoParam.getParams();
+		System.out.println(dateTime + " 参数：" + (params == null ? null : params.toJSONString()));
 		System.out.println(dateTime + " 原始：" + sqlSB1.toString());
 		System.out.println(dateTime + " 执行：" + sqlSB4.toString());
 		System.out.print(dateTime + " 原始：" + sqlSB2.toString());
