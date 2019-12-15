@@ -139,11 +139,13 @@ public class ThrowableHandler {
 	 * @param response 响应对象
 	 * */
 	private static void responseResult(String code, String message, HttpServletResponse response) {
-		Result result = new Result();
-		result.setSuccess(false);
-		result.setCode(code);
-		result.setMessage(message);
-		HttpUtil.responseText(response, ContentType.JSON, JSONObject.toJSONString(result));
+		if (response != null) {
+			Result result = new Result();
+			result.setSuccess(false);
+			result.setCode(code);
+			result.setMessage(message);
+			HttpUtil.responseText(response, ContentType.JSON, JSONObject.toJSONString(result));
+		}
 	}
 	
 }

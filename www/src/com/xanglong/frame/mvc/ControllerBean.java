@@ -66,7 +66,7 @@ public class ControllerBean {
 	 * @param requestURI 请求地址
 	 * @return 控制类实例对象
 	 * */
-	public static Object getController(String requestURI) {
+	protected static Object getController(String requestURI) {
 		return controllers.get(requestURI);
 	}
 
@@ -75,7 +75,7 @@ public class ControllerBean {
 	 * @param requestURI 请求地址
 	 * @return 定义在控制类下的方法实体
 	 * */
-	public static Method getMethod(String requestURI) {
+	protected static Method getMethod(String requestURI) {
 		return methods.get(requestURI);
 	}
 	

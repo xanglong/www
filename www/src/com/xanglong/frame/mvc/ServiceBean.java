@@ -13,16 +13,30 @@ import java.util.jar.JarFile;
 
 import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Const;
+import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.proxy.ProxyManager;
+import com.xanglong.i18n.zh_cn.FrameException;
 
 /**业务层Bean*/
 public class ServiceBean {
 
 	private static Map<String, Object> services = new HashMap<String, Object>();
-
+	
+	/**
+	 * 是否包含类缓存
+	 * @param key 类名
+	 * @return 是否包含
+	 * */
+	protected static boolean containsKey(String key) {
+		return services.containsKey(key);
+	}
+	
 	/**初始化*/
 	public void init() throws IOException, ClassNotFoundException {
 		String[] servicePackages = Sys.getConfig().getPackages().getService();
+		//先扫描一遍所有接口类和实现类的映射关系
+		new MvcManager().findAllInterfaceClassMap(servicePackages);
+		//然后开始扫描业务层
 		for (String servicePackage : servicePackages) {
 			Enumeration<URL> urls = ServiceBean.class.getClassLoader().getResources(servicePackage.replace('.', '/'));
 			while (urls.hasMoreElements()) {
@@ -45,21 +59,53 @@ public class ServiceBean {
 	 * @param clazz 类
 	 * */
 	protected void handlerServiceByClass(Class<?> clazz) {
-		MyService myService = clazz.getDeclaredAnnotation(MyService.class);
-		if (myService == null) {
-			return;
-		}
 		MvcManager mvcManager = new MvcManager();
+		boolean isInterface = clazz.isInterface();
+		//如果是注入的接口类，那么要做一层判断
+		Class<?> implementClass = null;
+		if (isInterface) {
+			String interfaceName = clazz.getName();
+			//业务层的实现类一定能找到
+			implementClass = MvcManager.getImplementClass(interfaceName);
+			if (implementClass == null) {
+				throw new BizException(FrameException.FRAME_INTERFACE_HAS_NO_IMPLEMENT_CLASS, interfaceName);
+			}
+		} else {
+			implementClass = clazz;
+			MyService myService = implementClass.getDeclaredAnnotation(MyService.class);
+			if (myService == null) {
+				return;
+			}
+		}
 		//由于会被交叉引用，所以如果存在就跳过设置
 		if (mvcManager.isExist(clazz.getName())) {
 			return;
 		}
-		Object object = new ProxyManager().getServiceInstance(clazz);
-		//设置索引
+		//根据接口类查找实现类
+		Object implementObject = services.get(implementClass.getName());
+		if (implementObject == null) {
+			try {
+				implementObject = implementClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new BizException(e);
+			}
+		}
+		Object object = null;
+		if (isInterface) {
+			object = new ProxyManager().getServiceInstance(implementObject);
+		} else {
+			object = implementObject;
+		}
+		//接口类被自动注入，扫描的时候要把实现类补上
+		if (isInterface) {
+			mvcManager.setIndex(implementClass.getName(), BeanType.SERVICE);
+			services.put(implementClass.getName(), implementObject);
+		}
 		mvcManager.setIndex(clazz.getName(), BeanType.SERVICE);
 		services.put(clazz.getName(), object);
-		//设置自动注入类
-		mvcManager.setAutowiredBean(object);
+		if (!isInterface) {
+			mvcManager.setAutowiredBean(object);
+		}
 	}
 	
 	/**
@@ -67,11 +113,15 @@ public class ServiceBean {
 	 * @param key 类的名称
 	 * @return 类的实例对象
 	 * */
-	public Object getService(String key) throws ClassNotFoundException {
+	protected static Object getService(String key) {
 		Object obj = services.get(key);
 		//处理自动注入时解析成员变量的Bean对象的问题
 		if (obj == null) {
-			handlerServiceByClass(Class.forName(key));
+			try {
+				new ServiceBean().handlerServiceByClass(Class.forName(key));
+			} catch (ClassNotFoundException e) {
+				throw new BizException(e);
+			}
 			obj = services.get(key);
 		}
 		return obj;

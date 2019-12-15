@@ -28,6 +28,7 @@ public class Reflect {
 				try {
 					target = field.get(obj);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
+					field.setAccessible(isAccessible);
 					throw new BizException(e);
 				}
 				field.setAccessible(isAccessible);

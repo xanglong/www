@@ -19,6 +19,15 @@ import com.xanglong.frame.exception.BizException;
 public class ComponentBean {
 
 	private static Map<String, Object> components = new HashMap<String, Object>();
+	
+	/**
+	 * 是否包含类缓存
+	 * @param key 类名
+	 * @return 是否包含
+	 * */
+	public static boolean containsKey(String key) {
+		return components.containsKey(key);
+	}
 
 	/**初始化*/
 	public void init() {
@@ -47,7 +56,7 @@ public class ComponentBean {
 	 * 缓存有@MyComponent注解的类
 	 * @param clazz 类
 	 * */
-	public void handlerComponentByClass(Class<?> clazz) {
+	protected void handlerComponentByClass(Class<?> clazz) {
 		MyComponent myComponent = clazz.getDeclaredAnnotation(MyComponent.class);
 		if (myComponent == null) {
 			return;
@@ -73,11 +82,11 @@ public class ComponentBean {
 	 * @param key 类的名称
 	 * @return 类的实例
 	 * */
-	public Object getComponent(String key) {
+	protected static Object getComponent(String key) {
 		Object obj = components.get(key);
 		if (obj == null) {
 			try {
-				handlerComponentByClass(Class.forName(key));
+				new ComponentBean().handlerComponentByClass(Class.forName(key));
 			} catch (ClassNotFoundException e) {
 				throw new BizException(e);
 			}

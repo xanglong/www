@@ -36,6 +36,7 @@ public class EntityValidation {
 					checkEncapsulationParam(obj, field, myVerification);
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
+				field.setAccessible(isAccessible);
 				throw new BizException(e);
 			}
 			field.setAccessible(isAccessible);
