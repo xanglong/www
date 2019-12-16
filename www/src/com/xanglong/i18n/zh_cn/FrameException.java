@@ -66,6 +66,7 @@ public enum FrameException implements IException, I18n {
 	FRAME_INTERFACE_HAS_NO_IMPLEMENT_CLASS("接口{0}没有实现类"),
 	FRAME_PLEASE_USE_IMPLEMENT_CLASS("接口{0}找不到实现类，请使用实现类代替注入"),
 	FRAME_NEED_IMPLEMENT_OBJECT("需要实现类对象"),
+	FRAME_NO_PROXY_SLAVE_SERVER("无可用从服务器可用"),
 	;
 	
 	private String code;

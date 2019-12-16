@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.xanglong.frame.Current;
 import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.ConfigManager;
+import com.xanglong.frame.config.EdiConst;
 import com.xanglong.frame.config.Proxy;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
@@ -30,8 +31,11 @@ public class Filter implements javax.servlet.Filter {
 	
 	public void init(FilterConfig filterConfig) {
 		try {
+			ConfigManager configManager = new ConfigManager();
 			//加载配置
-			new ConfigManager().loadConfig();
+			configManager.loadConfig();
+			//注册服务
+			configManager.registerServer();
 		} catch (Throwable exception) {
 			ThrowableHandler.dealException(exception);
 			//配置加载失败的情况，整个应用退出，必须把异常处理好
@@ -45,11 +49,12 @@ public class Filter implements javax.servlet.Filter {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
+		String uri = request.getRequestURI();
 		try {
 			//校验请求
 			checkRequest(request);
 			Proxy proxy = Sys.getConfig().getProxy();
-			if (proxy.getIsOpen() && proxy.getIsProxy()) {
+			if (proxy.getIsOpen() && proxy.getIsProxy() && !uri.startsWith(EdiConst.EDI_FRAME)) {
 				//代理的非业务异常会被系统捕获处理
 				HttpProxy.forward(request, response);
 			} else {

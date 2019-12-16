@@ -1,5 +1,7 @@
 package com.xanglong.frame.net;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,8 +30,11 @@ public class HttpProxy {
 		headerParams.put(Header.PROXY_AUTHORIZATION, proxy.getAuthorization());
 		requestDto.setHeaderParams(headerParams);
 		//获取要随机转发的服务器地址
-		String[] hosts = proxy.getHosts();
-		String host = hosts[MathUtil.getRandomIndex(hosts.length)];
+		List<String> hosts = proxy.getHosts();
+		if (hosts.size() == 0) {
+			throw new BizException(FrameException.FRAME_NO_PROXY_SLAVE_SERVER);
+		}
+		String host = hosts.size() > 1 ? hosts.get(MathUtil.getRandomIndex(hosts.size())) : hosts.get(0);
 		//获取查询参数，并设置目标服务器请求地址，GET和POST都支持
 		String query = request.getQueryString();
 		query = query == null ? "" : "?" + query;
@@ -57,6 +62,7 @@ public class HttpProxy {
 	public static void authorize(HttpServletRequest request) {
 		Proxy proxy = Sys.getConfig().getProxy();
 		String authorization = proxy.getAuthorization();
+		JSONObject headerParams = HttpUtil.getHeaderParams(request);
 		String proxyAuthorization = request.getHeader(Header.PROXY_AUTHORIZATION);
 		//转发凭证不能为空
 		if (StringUtil.isBlank(proxyAuthorization)) {

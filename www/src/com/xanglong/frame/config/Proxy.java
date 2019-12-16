@@ -1,5 +1,7 @@
 package com.xanglong.frame.config;
 
+import java.util.List;
+
 public class Proxy {
 	
 	/**代理是否开启*/
@@ -15,7 +17,13 @@ public class Proxy {
 	private String ip;
 	
 	/**可转发的服务器地址，这里用HTTP转发，本项目用的tomcat可以用AJP做集群*/
-	private String[] hosts;
+	private List<String> hosts;
+	
+	/**当前服务器暴露地址*/
+	private String thisHost;
+	
+	/**主服务器暴露地址*/
+	private String host;
 
 	public boolean getIsOpen() {
 		return isOpen;
@@ -49,12 +57,28 @@ public class Proxy {
 		this.ip = ip;
 	}
 
-	public String[] getHosts() {
+	public List<String> getHosts() {
 		return hosts;
 	}
 
-	public void setHosts(String[] hosts) {
+	public void setHosts(List<String> hosts) {
 		this.hosts = hosts;
+	}
+
+	public String getThisHost() {
+		return thisHost;
+	}
+
+	public void setThisHost(String thisHost) {
+		this.thisHost = thisHost;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 }
