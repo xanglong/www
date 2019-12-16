@@ -2,6 +2,7 @@ package com.xanglong.frame.entity;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
@@ -10,6 +11,8 @@ import org.jsoup.safety.Whitelist;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.util.StringUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
+
+import javassist.bytecode.Descriptor.Iterator;
 
 /**实体对象校验*/
 public class EntityValidation {
@@ -33,6 +36,7 @@ public class EntityValidation {
 					checkEncapsulationParam(obj, field, myVerification);
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
+				field.setAccessible(isAccessible);
 				throw new BizException(e);
 			}
 			field.setAccessible(isAccessible);
@@ -78,11 +82,17 @@ public class EntityValidation {
 				checkChar(myVerification, ((Character) value).charValue());
 			} else if (Byte.class == fieldClass) {
 			} else {
-				//递归校验内部对象
 				if (fieldClass.isArray()) {
-					//校验数组
+					//数组对象
 					for (int i = 0, length = Array.getLength(value); i < length; i++) {
-						doVerificatio(Array.get(value, 0));
+						doVerificatio(Array.get(value, i));
+					}
+				} else if (Collection.class.isAssignableFrom(fieldClass)) {
+					//集合对象
+					Collection<?> valueCollection = (Collection<?>) value;
+					Iterator it = (Iterator) valueCollection.iterator();
+					while(it.hasNext()){
+						doVerificatio(it.next());
 					}
 				} else {
 					doVerificatio(value);

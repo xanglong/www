@@ -22,6 +22,15 @@ public class RepositoryBean {
 
 	private static Map<String, Object> daos = new HashMap<String, Object>();
 	
+	/**
+	 * 是否包含类缓存
+	 * @param key 类名
+	 * @return 是否包含
+	 * */
+	protected static boolean containsKey(String key) {
+		return daos.containsKey(key);
+	}
+	
 	/**初始化*/
 	public void init() {
 		String[] daoPackages = Sys.getConfig().getPackages().getDao();
@@ -68,7 +77,7 @@ public class RepositoryBean {
 	 * @param key 类名字符串
 	 * @return bean实例
 	 * */
-	public Object getRepository(String key) {
+	protected static Object getRepository(String key) {
 		return daos.get(key);
 	}
 

@@ -60,7 +60,12 @@ public enum FrameException implements IException, I18n {
 	FRAME_VALIDATION_VALUE_INVALID("{0}的值非法，不符合规则"),
 	FRAME_COPY_FILE_EXIST("目标文件{0}已存在，但是是个文件夹"),
 	FRAME_COPY_FILE_FAIL("从文件{0}复制到文件{1}失败"),
-	FRAME_MYAUTOWIRED_CANNOT_BE_INTERFACE("@MyAutowired不允许自动注入类{0}，请换成实现类"),
+	FRAME_METHOD_PARAMETER_INVALID("不支持的对象类型{0}"),
+	FRAME_MOST_ONE_KEY_IN_THE_RESULT("查询结果最多只能有一个字段才可以正确返回集合结构"),
+	FRAME_INTERFACE_HAS_IMPLEMENT_CLASS("接口{0}已有实现类{1}"),
+	FRAME_INTERFACE_HAS_NO_IMPLEMENT_CLASS("接口{0}没有实现类"),
+	FRAME_PLEASE_USE_IMPLEMENT_CLASS("接口{0}找不到实现类，请使用实现类代替注入"),
+	FRAME_NEED_IMPLEMENT_OBJECT("需要实现类对象"),
 	;
 	
 	private String code;

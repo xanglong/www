@@ -1,7 +1,7 @@
-package com.xanglong.frame.dao;
+package com.xanglong.frame.entity;
 
 /**分页查询实体*/
-public class PageParam {
+public class BasePage {
 
 	/**开始行*/
 	private int start = 0;

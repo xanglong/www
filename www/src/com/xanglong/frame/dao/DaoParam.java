@@ -1,6 +1,7 @@
 package com.xanglong.frame.dao;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xanglong.frame.entity.BasePage;
 
 public class DaoParam {
 	
@@ -8,10 +9,10 @@ public class DaoParam {
 	private String sql;
 
 	/**前端入参*/
-	private JSONObject webParams;
+	private JSONObject params;
 
 	/**分页参数*/
-	private	PageParam pageParam;
+	private	BasePage page;
 	
 	/**可执行SQL*/
 	private String exeSql;
@@ -24,20 +25,20 @@ public class DaoParam {
 		this.sql = sql;
 	}
 
-	public JSONObject getWebParams() {
-		return webParams;
+	public JSONObject getParams() {
+		return params;
 	}
 
-	public void setWebParams(JSONObject webParams) {
-		this.webParams = webParams;
+	public void setParams(JSONObject params) {
+		this.params = params;
 	}
 
-	public PageParam getPageParam() {
-		return pageParam;
+	public BasePage getPage() {
+		return page;
 	}
 
-	public void setPageParam(PageParam pageParam) {
-		this.pageParam = pageParam;
+	public void setPage(BasePage page) {
+		this.page = page;
 	}
 
 	public String getExeSql() {
