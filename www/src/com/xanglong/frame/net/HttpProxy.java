@@ -62,7 +62,6 @@ public class HttpProxy {
 	public static void authorize(HttpServletRequest request) {
 		Proxy proxy = Sys.getConfig().getProxy();
 		String authorization = proxy.getAuthorization();
-		JSONObject headerParams = HttpUtil.getHeaderParams(request);
 		String proxyAuthorization = request.getHeader(Header.PROXY_AUTHORIZATION);
 		//转发凭证不能为空
 		if (StringUtil.isBlank(proxyAuthorization)) {
