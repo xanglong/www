@@ -286,6 +286,8 @@ public class MvcManager {
 	
 	/**
 	 * 公开获取获取Bean对象
+	 * @param clazz 类
+	 * @return bean对象
 	 * */
 	public static Object getImplementBean(Class<?> clazz) {
 		String key = clazz.getName();

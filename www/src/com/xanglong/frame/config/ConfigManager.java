@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,6 +17,9 @@ import com.xanglong.frame.dao.DaoMapper;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
 import com.xanglong.frame.mvc.MvcManager;
+import com.xanglong.frame.net.Header;
+import com.xanglong.frame.net.HttpUtil;
+import com.xanglong.frame.net.RequestDto;
 import com.xanglong.frame.util.BaseUtil;
 import com.xanglong.frame.util.EntityUtil;
 import com.xanglong.i18n.LanguageManager;
@@ -70,7 +75,12 @@ public class ConfigManager {
 		}
 	}
 	
-	/**设置Properties配置*/
+	/**
+	 * 设置Properties配置
+	 * @param clazz 配置实体类
+	 * @param file 配置文件
+	 * @return 配置实体
+	 * */
 	private Object setProperties(Class<?> clazz, File file) {
 		Properties properties = new Properties();
 		try (FileInputStream fileInputStream = new FileInputStream(file);
@@ -87,7 +97,12 @@ public class ConfigManager {
 		return EntityUtil.getBean(JO, clazz);
 	}
 
-	/**递归设值*/
+	/**
+	 * 递归设值
+	 * @param JO JSON对象
+	 * @param key 键
+	 * @param value 值
+	 * */
 	private void setValue(JSONObject JO, String key, String value) {
 		String[] keys = key.split("\\.");
 		String key0 = keys[0];
@@ -123,7 +138,11 @@ public class ConfigManager {
 		}
 	}
 	
-	/**获取配置*/
+	/**
+	 * 获取配置
+	 * @param key 配置文件名称
+	 * @return 配置实体对象
+	 * */
 	private static Object getConfig(String key) {
 		//如果没有配置缓存说明就没有初始化过，直接重置配置
 		if (!configMap.containsKey(key)) {
@@ -145,6 +164,76 @@ public class ConfigManager {
 	/**获取百度富文本配置*/
 	public static UeditorConfig getUeditorConfig() {
 		return (UeditorConfig)getConfig(Const.UEDITOR_PROPERTIES);
+	}
+	
+	/**
+	 * 注册服务器信息
+	 * */
+	public void registerServer() {
+		//获取代理配置
+		Proxy proxy = getConfig().getProxy();
+		//如果不启用代理，则不管
+		if (!proxy.getIsOpen()) {
+			return;
+		}
+		if (proxy.getIsProxy()) {
+			//设置可用的从服务器
+			setHosts4MasterStart(proxy);
+		} else {
+			//向主服务器注册配置信息
+			setHost4SlaveStart(proxy);
+		}
+
+	}
+	
+	/**
+	 * 设置可用的从服务器
+	 * @param proxy 代理配置
+	 * */
+	private void setHost4SlaveStart(Proxy proxy) {
+		//如果主服务器没起来，那么忽略错误，等主服务器起来来反调用从服务器
+		try {
+			RequestDto requestDto = new RequestDto();
+			JSONObject headerParams = new JSONObject();
+			headerParams.put(Header.PROXY_AUTHORIZATION, proxy.getAuthorization());
+			requestDto.setHeaderParams(headerParams);
+			requestDto.setUrl(proxy.getHost() + EdiConst.EDI_FRAME + EdiConst.PROXY_REGISTER_DO + "?host=" + proxy.getThisHost());
+			HttpUtil.doGet(requestDto);
+		} catch(BizException e) {
+			Throwable throwable = e.getThrowable();
+			//如果不是连接拒绝错误，则抛出异常出去
+			if (throwable == null || !"Connection refused: connect".equals(throwable.getMessage())) {
+				throw e;
+			}
+		}
+	}
+	
+	/**
+	 * 设置可用的从服务器
+	 * @param proxy 代理配置
+	 * */
+	private void setHosts4MasterStart(Proxy proxy) {
+		List<String> hosts = new ArrayList<>(); 
+		//如果当前是代理服务器，依次验证所有从服务器是否启动，没启动的从配置中移除
+		for (String host : proxy.getHosts()) {
+			try {
+				RequestDto requestDto = new RequestDto();
+				JSONObject headerParams = new JSONObject();
+				headerParams.put(Header.PROXY_AUTHORIZATION, proxy.getAuthorization());
+				requestDto.setHeaderParams(headerParams);
+				requestDto.setUrl(host);
+				HttpUtil.doGet(requestDto);
+				hosts.add(host);
+			} catch(BizException e) {
+				Throwable throwable = e.getThrowable();
+				//如果不是连接拒绝错误，则抛出异常出去
+				if (throwable == null || !"Connection refused: connect".equals(throwable.getMessage())) {
+					throw e;
+				}
+			}
+		}
+		//重置可用的服务器列表
+		proxy.setHosts(hosts);
 	}
 
 }

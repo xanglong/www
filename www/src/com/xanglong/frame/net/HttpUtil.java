@@ -46,7 +46,6 @@ public class HttpUtil {
 	 * */
 	public static void responseText(HttpServletResponse response, ContentType contentType, String text) {
 		response.resetBuffer();
-		response.addHeader(Header.CONTENT_LENGTH, "" + text.length());
 		response.setContentType(contentType.getCode() + ";charset=" + Const.CHARSET_STR);
 		try (PrintWriter printWriter = response.getWriter();) {
 			printWriter.append(text);
@@ -92,7 +91,6 @@ public class HttpUtil {
 	 * */
 	public static void responseImage(HttpServletResponse response, byte[] bytes, ImageType imageType, String imageName) {
 		response.resetBuffer();
-		response.addHeader(Header.CONTENT_LENGTH, "" + bytes.length);
 		response.setContentType(imageType.getType());
 		try (
 			ServletOutputStream sos = response.getOutputStream();
@@ -119,7 +117,6 @@ public class HttpUtil {
 	public static void responseFile(HttpServletResponse response, byte[] bytes, String fileName) {
 		response.resetBuffer();
 		response.setContentType(ContentType.FORM_DATA.getCode());
-		response.addHeader(Header.CONTENT_LENGTH, "" + bytes.length);
 		try (
 			OutputStream outputStream = response.getOutputStream();
 		){
@@ -141,6 +138,17 @@ public class HttpUtil {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setUrl(url);
 		return doRequest(requestDto, Method.GET);
+	}
+	
+	/**
+	 * 执行POST请求
+	 * @param url 请求地址
+	 * @return 响应结果
+	 * */
+	public static ResponseDto doPost(String url) {
+		RequestDto requestDto = new RequestDto();
+		requestDto.setUrl(url);
+		return doRequest(requestDto, Method.POST);
 	}
 	
 	/**
