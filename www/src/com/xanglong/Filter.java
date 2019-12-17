@@ -56,7 +56,7 @@ public class Filter implements javax.servlet.Filter {
 			Proxy proxy = Sys.getConfig().getProxy();
 			if (proxy.getIsOpen() && proxy.getIsProxy() && !uri.startsWith(EdiConst.EDI_FRAME)) {
 				//代理的非业务异常会被系统捕获处理
-				HttpProxy.forward(request, response);
+				HttpProxy.forward(request, response, null);
 			} else {
 				//如果开启了代理，则需要做授权
 				if (proxy.getIsOpen()) {

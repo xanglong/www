@@ -1,5 +1,6 @@
 package com.xanglong.frame.net;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,9 @@ public class HttpProxy {
 	 * 执行代理转发服务，作为代理不应该处理异常，所以抛出所有异常
 	 * @param request 请求对象
 	 * @param response 响应对象
+	 * @param bytes 二进制数据
 	 * */
-	public static void forward(HttpServletRequest request, HttpServletResponse response) {
+	public static void forward(HttpServletRequest request, HttpServletResponse response, byte[] bytes) {
 		Proxy proxy = Sys.getConfig().getProxy();
 		RequestDto requestDto = new RequestDto();
 		//设置请求类型
@@ -42,18 +44,38 @@ public class HttpProxy {
 		requestDto.setUrl(url);
 		String method = request.getMethod();
 		ResponseDto responseDto = null;
-		if (Method.GET.getCode().equals(method)) {
-			responseDto = HttpUtil.doGet(requestDto);
-		} else if (Method.POST.getCode().equals(method)) {
-			requestDto.setBytes(HttpUtil.getBytes(request));
-			responseDto = HttpUtil.doPost(requestDto);
-		} else {
-			throw new BizException(FrameException.FRAME_REQUEST_METHOD_INVALID, method);
+		try {
+			if (Method.GET.getCode().equals(method)) {
+				responseDto = HttpUtil.doGet(requestDto);
+			} else if (Method.POST.getCode().equals(method)) {
+				//考虑到递归重试，二进制数据流不能被重复，那么可以用传参解决
+				bytes = bytes == null ? HttpUtil.getBytes(request) : bytes;
+				requestDto.setBytes(bytes);
+				responseDto = HttpUtil.doPost(requestDto);
+			} else {
+				throw new BizException(FrameException.FRAME_REQUEST_METHOD_INVALID, method);
+			}
+		} catch(BizException e) {
+			Throwable throwable = e.getThrowable();
+			//如果不是连接拒绝错误，则抛出异常出去
+			if (throwable != null && "Connection refused: connect".equals(throwable.getMessage())) {
+				//如果转发的从服务器连接拒绝，则当前服务器移除注册信息
+				List<String> newHosts = new ArrayList<>();
+				for (String hos : hosts) {
+					if (!hos.equals(host)) {
+						newHosts.add(hos);
+					}
+				}
+				proxy.setHosts(newHosts);
+				//移除没用的服务器后，继续转发当前请求
+				forward(request, response, bytes);
+			} else {
+				throw e;
+			}
 		}
 		//返回代理返回的结果
 		HttpUtil.responseDto(response, responseDto);
 	}
-	
 	
 	/**
 	 * 执行代理授权，过滤非法请求
