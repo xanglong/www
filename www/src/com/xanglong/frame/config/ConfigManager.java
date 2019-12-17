@@ -183,7 +183,6 @@ public class ConfigManager {
 			//向主服务器注册配置信息
 			setHost4SlaveStart(proxy);
 		}
-
 	}
 	
 	/**
