@@ -67,6 +67,8 @@ public enum FrameException implements IException, I18n {
 	FRAME_PLEASE_USE_IMPLEMENT_CLASS("接口{0}找不到实现类，请使用实现类代替注入"),
 	FRAME_NEED_IMPLEMENT_OBJECT("需要实现类对象"),
 	FRAME_NO_PROXY_SLAVE_SERVER("无可用从服务器可用"),
+	FRAME_GET_REQUEST_BYTES_DATA_INVALID("GET请求不支持发送二进制数据"),
+	FRAME_CAN_NOT_GET_REDIS("获取不到redis连接"),
 	;
 	
 	private String code;
