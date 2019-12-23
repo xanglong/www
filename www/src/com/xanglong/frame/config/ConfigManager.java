@@ -12,17 +12,12 @@ import java.util.Properties;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xanglong.frame.dao.DaoManager;
-import com.xanglong.frame.dao.DaoMapper;
 import com.xanglong.frame.exception.BizException;
-import com.xanglong.frame.exception.ThrowableHandler;
-import com.xanglong.frame.mvc.MvcManager;
 import com.xanglong.frame.net.Header;
 import com.xanglong.frame.net.HttpUtil;
 import com.xanglong.frame.net.RequestDto;
 import com.xanglong.frame.util.BaseUtil;
 import com.xanglong.frame.util.EntityUtil;
-import com.xanglong.i18n.LanguageManager;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 public class ConfigManager {
@@ -30,30 +25,11 @@ public class ConfigManager {
 	/**配置缓存*/
 	private static Map<String, Object> configMap = new HashMap<>();
 	
-	/**初始化配置*/
-	public void loadConfig() {
+	/**配置入口*/
+	public void init() {
 		if (!configMap.isEmpty()) {
 			return;
 		}
-		try {
-			//[1]配置
-			init();
-			//[2]语言
-			new LanguageManager().init();
-			//[3]MVC框架
-			new MvcManager().init();
-			//[4]Mapper解析
-			new DaoMapper().init();
-			//[5]数据库连接池
-			new DaoManager().init();
-		} catch (Throwable throwable) {
-			ThrowableHandler.dealException(throwable);
-			System.exit(1);
-		}
-	}
-
-	/**配置入口*/
-	public void init() {
 		String savePath = BaseUtil.getSavePath();
 		File configFile = new File(savePath + Const.CONFIG_FOLDER_NAME + "/");
 		if (!configFile.exists()) {
@@ -146,7 +122,7 @@ public class ConfigManager {
 	private static Object getConfig(String key) {
 		//如果没有配置缓存说明就没有初始化过，直接重置配置
 		if (!configMap.containsKey(key)) {
-			new ConfigManager().loadConfig();
+			new ConfigManager().init();
 		}
 		if (Const.CONFIG_PROPERTIES.equals(key)) {
 			return (Config)configMap.get(Const.CONFIG_PROPERTIES);

@@ -15,8 +15,10 @@ import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.ConfigManager;
 import com.xanglong.frame.config.EdiConst;
 import com.xanglong.frame.config.Proxy;
+import com.xanglong.frame.dao.DaoManager;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.frame.exception.ThrowableHandler;
+import com.xanglong.frame.mvc.MvcManager;
 import com.xanglong.frame.net.Header;
 import com.xanglong.frame.net.HttpProxy;
 import com.xanglong.frame.net.Method;
@@ -25,6 +27,7 @@ import com.xanglong.frame.net.SourceInfo;
 import com.xanglong.frame.net.SourceType;
 import com.xanglong.frame.session.Session;
 import com.xanglong.frame.util.StringUtil;
+import com.xanglong.i18n.LanguageManager;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 public class Filter implements javax.servlet.Filter {
@@ -32,9 +35,15 @@ public class Filter implements javax.servlet.Filter {
 	public void init(FilterConfig filterConfig) {
 		try {
 			ConfigManager configManager = new ConfigManager();
-			//加载配置
-			configManager.loadConfig();
-			//注册服务
+			//[1]加载配置
+			configManager.init();
+			//[2]语言
+			new LanguageManager().init();
+			//[3]MVC框架
+			new MvcManager().init();
+			//[4]数据库连接池
+			new DaoManager().init();
+			//[5]注册服务
 			configManager.registerServer();
 		} catch (Throwable exception) {
 			ThrowableHandler.dealException(exception);

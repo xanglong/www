@@ -444,6 +444,9 @@ public class HttpUtil {
 		byte[] postBytes = requestDto.getBytes();
 		String BOUNDARY = "------------" + StringUtil.getUUID();
 		if (Method.GET == method) {
+			if (postBytes != null) {
+				throw new BizException(FrameException.FRAME_GET_REQUEST_BYTES_DATA_INVALID);
+			}
 			int idx = url.indexOf("?");
 			String origin = idx == -1 ? url : url.substring(0, idx);
 			url = origin + "?" + getQuery(url, requestDto.getBodyParams());

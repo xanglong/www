@@ -50,6 +50,9 @@ public class Config {
 	/**事务控制*/
 	private Transaction transaction;
 	
+	/**Redis配置*/
+	private Redis redis;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -176,6 +179,14 @@ public class Config {
 
 	public void setTransaction(Transaction transaction) {
 		this.transaction = transaction;
+	}
+
+	public Redis getRedis() {
+		return redis;
+	}
+
+	public void setRedis(Redis redis) {
+		this.redis = redis;
 	}
 
 }

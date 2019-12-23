@@ -17,6 +17,7 @@ import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Const;
 import com.xanglong.frame.config.Transaction;
 import com.xanglong.frame.dao.Dao;
+import com.xanglong.frame.dao.DaoMapper;
 import com.xanglong.frame.exception.BizException;
 import com.xanglong.i18n.zh_cn.FrameException;
 
@@ -60,6 +61,8 @@ public class MvcManager {
 		new ComponentBean().init();
 		//控制层
 		new ControllerBean().init();
+		//Mapper解析
+		new DaoMapper().init();
 	}
 	
 	/**
