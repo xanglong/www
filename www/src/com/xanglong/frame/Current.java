@@ -8,7 +8,8 @@ import com.xanglong.frame.dao.DaoManager;
 import com.xanglong.frame.mvc.BeanType;
 import com.xanglong.frame.net.SourceInfo;
 import com.xanglong.frame.session.Session;
-import com.xanglong.frame.session.SessionData;
+import com.xanglong.frame.session.Context;
+import com.xanglong.frame.session.MySession;
 
 public class Current {
 
@@ -23,16 +24,19 @@ public class Current {
 	
 	/**记录MVC切面栈*/
 	private static ThreadLocal<Stack<BeanType>> aopStackCahce = new ThreadLocal<>();
+	
+	/**记录线程级别会话信息，只是系统层面不是业务层面*/
+	private static ThreadLocal<Context> contextCache = new ThreadLocal<>();
 
 	public static String getSessionId() {
 		return sessionIdCache.get();
 	}
 
-	public static void setSessionId(String id) {
-		sessionIdCache.set(id);
+	public static void setSessionId(String sessionId) {
+		sessionIdCache.set(sessionId);
 	}
 
-	public static SessionData getSession() {
+	public static MySession getSession() {
 		return Session.getSession(sessionIdCache.get());
 	}
 
@@ -61,7 +65,10 @@ public class Current {
 		return connectionData;
 	}
 	
-	/**进入切面*/
+	/**
+	 * 进入切面
+	 * @param beanType bean的类型
+	 * */
 	public static void aopEnter(BeanType beanType) {
 		Stack<BeanType> aopStack = aopStackCahce.get();
 		if (aopStack == null) {
@@ -71,7 +78,10 @@ public class Current {
 		aopStack.push(beanType);
 	}
 	
-	/**离开切面*/
+	/**
+	 * 离开切面
+	 * @return bean的类型
+	 * */
 	public static BeanType aopExit() {
 		Stack<BeanType> aopStack = aopStackCahce.get();
 		if (aopStack == null || aopStack.isEmpty()) {
@@ -80,13 +90,32 @@ public class Current {
 		return aopStack.pop();
 	}
 	
-	/**获取当前切面*/
+	/**
+	 * 获取当前切面
+	 * @return bean的类型
+	 * */
 	public static BeanType getAop() {
 		Stack<BeanType> aopStack = aopStackCahce.get();
 		if (aopStack == null || aopStack.isEmpty()) {
 			return null;
 		}
 		return aopStack.firstElement();
+	}
+	
+	/**
+	 * 获取当前线程会话信息
+	 * @return 当前线程会话信息
+	 * */
+	public static Context getContext() {
+		return contextCache.get();
+	}
+	
+	/**
+	 * 设置当前线程会话信息
+	 * @param context 当前线程会话信息
+	 * */
+	public static void setContext(Context context) {
+		contextCache.set(context);
 	}
 
 }

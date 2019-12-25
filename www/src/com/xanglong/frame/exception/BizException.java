@@ -1,7 +1,7 @@
 package com.xanglong.frame.exception;
 
 import com.xanglong.frame.Current;
-import com.xanglong.frame.session.SessionData;
+import com.xanglong.frame.session.MySession;
 import com.xanglong.i18n.Language;
 import com.xanglong.i18n.LanguageManager;
 
@@ -32,7 +32,7 @@ public class BizException extends RuntimeException {
 	public BizException(IException iException, String...messages) {
 		//默认异常用定义里面的异常，messages最好只是字母、输字和符号，否则国际化不动
 		this.code = iException.getCode();
-		SessionData sessionData = Current.getSession();
+		MySession sessionData = Current.getSession();
 		if (sessionData == null) {
 			//默认返回中文简体
 			this.message = iException.getMessage();

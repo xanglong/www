@@ -1,5 +1,7 @@
 package com.xanglong.frame.dao;
 
+import java.util.Date;
+
 import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.Current;
 import com.xanglong.frame.Sys;
@@ -33,7 +35,7 @@ public class Dao {
 			try {
 				DaoFactory.executeBatchSQL4MySQL(sqls);
 				if (config.getIsDebug()) {
-					System.out.println(DateUtil.getDateTime() + " 开启事务");
+					System.out.println(DateUtil.getDateTime(new Date()) + " 开启事务");
 				}
 			} catch (Exception e) {
 				rollback();
@@ -58,7 +60,7 @@ public class Dao {
 			try {
 				DaoFactory.executeSQL4MySQL("COMMIT");
 				if (config.getIsDebug()) {
-					System.out.println(DateUtil.getDateTime() + " 手动提交事务");
+					System.out.println(DateUtil.getDateTime(new Date()) + " 手动提交事务");
 				}
 			} catch (Exception e) {
 				rollback();
@@ -86,7 +88,7 @@ public class Dao {
 			try {
 				DaoFactory.executeBatchSQL4MySQL(sqls);
 				if (config.getIsDebug()) {
-					System.out.println(DateUtil.getDateTime() + " 系统提交事务");
+					System.out.println(DateUtil.getDateTime(new Date()) + " 系统提交事务");
 				}
 			} catch (Exception e) {
 				rollback();
@@ -132,7 +134,7 @@ public class Dao {
 	 * */
 	private static void console(long start, DaoParam daoParam) {
 		long end = System.currentTimeMillis();
-		String dateTime = DateUtil.getDateTime();
+		String dateTime = DateUtil.getDateTime(new Date());
 		System.out.println(dateTime + " 耗时：" + (end - start) + "毫秒");
 		StringBuilder sqlSB1 = new StringBuilder();
 		StringBuilder sqlSB2 = new StringBuilder("\n");

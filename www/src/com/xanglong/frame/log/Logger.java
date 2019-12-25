@@ -3,6 +3,7 @@ package com.xanglong.frame.log;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -41,7 +42,7 @@ public class Logger {
 	 * */
 	public static void warn(Throwable throwable) {
 		Config config = Sys.getConfig();
-		String dateTime = DateUtil.getDateTime();
+		String dateTime = DateUtil.getDateTime(new Date());
 		String date = dateTime.substring(0, 10);
 		String logTypeFolder = Sys.getConfig().getLog().getBizExceptionPath();
 		String logPath = config.getDataPath() + config.getLog().getLogBasePath() + "/" + logTypeFolder + "." + date + ".log";
@@ -54,7 +55,7 @@ public class Logger {
 	 * */
 	public static void danger(Throwable throwable) {
 		Config config = Sys.getConfig();
-		String dateTime = DateUtil.getDateTime();
+		String dateTime = DateUtil.getDateTime(new Date());
 		String date = dateTime.substring(0, 10);
 		String logTypeFolder = Sys.getConfig().getLog().getSystemExceptionPath();
 		String logPath = config.getDataPath() + config.getLog().getLogBasePath() + "/" + logTypeFolder + "." + date + ".log";
@@ -67,7 +68,7 @@ public class Logger {
 	 * */
 	public static void error(Throwable throwable) {
 		Config config = Sys.getConfig();
-		String dateTime = DateUtil.getDateTime();
+		String dateTime = DateUtil.getDateTime(new Date());
 		String date = dateTime.substring(0, 10);
 		String logTypeFolder = Sys.getConfig().getLog().getErrorPath();
 		String logPath = config.getDataPath() + config.getLog().getLogBasePath() + "/" + logTypeFolder + "." + date + ".log";

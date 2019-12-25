@@ -1,5 +1,6 @@
 package com.xanglong.frame.session;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,69 +10,103 @@ import com.xanglong.frame.Current;
 import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Config;
 import com.xanglong.frame.config.Proxy;
-import com.xanglong.frame.config.RedisKey;
 import com.xanglong.frame.io.RedisUtil;
+import com.xanglong.frame.key.RedisKey;
 import com.xanglong.frame.util.DateUtil;
 
 
 /**会话信息*/
 public class Session {
 	
-	private static Map<String, SessionData> sessionMap = new HashMap<>();
+	private static Map<String, MySession> sessionMap = new HashMap<>();
 	
-	/**开始会话*/
+	/**
+	 * 开始会话
+	 * @param request 请求对象
+	 * */
 	public static void start(HttpServletRequest request) {
-		Proxy proxy = Sys.getConfig().getProxy();
-		String id = request.getSession().getId();
-		SessionData sessionData = null;
-		//开启代理服务代表多机部署，否则就单机部署就行
-		if (proxy.getIsOpen()) {
-			//开启多机的就用Redis解决分布式会话问题
-			Object object = RedisUtil.get(RedisKey.SESSION + id);
-			if (object != null) {
-				sessionData = (SessionData) object;
+		//创建当前线程会话信息
+		Context context = new Context(request);
+		//把当前线程会话信息塞入到线程中
+		Current.setContext(context);
+		String sessionId = context.getSessionId();
+		//如果会话信息没有构建过，则构建会话信息
+		if (!sessionMap.containsKey(sessionId)) {
+			Proxy proxy = Sys.getConfig().getProxy();
+			MySession mySession = null;
+			//如果是多机部署，则先从redis中获取一下，因为可能是别的机器已经生成会话信息
+			if (proxy.getIsOpen()) {
+				Object object = RedisUtil.get(RedisKey.SESSION + sessionId);
+				if (object == null) {
+					//如果redis中也没有会话信息，则创建会话信息，并塞入到redis中
+					mySession = new MySession(request);
+					//把会话信息同步到redis中去
+					RedisUtil.set(RedisKey.SESSION + sessionId, mySession);
+				} else {
+					mySession = (MySession) object;
+				}
+				//就只把会话信息的ID塞入，以此标记可以从redis获取到会话信息
+				sessionMap.put(sessionId, null);
 			} else {
-				sessionData = new SessionData(request);
-				RedisUtil.set(RedisKey.SESSION + id, sessionData);
-			}
-		} else {
-			//单机部署就按照本地缓存处理就行
-			sessionData = sessionMap.get(id);
-			if (sessionData == null) {
-				sessionData = new SessionData(request);
-				sessionMap.put(id, sessionData);
+				//如果是单机部署，那么没有会话信息就需要创建会话信息
+				mySession = sessionMap.get(sessionId);
+				if (mySession == null) {
+					mySession = new MySession(request);
+					//单机部署，会话信息塞入整个，存到本地缓存
+					sessionMap.put(sessionId, mySession);
+				}
 			}
 		}
 		//绑定当前会话信息到当前线程上
-		Current.setSessionId(id);
+		Current.setSessionId(sessionId);
 	}
 	
-	/**结束会话*/
+	/**
+	 * 结束会话
+	 * @param request 请求对象
+	 * */
 	public static void end(HttpServletRequest request) {
-		SessionData sessionData = Current.getSession();
-		if (sessionData == null) {
+		Context context = Current.getContext();
+		if (context == null) {
 			return;
 		}
-		long requestStart = sessionData.getRequestStart();
+		long requestStart = context.getRequestStart();
 		long requestEnd = System.currentTimeMillis();
-		sessionData.setRequestEnd(requestEnd);
+		context.setRequestEnd(requestEnd);
 		Config config = Sys.getConfig();
 		if (config.getIsDebug()) {
-			System.out.println(DateUtil.getDateTime() + " " + config.getBaseUrl() + request.getRequestURI() + " " + (requestEnd - requestStart) + "ms ");
+			String url = config.getBaseUrl() + request.getRequestURI();
+			long timeCost = requestEnd - requestStart;
+			System.out.println(DateUtil.getTimeMillis(new Date()) + " " + url + " " + timeCost + "ms ");
 		}
 	}
 
-	/**获取会话信息*/
-	public static SessionData getSession(String id) {
+	/**
+	 * 获取会话信息
+	 * @param id 会话ID
+	 * @return 会话信息
+	 * */
+	public static MySession getSession(String id) {
 		Proxy proxy = Sys.getConfig().getProxy();
 		if (proxy.getIsOpen()) {
 			//多机部署就从Redis获取会话信息
 			Object object = RedisUtil.get(RedisKey.SESSION + id);
 			if (object != null) {
-				return (SessionData) object;
+				return (MySession) object;
 			}
 		}
 		return sessionMap.get(id);
+	}
+	
+	/**
+	 * 多机部署时同步会话信息到redis中
+	 * @param mySession 会话信息
+	 * */
+	protected static void updateSession(MySession mySession) {
+		Proxy proxy = Sys.getConfig().getProxy();
+		if (proxy.getIsOpen()) {
+			RedisUtil.set(RedisKey.SESSION + mySession.getSessionId(), mySession);
+		}
 	}
 
 }
