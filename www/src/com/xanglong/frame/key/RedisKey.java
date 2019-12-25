@@ -1,4 +1,4 @@
-package com.xanglong.frame.config;
+package com.xanglong.frame.key;
 
 public class RedisKey {
 

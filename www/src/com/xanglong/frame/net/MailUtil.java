@@ -133,7 +133,7 @@ public class MailUtil {
      * */
     public static void send(Throwable throwable) {
     	Mail mail = Sys.getConfig().getMail();
-		String dateTime = DateUtil.getDateTime();
+		String dateTime = DateUtil.getDateTime(new Date());
 		try (StringWriter stringWriter = new StringWriter();
 			PrintWriter printWriter = new PrintWriter(stringWriter);
 		) {

@@ -2,34 +2,25 @@ package com.xanglong.frame.session;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.xanglong.i18n.Language;
-
-public class SessionData {
-
-	SessionData(HttpServletRequest request) {
-		this.id = request.getSession().getId();
-		this.language = Language.ZH_CN;
+/**只记录系统数据，不记录业务数据*/
+public class Context {
+	
+	Context(HttpServletRequest request) {
+		this.sessionId = request.getSession().getId();
 		this.requestStart = System.currentTimeMillis();
 	}
-	
+
 	/**会话ID*/
-	private String id;
-	
-	/**语言*/
-	private Language language;
+	private String sessionId;
 	
 	/**请求开始时间*/
 	private long requestStart;
 	
 	/**请求结束时间*/
 	private long requestEnd;
-	
-	public String getId() {
-		return id;
-	}
 
-	public Language getLanguage() {
-		return language;
+	public String getSessionId() {
+		return sessionId;
 	}
 
 	public long getRequestStart() {
