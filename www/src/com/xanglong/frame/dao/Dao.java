@@ -35,7 +35,7 @@ public class Dao {
 			try {
 				DaoFactory.executeBatchSQL4MySQL(sqls);
 				if (config.getIsDebug()) {
-					System.out.println(DateUtil.getDateTime(new Date()) + " 开启事务");
+					System.out.println(DateUtil.getTimeMillis(new Date()) + " 开启事务");
 				}
 			} catch (Exception e) {
 				rollback();
@@ -60,7 +60,7 @@ public class Dao {
 			try {
 				DaoFactory.executeSQL4MySQL("COMMIT");
 				if (config.getIsDebug()) {
-					System.out.println(DateUtil.getDateTime(new Date()) + " 手动提交事务");
+					System.out.println(DateUtil.getTimeMillis(new Date()) + " 手动提交事务");
 				}
 			} catch (Exception e) {
 				rollback();
@@ -88,7 +88,7 @@ public class Dao {
 			try {
 				DaoFactory.executeBatchSQL4MySQL(sqls);
 				if (config.getIsDebug()) {
-					System.out.println(DateUtil.getDateTime(new Date()) + " 系统提交事务");
+					System.out.println(DateUtil.getTimeMillis(new Date()) + " 系统提交事务");
 				}
 			} catch (Exception e) {
 				rollback();
@@ -134,7 +134,7 @@ public class Dao {
 	 * */
 	private static void console(long start, DaoParam daoParam) {
 		long end = System.currentTimeMillis();
-		String dateTime = DateUtil.getDateTime(new Date());
+		String dateTime = DateUtil.getTimeMillis(new Date());
 		System.out.println(dateTime + " 耗时：" + (end - start) + "毫秒");
 		StringBuilder sqlSB1 = new StringBuilder();
 		StringBuilder sqlSB2 = new StringBuilder("\n");

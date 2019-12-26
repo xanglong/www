@@ -209,21 +209,12 @@ public class FileUtil {
 	 * @param extensions 相对目录表达式
 	 * @param recursive 是否递归列举
 	 * */
-	public static List<File> listFiles(File directory, String[] extensions, boolean recursive) {
+	public static List<File> listFiles(File directory) {
 		List<File> files = new ArrayList<>();
 		if (!directory.isDirectory()) {
             return files;
         }
-		if (extensions != null ) {
-			String[] suffixes = new String[extensions.length];
-	        for (int i = 0; i < extensions.length; i++) {
-	        	String extension = extensions[i];
-	        	if (!extension.startsWith(".")) {
-	        		suffixes[i] = "." + extensions[i];
-	        	}
-	        }
-		}
-        innerListFiles(files, directory, extensions, recursive);
+        innerListFiles(files, directory);
 		return files;
 	}
 
@@ -234,24 +225,15 @@ public class FileUtil {
 	 * @param extensions 相对目录表达式
 	 * @param recursive 是否递归列举
 	 * */
-	private static void innerListFiles(List<File> files, File directory, String[] extensions, boolean recursive) {
-        File[] found = directory.listFiles();
-        if (found != null) {
-            for (int i = 0; i < found.length; i++) {
-            	File file = found[i];
-                if (file.isDirectory() && recursive) {
-                    innerListFiles(files, found[i], extensions, recursive);
+	private static void innerListFiles(List<File> files, File directory) {
+        File[] listFiles = directory.listFiles();
+        if (listFiles != null) {
+            for (int i = 0; i < listFiles.length; i++) {
+            	File file = listFiles[i];
+                if (file.isDirectory()) {
+                    innerListFiles(files, listFiles[i]);
                 } else {
-                	if (extensions != null) {
-                		for (String extension : extensions ) {
-                    		if (file.getName().endsWith(extension)) {
-                    			files.add(file);
-                    			break;
-                        	}
-                    	}
-                	} else {
-                		files.add(file);
-                	}
+                	files.add(file);
                 }
             }
         }
