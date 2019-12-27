@@ -26,7 +26,7 @@ public class HttpProxy {
 		Proxy proxy = Sys.getConfig().getProxy();
 		RequestDto requestDto = new RequestDto();
 		//设置请求类型
-		requestDto.setContentType(HttpUtil.getContentType(request));
+		requestDto.setContentType(HttpUtil.getContentType(request.getContentType()));
 		//设置请求头参数，加入转发凭证
 		JSONObject headerParams = HttpUtil.getHeaderParams(request);
 		headerParams.put(Header.PROXY_AUTHORIZATION, proxy.getAuthorization());

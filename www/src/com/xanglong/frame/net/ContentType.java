@@ -15,6 +15,9 @@ public enum ContentType {
 	//网页请求HTML、HTX、HTM、JSP、PLG、STM、XHTML
 	HTML("text/html", "网页"),
 	
+	//XML文档
+	XML("text/xml", "XML文档"),
+	
 	//在发送请求到服务器前编码所有字符，空格转换为 "+"加号，特殊符号转换为 ASCII HEX值
 	FORM_URLENCODED("application/x-www-form-urlencoded", "表单"),
 	
