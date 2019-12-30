@@ -1,0 +1,3 @@
+(function(){
+	XL.tree('#menu');
+})();

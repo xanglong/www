@@ -1,0 +1,171 @@
+html, body, ul {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+}
+ul {
+	list-style: none;
+	list-style-image: none;
+}
+.xl-tree {
+	border-right: 1px solid #ddd;
+	height: 100%;
+	width: 100%;
+}
+.xl-tree-tool {
+	border-bottom: 1px solid #ddd;
+	height: 24px;
+	width: 100%;
+}
+.xl-tree-tool>input {
+	float:left;
+	border: 0;
+	padding: 0 5px;
+	height: 24px;
+	width: calc(100% - 58px);
+	outline: none;
+	font-size: 12px;
+}
+.xl-tree-tool>a {
+	float:left;
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: 4px 4px;
+}
+.xl-tree-tool>a:hover {
+	background-color: #f4f4f4;
+}
+.xl-tree-ul {
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.xl-tree-li {
+	margin: 0 0 0 16px;
+	padding: 0;
+	display: block;
+	min-height: 24px;
+	min-width: 24px;
+	font-size:0;
+	white-space: nowrap;
+	-webkit-text-size-adjust:none;
+}
+.xl-tree>ul>li{
+	margin-left: 0;
+}
+.xl-tree-li>i, .xl-tree-li>a>i {
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	height: 24px;
+	width: 16px;
+	line-height: 24px;
+	display: inline-block;
+	cursor: pointer;
+	text-decoration: none;
+	vertical-align: top;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: 0 4px;
+}
+.xl-tree-li>a {
+	height: 24px;
+	display: inline-block;
+	font-size: 12px;
+	white-space: nowrap;
+	margin: 0;
+	vertical-align: top;
+	cursor: pointer;
+}
+.xl-tree-li>a:hover {
+	background-color: #e5f3ff;
+}
+.xl-tree-li>a.active {
+	background-color: #cde8ff;
+}
+.xl-tree-li>a>span {
+	padding: 0 4px;
+	display: inline-block;
+	line-height: 24px;
+}
+.xl-icon-frame {
+	background-image: url(/src/icon/0001.ico);
+}
+.xl-icon-home {
+	background-image: url(/src/icon/0002.png);
+}
+.xl-icon-mail {
+	background-image: url(/src/icon/0003.png);
+}
+.xl-icon-mail2 {
+	background-image: url(/src/icon/0004.png);
+}
+.xl-icon-user {
+	background-image: url(/src/icon/0005.png);
+}
+.xl-icon-conf {
+	background-image: url(/src/icon/0006.png);
+}
+.xl-icon-search {
+	background-image: url(/src/icon/0007.png);
+}
+.xl-icon-web {
+	background-image: url(/src/icon/0008.gif);
+}
+.xl-icon-collapse {
+	background-image: url(/src/icon/0009.png);
+}
+.xl-icon-link {
+	background-image: url(/src/icon/0010.gif);
+}
+.xl-icon-arrow-right {
+	background-image: url(/src/icon/0011.png);
+}
+.xl-icon-arrow-bottom {
+	background-image: url(/src/icon/0012.png);
+}
+.xl-icon-web-service {
+	background-image: url(/src/icon/0013.gif);
+}
+.xl-icon-web-service2 {
+	background-image: url(/src/icon/0017.gif);
+}
+.xl-icon-java-project {
+	background-image: url(/src/icon/0014.png);
+}
+.xl-icon-java-resource {
+	background-image: url(/src/icon/0015.png);
+}
+.xl-icon-service-interface {
+	background-image: url(/src/icon/0016.gif);
+}
+.xl-icon-package {
+	background-image: url(/src/icon/0018.png);
+}
+.xl-icon-package2 {
+	background-image: url(/src/icon/0019.png);
+}
+.xl-icon-java {
+	background-image: url(/src/icon/0020.png);
+}
+.xl-icon-lib {
+	background-image: url(/src/icon/0021.gif);
+}
+.xl-icon-jar {
+	background-image: url(/src/icon/0022.png);
+}
+.xl-icon-js {
+	background-image: url(/src/icon/0023.png);
+}
+.xl-icon-folder {
+	background-image: url(/src/icon/0024.gif);
+}
+.xl-icon-text {
+	background-image: url(/src/icon/0025.gif);
+}
+.xl-icon-html {
+	background-image: url(/src/icon/0026.gif);
+}

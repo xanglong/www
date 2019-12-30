@@ -622,7 +622,7 @@ public class DaoMapper {
 					throw new BizException(e);
 				}
 				for (File file : files) {
-					String basePath = Const.BASE_PACKAGE_NAME.replaceAll("\\.", "\\\\");
+					String basePath = Sys.getConfig().getPackages().getBase().replaceAll("\\.", "\\\\");
 					String filePath = file.getPath();
 					filePath = filePath.substring(filePath.indexOf("\\classes\\" + basePath) + 9);
 					String mapper = filePath.replace("\\", ".");

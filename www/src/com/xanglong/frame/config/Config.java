@@ -53,6 +53,18 @@ public class Config {
 	/**Redis配置*/
 	private Redis redis;
 	
+	/**默认网页*/
+	private String welcomeFile;
+	
+	/**网页类型*/
+	private String documentType;
+	
+	/**动作请求类型*/
+	private String[] actionTypes;
+	
+	/**项目工程资源目录*/
+	private String webContent;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -187,6 +199,38 @@ public class Config {
 
 	public void setRedis(Redis redis) {
 		this.redis = redis;
+	}
+
+	public String getWelcomeFile() {
+		return welcomeFile;
+	}
+
+	public void setWelcomeFile(String welcomeFile) {
+		this.welcomeFile = welcomeFile;
+	}
+
+	public String getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
+
+	public String[] getActionTypes() {
+		return actionTypes;
+	}
+
+	public void setActionTypes(String[] actionTypes) {
+		this.actionTypes = actionTypes;
+	}
+
+	public String getWebContent() {
+		return webContent;
+	}
+
+	public void setWebContent(String webContent) {
+		this.webContent = webContent;
 	}
 
 }

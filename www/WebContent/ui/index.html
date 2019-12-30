@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>前端框架-降龙科技</title>
+		<link rel="stylesheet" href="/src/xl.css">
+		<style type="text/css">
+			#page{height:calc(100% - 37px);width:100%;}
+			#nav{height:36px;line-height:36px;border-bottom:1px solid #ddd;}
+			.nav-left{float:left;border-right:1px solid #ddd;height:36px;width:36px;cursor:pointer;background-position:10px;background-repeat:no-repeat;}
+			.nav-left:hover{background-color:#f4f4f4;}
+			.nav-right{float:right;border-left:1px solid #ddd;height:36px;width:145px;}
+			.nav-right>a{float:left;height:36px;width:36px;cursor:pointer;background-position:10px;background-repeat:no-repeat;}
+			.nav-right>a:hover{background-color: #f4f4f4;}
+			#menu{height:100%;width:270px;}
+		</style>
+	</head>
+	<body>
+		<div id="nav">
+			<a class="nav-left xl-icon-frame" title="菜单"></a>
+			<div class="nav-right">
+				<a class="xl-icon-home" title="首页"></a>
+				<a class="xl-icon-mail" title="邮件"></a>
+				<a class="xl-icon-user" title="用户"></a>
+				<a class="xl-icon-conf" title="设置"></a>
+			</div>
+		</div>
+		<div id="page">
+			<div id="menu" class="xl-tree">
+				<div class="xl-tree-tool">
+					<input type="text" placeholder="搜索">
+					<a class="xl-icon-collapse" title="收起"></a>
+					<a class="xl-icon-link" title="联动"></a>
+				</div>
+				<ul class="xl-tree-ul">
+					<li class="xl-tree-li">
+						<i class="xl-icon-arrow-bottom"></i>
+						<a><i class="xl-icon-java-project"></i><span>www[www devlop]</span></a>
+						<ul class="xl-tree-ul">
+							<li class="xl-tree-li">
+								<i class="xl-icon-arrow-bottom"></i>
+								<a><i class="xl-icon-web-service"></i><span>JAS-WS Web Service</span></a>
+								<ul class="xl-tree-ul">
+									<li class="xl-tree-li"><i></i><a><i class="xl-icon-service-interface"></i><span>Service Endpoint Interfaces</span></a></li>
+									<li class="xl-tree-li"><i></i><a><i class="xl-icon-web-service2"></i><span>Web Services</span></a></li>
+								</ul>
+							</li>
+							<li class="xl-tree-li">
+								<i class="xl-icon-arrow-bottom"></i>
+								<a><i class="xl-icon-java-resource"></i><span>Java Resources</span></a>
+								<ul class="xl-tree-ul">
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-bottom"></i>
+										<a><i class="xl-icon-java-resource"></i><span>src</span></a>
+										<ul class="xl-tree-ul">
+											<li class="xl-tree-li">
+												<i class="xl-icon-arrow-bottom"></i>
+												<a><i class="xl-icon-package"></i><span>com.xanglong</span></a>
+												<ul class="xl-tree-ul">
+													<li class="xl-tree-li">
+														<i class="xl-icon-arrow-right"></i>
+														<a><i class="xl-icon-package2"></i><span>edi</span></a>
+													</li>
+													<li class="xl-tree-li">
+														<i class="xl-icon-arrow-right"></i>
+														<a><i class="xl-icon-package"></i><span>frame</span></a>
+													</li>
+													<li class="xl-tree-li">
+														<i class="xl-icon-arrow-right"></i>
+														<a><i class="xl-icon-package"></i><span>i18n</span></a>
+													</li>
+													<li class="xl-tree-li">
+														<i class="xl-icon-arrow-right"></i>
+														<a><i class="xl-icon-package2"></i><span>web</span></a>
+													</li>
+													<li class="xl-tree-li">
+														<i class="xl-icon-arrow-right"></i>
+														<a><i class="xl-icon-java"></i><span>Filter</span></a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-bottom"></i>
+										<a><i class="xl-icon-lib"></i><span>Libraries</span></a>
+										<ul class="xl-tree-ul">
+											<li class="xl-tree-li">
+												<i class="xl-icon-arrow-right"></i>
+												<a><i class="xl-icon-lib"></i><span>Apache Tomca v9.0</span></a>
+												<ul class="xl-tree-ul">
+													<li class="xl-tree-li">
+														<i class="xl-icon-arrow-right"></i>
+														<a><i class="xl-icon-jar"></i><span>annotaions-api.jar</span></a>
+													</li>
+												</ul>
+											</li>
+											<li class="xl-tree-li">
+												<i class="xl-icon-arrow-right"></i>
+												<a><i class="xl-icon-lib"></i><span>JRE System Library</span></a>
+											</li>
+											<li class="xl-tree-li">
+												<i class="xl-icon-arrow-right"></i>
+												<a><i class="xl-icon-lib"></i><span>JUnit 5</span></a>
+											</li>
+											<li class="xl-tree-li">
+												<i class="xl-icon-arrow-bottom"></i>
+												<a><i class="xl-icon-lib"></i><span>Web App Libraries</span></a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="xl-tree-li">
+								<i class="xl-icon-arrow-bottom"></i>
+								<a><i class="xl-icon-lib"></i><span>JavaScript Resources</span></a>
+								<ul class="xl-tree-ul">
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-right"></i>
+										<a><i class="xl-icon-js"></i><span>WebContent</span></a>
+									</li>
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-right"></i>
+										<a><i class="xl-icon-lib"></i><span>ECMAScript Built-In Library</span></a>
+									</li>
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-right"></i>
+										<a><i class="xl-icon-web"></i><span>ECMA 3 Browser Support Library</span></a>
+									</li>
+								</ul>
+							</li>
+							<li class="xl-tree-li">
+								<i></i>
+								<a><i class="xl-icon-folder"></i><span>build</span></a>
+								<ul class="xl-tree-ul">
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-right"></i>
+										<a><i class="xl-icon-folder"></i><span>error</span></a>
+									</li>
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-bottom"></i>
+										<a><i class="xl-icon-folder"></i><span>META-INF</span></a>
+										<ul class="xl-tree-ul">
+											<li class="xl-tree-li">
+												<i></i>
+												<a><i class="xl-icon-text"></i><span>MANIFEST.MF</span></a>
+											</li>
+										</ul>
+									</li>
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-right"></i>
+										<a><i class="xl-icon-folder"></i><span>src</span></a>
+									</li>
+									<li class="xl-tree-li">
+										<i class="xl-icon-arrow-right"></i>
+										<a><i class="xl-icon-folder"></i><span>WEB-INF</span></a>
+									</li>
+									<li class="xl-tree-li">
+										<i></i>
+										<a><i class="xl-icon-web"></i><span>favicon.ico</span></a>
+									</li>
+									<li class="xl-tree-li">
+										<i></i>
+										<a><i class="xl-icon-html"></i><span>index.html</span></a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="/src/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/src/xl.js"></script>
+		<script type="text/javascript" src="/ui/index.js"></script>
+	</body>
+</html>

@@ -13,15 +13,6 @@ public class Const {
 	/**默认编码格式*/
 	public static final Charset CHARSET = Charset.forName(CHARSET_STR);
 	
-	/**默认网页名*/
-	public static final String WELCOME_FILE = "index.html";
-	
-	/**网页类型*/
-	public static final String DOCUMENT_TYPE = "html";
-	
-	/**默认动作请求后缀*/
-	public static final String[] ACTION_TYPES = "do,jsp".split(",");
-	
 	/**静态脚本前缀*/
 	public static final String STATIC_JS_PREFIX = "/**/";
 	
@@ -33,12 +24,6 @@ public class Const {
 	
 	/**数据库参数值*/
 	public static final String MYSQL_VARIABLES_VALUE = "Value";
-	
-	/**项目基础包*/
-	public static final String BASE_PACKAGE_NAME = "com.xanglong";
-	
-	/**静态资源文件夹*/
-	public static final String WEBCONTENT_FOLDER_NAME = "WebContent";
 	
 	/**配置文件夹*/
 	public static final String CONFIG_FOLDER_NAME = "config";

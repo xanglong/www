@@ -34,7 +34,13 @@ public class Source {
 	public static SourceInfo getSourceInfo(String uri) {
 		//如果请求没指定类型和文件名称，则按照欢饮页处理
 		if (uri.charAt(uri.length() - 1) == '/') {
-			uri += Const.WELCOME_FILE;
+			uri += Sys.getConfig().getWelcomeFile();
+		} else {
+			String type = uri.substring(uri.lastIndexOf("/"));
+			int idx = type.lastIndexOf(".");
+			if (idx == -1) {
+				uri += "/" + Sys.getConfig().getWelcomeFile();
+			}
 		}
 		SourceInfo sourceInfo = getSourceInfoInner(uri);
 		//缓存住资源信息，方便一些信息的处理
@@ -51,19 +57,18 @@ public class Source {
 		SourceInfo sourceInfo = new SourceInfo();
 		sourceInfo.setRequestURI(uri);
 		String type = uri.substring(uri.lastIndexOf("/"));
-		int idx = type.indexOf(".");
-		if (idx != -1) {
-			type = type.substring(idx + 1);
-			for (String actionType : Const.ACTION_TYPES) {
-				if (actionType.equals(type)) {
-					//如果是动作请求，直接返回即可
-					sourceInfo.setSourceType(SourceType.ACTION);
-					return sourceInfo;
-				}
+		type = type.substring(type.lastIndexOf(".") + 1);
+		Config config = Sys.getConfig();
+		String[] actionTypes = config.getActionTypes();
+		for (String actionType : actionTypes) {
+			if (actionType.equals(type)) {
+				//如果是动作请求，直接返回即可
+				sourceInfo.setSourceType(SourceType.ACTION);
+				return sourceInfo;
 			}
 		}
 		//整个处理顺序按照请求的频率从高到低排列
-		if (Const.DOCUMENT_TYPE.equals(type)) {
+		if (config.getDocumentType().equals(type)) {
 			sourceInfo.setSourceType(SourceType.HTML);
 			return sourceInfo;
 		} else if (SourceType.CSS.getCode().equals(type)) {
@@ -155,7 +160,7 @@ public class Source {
 			}
 		} else {
 			if (SourceType.HTML == sourceInfo.getSourceType()) {
-				throw new BizException(SystemException.E404);
+				throw new BizException(SystemException.E404, filePath);
 			} else {
 				response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
 				throw new BizException(FrameException.FRAME_FILE_NULL, uri);
