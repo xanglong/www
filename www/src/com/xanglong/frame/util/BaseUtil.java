@@ -1,7 +1,7 @@
 package com.xanglong.frame.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xanglong.frame.config.Const;
+import com.xanglong.frame.Sys;
 
 public class BaseUtil {
 
@@ -29,7 +29,7 @@ public class BaseUtil {
 		String resourcePath = BaseUtil.class.getClassLoader().getResource("").getPath();
 		String savePath = null;
 		if (resourcePath.endsWith("build/classes/")) {
-			savePath = resourcePath.replace("build/classes/", "") + Const.WEBCONTENT_FOLDER_NAME + "/WEB-INF/";
+			savePath = resourcePath.replace("build/classes/", "") + Sys.getConfig().getWebContent() + "/WEB-INF/";
 		} else {
 			savePath = resourcePath.replace("classes/", "");
 		}

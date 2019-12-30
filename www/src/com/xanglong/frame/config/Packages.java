@@ -1,6 +1,9 @@
 package com.xanglong.frame.config;
 
 public class Packages {
+	
+	/**基础包路径*/
+	private String base;
 
 	/**控制层包路径*/
 	private String[] controller;
@@ -16,6 +19,14 @@ public class Packages {
 
 	/**打了@MyComponent注解的类所在的包路径*/
 	private String[] component;
+	
+	public String getBase() {
+		return base;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
 	
 	public String[] getController() {
 		return controller;
