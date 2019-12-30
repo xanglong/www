@@ -78,6 +78,13 @@ ul {
 	white-space: nowrap;
 	margin: 0;
 	vertical-align: top;
+	cursor: pointer;
+}
+.xl-tree-li>a:hover {
+	background-color: #e5f3ff;
+}
+.xl-tree-li>a.active {
+	background-color: #cde8ff;
 }
 .xl-tree-li>a>span {
 	padding: 0 4px;
@@ -149,4 +156,16 @@ ul {
 }
 .xl-icon-jar {
 	background-image: url(/src/icon/0022.png);
+}
+.xl-icon-js {
+	background-image: url(/src/icon/0023.png);
+}
+.xl-icon-folder {
+	background-image: url(/src/icon/0024.gif);
+}
+.xl-icon-text {
+	background-image: url(/src/icon/0025.gif);
+}
+.xl-icon-html {
+	background-image: url(/src/icon/0026.gif);
 }
