@@ -207,18 +207,18 @@
 		'tree': function(options) {
 			var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : create();
 			if (!$tree.hasClass('xl-tree')) return;
-			var $root = $tree.children('.xl-tree-ul');
+			var $root = $tree.children('ul');
 			$root.on('click', function(e){
 				var $tag = $(e.target), tagName = e.target.tagName, isArrow = false;
 				if (tagName == 'UL' || tagName == 'LI') return;
 				if (tagName == 'I') {
 					if ($tag.hasClass('xl-icon-arrow-bottom')) {
 						isArrow = true;
-						$tag.parent().children('.xl-tree-ul').hide();
+						$tag.parent().children('ul').hide();
 						$tag.removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
 					} else if ($tag.hasClass('xl-icon-arrow-right')) {
 						isArrow = true;
-						$tag.parent().children('.xl-tree-ul').show();
+						$tag.parent().children('ul').show();
 						$tag.removeClass('xl-icon-arrow-right').addClass('xl-icon-arrow-bottom');
 					}
 				}
