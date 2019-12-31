@@ -180,12 +180,22 @@
 						case 'G': return '';
 						case 'Y': return date.getFullYear();
 						case 'y': return date.getFullYear();
-						case 'M': var M = date.getMonth() + 1; return (M < 10 && match.length >= 2) ? '0' + M : M;
-						case 'd': var d = date.getDate(); return (d < 10 && match.length >= 2) ? '0' + d : d;
+						case 'M': 
+							var M = date.getMonth() + 1;
+							return (M < 10 && match.length >= 2) ? '0' + M : M;
+						case 'd':
+							var d = date.getDate();
+							return (d < 10 && match.length >= 2) ? '0' + d : d;
 						case 'k': return date.getHours();
-						case 'H': var H = date.getHours(); return (H < 10 && match.length >= 2) ? '0' + H : H;
-						case 'm': var m = date.getMinutes(); return (m < 10 && match.length >= 2) ? '0' + m : m;
-						case 's': var s = date.getSeconds(); return (s < 10 && match.length >= 2) ? '0' + s : s;
+						case 'H':
+							var H = date.getHours();
+							return (H < 10 && match.length >= 2) ? '0' + H : H;
+						case 'm':
+							var m = date.getMinutes();
+							return (m < 10 && match.length >= 2) ? '0' + m : m;
+						case 's':
+							var s = date.getSeconds();
+							return (s < 10 && match.length >= 2) ? '0' + s : s;
 						case 'S': return date.getMilliseconds();
 						case 'E': return ['日','一','二','三','四','五','六'][date.getDay()]; 
 						case 'D': return XL.date.dayOfTheYear(date); 
@@ -193,7 +203,9 @@
 						case 'w': return Math.ceil(XL.date.dayOfTheYear(date) / 7); 
 						case 'W': return Math.ceil(date.getDate() / 7); 
 						case 'a': return date.getHours() < 12 ? '上午' : '下午'; 
-						case 'h': var h = date.getHours() % 12 || 12; return (h < 10 && match.length >= 2) ? '0' + h : h; 
+						case 'h':
+							var h = date.getHours() % 12 || 12;
+							return (h < 10 && match.length >= 2) ? '0' + h : h; 
 						case 'K': return date.getHours() % 12; 
 						case 'z': return XL.date.getZone(date)['name']; 
 						case 'Z': return XL.date.getZone(date)['value']; 
@@ -206,11 +218,15 @@
 		},
 		'tree': function(options) {
 			var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : create();
-			if (!$tree.hasClass('xl-tree')) return;
+			if (!$tree.hasClass('xl-tree')) {
+				return;
+			}
 			var $root = $tree.children('ul');
 			$root.on('click', function(e){
 				var $tag = $(e.target), tagName = e.target.tagName, isArrow = false;
-				if (tagName == 'UL' || tagName == 'LI') return;
+				if (tagName == 'UL' || tagName == 'LI') {
+					return;
+				}
 				if (tagName == 'I') {
 					if ($tag.hasClass('xl-icon-arrow-bottom')) {
 						isArrow = true;
@@ -230,7 +246,9 @@
 					} else if (e.shiftKey) {
 						getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
 						var $lastActive = $root.find('.last-active');
-						if ($lastActive.length == 0) $a.addClass('active'); else {
+						if ($lastActive.length == 0) {
+							$a.addClass('active');
+						} else {
 							var $as = $root.find('a'), start, end, last, current;
 							var lastActive = $lastActive[0], currentActive = $a[0];
 							for (var i = 0; i < $as.length; i++) {
@@ -275,16 +293,31 @@
 						runSid = null;
 					}
 					runSid = sid;
+					$root.find('span').each(function(index, value){
+						var $em = $(value).children('em');
+						if ($em.length > 0) {
+							value.outerHTML = value.outerHTML.replace('<em>', '').replace('</em>', '');
+						}
+					});
 					if (searchInput.value == '') {
 						$root.find('li').show();
 					} else {
 						$root.find('li').hide();
-						var texts = searchInput.value.toLowerCase().replace('，',',').split(',');
+						var text = searchInput.value;
+						var textLower = text.toLowerCase();
 						$root.find('span').each(function(index, value) {
-							for (var i = 0; i < texts.length; i++) {
-								if (value.textContent.toLowerCase().indexOf(texts[i]) != -1) {
-									$(value).parents('li').show();
-									break;
+							if (value.textContent.toLowerCase().indexOf(textLower) != -1) {
+								var $span = $(value);
+								$span.html(value.textContent.replace(text, '<em>' + text + '</em>'));
+								var $parent = $span.parent();
+								while (!$parent.hasClass('xl-tree')) {
+									if ($parent[0].tagName == 'LI') {
+										if (!$parent.is(':hidden')) {
+											break;
+										}
+										$parent.show();
+									}
+									$parent = $parent.parent();
 								}
 							}
 						});
