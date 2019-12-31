@@ -296,19 +296,24 @@
 					$root.find('span').each(function(index, value){
 						var $em = $(value).children('em');
 						if ($em.length > 0) {
-							value.outerHTML = value.outerHTML.replace('<em>', '').replace('</em>', '');
+							value.outerHTML = value.outerHTML.replace(/<em>/g, '').replace(/<\/em>/g, '');
 						}
 					});
 					if (searchInput.value == '') {
 						$root.find('li').show();
 					} else {
 						$root.find('li').hide();
-						var text = searchInput.value;
-						var textLower = text.toLowerCase();
+						var text = searchInput.value, textLower = text.toLowerCase();
 						$root.find('span').each(function(index, value) {
-							if (value.textContent.toLowerCase().indexOf(textLower) != -1) {
+							var ctx = value.textContent, ctxLower = ctx.toLowerCase();
+							if (ctxLower.indexOf(textLower) != -1) {
+								var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
+								for (var i = 0; i < words.length - 1; i++) {
+									var start = wordIndex + words[i].length, end = start + textLower.length;
+									newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
+									wordIndex = end;
+								}
 								var $span = $(value);
-								$span.html(value.textContent.replace(text, '<em>' + text + '</em>'));
 								var $parent = $span.parent();
 								while (!$parent.hasClass('xl-tree')) {
 									if ($parent[0].tagName == 'LI') {
@@ -319,6 +324,7 @@
 									}
 									$parent = $parent.parent();
 								}
+								$span.html(newCtx + ctx.substring(wordIndex));
 							}
 						});
 					}
