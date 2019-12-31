@@ -257,6 +257,40 @@
 					}
 				}
 			});
+			$tree.children('div').on('click', 'a', function(e) {
+				var $a = $(this);
+				if ($a.hasClass('xl-icon-collapse')) {
+					$root.find('.xl-icon-arrow-bottom').removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
+					$root.find('ul').hide();
+				} else if ($a.hasClass('xl-icon-link')) {
+					
+				}
+			});
+			var runSid = null;
+			var searchInput = $tree.children('div').children('input')[0];
+			searchInput.oninput = function(e){
+				var sid = setTimeout(function(){
+					if (runSid != null) {
+						clearTimeout(runSid);
+						runSid = null;
+					}
+					runSid = sid;
+					if (searchInput.value == '') {
+						$root.find('li').show();
+					} else {
+						$root.find('li').hide();
+						var texts = searchInput.value.toLowerCase().replace('，',',').split(',');
+						$root.find('span').each(function(index, value) {
+							for (var i = 0; i < texts.length; i++) {
+								if (value.textContent.toLowerCase().indexOf(texts[i]) != -1) {
+									$(value).parents('li').show();
+									break;
+								}
+							}
+						});
+					}
+				}, 50);
+			};
 			function create() {
 				
 			}
