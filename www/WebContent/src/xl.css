@@ -92,6 +92,9 @@ ul {
 	display: inline-block;
 	line-height: 24px;
 }
+.xl-tree li>a>span>em {
+	background-color: #ffff00;
+}
 .xl-icon-frame {
 	background-image: url(/src/icon/0001.ico);
 }
