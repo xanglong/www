@@ -405,7 +405,7 @@
 				}
 				pop.innerHTML = layout;
 				$container.append(pop);
-				if (p.onOpen) { p.onOpen();}
+				if (p.onOpen) {p.onOpen();}
 				var sid = null;
 				if (p.autoclose && typeof p.autoclose === 'number') {
 					sid = setTimeout(remove.bind(this, $(pop)), p.autoclose);
