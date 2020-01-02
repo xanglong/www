@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	var XL = {
 		'base': {
 			'os': (function() {
@@ -18,7 +18,7 @@
 						'isWin10': /windows nt 10.0/.test(ua)
 					};
 				}()),
-			'bw': (function() {
+			'browser': (function() {
 				var ua = navigator.userAgent.toLowerCase();
 				return {
 					'isUC': /ucweb/.test(ua),
@@ -170,7 +170,7 @@
 			    var arr = date.toString().match(/([A-Z]+)([-+]\d+:?\d+)/); 
 			    return {'name': arr[1], 'value': arr[2]}; 
 			},
-			'format': function(dateTime, pattern){
+			'format': function(dateTime, pattern) {
 				var date = new Date(dateTime);
 				if (XL.base.isBlank(pattern)) {
 					return date.toLocaleString();
@@ -216,118 +216,206 @@
 				}); 
 			}
 		},
-		'tree': function(options) {
-			var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : create();
-			if (!$tree.hasClass('xl-tree')) {
-				return;
-			}
-			var $root = $tree.children('ul');
-			$root.on('click', function(e){
-				var $tag = $(e.target), tagName = e.target.tagName, isArrow = false;
-				if (tagName == 'UL' || tagName == 'LI') {
+		'tree': {
+			'init': function(options) {
+				var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : create(options);
+				if (!$tree.hasClass('xl-tree')) {
 					return;
 				}
-				if (tagName == 'I') {
-					if ($tag.hasClass('xl-icon-arrow-bottom')) {
-						isArrow = true;
-						$tag.parent().children('ul').hide();
-						$tag.removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
-					} else if ($tag.hasClass('xl-icon-arrow-right')) {
-						isArrow = true;
-						$tag.parent().children('ul').show();
-						$tag.removeClass('xl-icon-arrow-right').addClass('xl-icon-arrow-bottom');
-					}
-				}
-				if (!isArrow) {
-					var $a = $tag.closest('a');
-					if (e.ctrlKey) {
-						getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-						$a.hasClass('active') ? $a.removeClass('active') : $a.addClass('active');
-					} else if (e.shiftKey) {
-						getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-						var $lastActive = $root.find('.last-active');
-						if ($lastActive.length == 0) {
-							$a.addClass('active');
-						} else {
-							var $as = $root.find('a'), start, end, last, current;
-							var lastActive = $lastActive[0], currentActive = $a[0];
-							for (var i = 0; i < $as.length; i++) {
-								var ai = $as[i];
-								if (ai == lastActive) last = i;
-								if (ai == currentActive) current = i;
-							}
-							if (current < last) {
-								start = current;
-								end = last;
-							} else {
-								start = last;
-								end = current;
-							}
-							$as.removeClass('active').slice(start, end + 1).addClass('active');
-						} 
-					} else {
-						$root.find('.active').removeClass('active');
-						$a.addClass('active');
-					}
-					if (!e.shiftKey) {
-						$root.find('.last-active').removeClass('last-active');
-						$a.addClass('last-active');
-					}
-				}
-			});
-			$tree.children('div').on('click', 'a', function(e) {
-				var $a = $(this);
-				if ($a.hasClass('xl-icon-collapse')) {
-					$root.find('.xl-icon-arrow-bottom').removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
-					$root.find('ul').hide();
-				} else if ($a.hasClass('xl-icon-link')) {
+				function create(p) {
 					
 				}
-			});
-			var runSid = null;
-			var searchInput = $tree.children('div').children('input')[0];
-			searchInput.oninput = function(e){
-				var sid = setTimeout(function(){
-					if (runSid != null) {
-						clearTimeout(runSid);
-						runSid = null;
-					}
-					runSid = sid;
-					$root.find('span').each(function(index, value){
-						var $em = $(value).children('em');
-						if ($em.length > 0) {
-							value.outerHTML = value.outerHTML.replace('<em>', '').replace('</em>', '');
-						}
-					});
-					if (searchInput.value == '') {
-						$root.find('li').show();
-					} else {
-						$root.find('li').hide();
-						var text = searchInput.value;
-						var textLower = text.toLowerCase();
-						$root.find('span').each(function(index, value) {
-							if (value.textContent.toLowerCase().indexOf(textLower) != -1) {
-								var $span = $(value);
-								$span.html(value.textContent.replace(text, '<em>' + text + '</em>'));
-								var $parent = $span.parent();
-								while (!$parent.hasClass('xl-tree')) {
-									if ($parent[0].tagName == 'LI') {
-										if (!$parent.is(':hidden')) {
-											break;
-										}
-										$parent.show();
-									}
-									$parent = $parent.parent();
-								}
+				XL.tree.toolbar.init($tree);
+				XL.tree.node.click($tree);
+			},
+			'toolbar': {
+				'init': function($tree) {
+					XL.tree.toolbar.system.init($tree);
+					XL.tree.toolbar.custom.init($tree);
+				},
+				'system':{
+					'init': function($tree) {
+						$tree.children('.xl-tree-tool-system').on('click', 'a', function(e) {
+							var $a = $(this);
+							if ($a.hasClass('xl-icon-collapse')) {
+								XL.tree.toolbar.system.collapse($tree);
+							} else if ($a.hasClass('xl-icon-link')) {
+								XL.tree.toolbar.system.link($tree);
 							}
 						});
+						XL.tree.toolbar.system.search($tree);
+					},
+					'collapse': function($tree) {
+						var $root = $tree.children('ul');
+						$root.find('.xl-icon-arrow-bottom').removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
+						$root.find('ul').hide();
+					}, 
+					'link': function($tree) {
+						
+					},
+					'search': function($tree) {
+						var runSid = null, $root = $tree.children('ul');
+						var searchInput = $tree.children('.xl-tree-tool-system').children('input')[0];
+						searchInput.oninput = function(e) {
+							var sid = setTimeout(function() {
+								if (runSid != null) {
+									clearTimeout(runSid);
+									runSid = null;
+								}
+								runSid = sid;
+								$root.find('span').each(function(index, value) {
+									var $em = $(value).children('em');
+									if ($em.length > 0) {
+										value.outerHTML = value.outerHTML.replace(/<em>/g, '').replace(/<\/em>/g, '');
+									}
+								});
+								if (searchInput.value == '') {
+									$root.find('li').show();
+								} else {
+									$root.find('li').hide();
+									var text = searchInput.value, textLower = text.toLowerCase();
+									$root.find('span').each(function(index, value) {
+										var ctx = value.textContent, ctxLower = ctx.toLowerCase();
+										if (ctxLower.indexOf(textLower) != -1) {
+											var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
+											for (var i = 0; i < words.length - 1; i++) {
+												var start = wordIndex + words[i].length, end = start + textLower.length;
+												newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
+												wordIndex = end;
+											}
+											var $span = $(value);
+											var $parent = $span.parent();
+											while (!$parent.hasClass('xl-tree')) {
+												if ($parent[0].tagName == 'LI') {
+													if (!$parent.is(':hidden')) {
+														break;
+													}
+													$parent.show();
+												}
+												$parent = $parent.parent();
+											}
+											$span.html(newCtx + ctx.substring(wordIndex));
+										}
+									});
+								}
+							}, 50);
+						};
 					}
-				}, 50);
-			};
-			function create() {
-				
+				},
+				'custom': {
+					'init': function($tree) {
+						
+					}
+				}
+			},
+			'node': {
+				'click': function($tree) {
+					var $root = $tree.children('ul');
+					$root.on('click', function(e) {
+						var $tag = $(e.target), tagName = e.target.tagName, isArrow = false;
+						if (tagName == 'UL' || tagName == 'LI') {
+							return;
+						}
+						if (tagName == 'I') {
+							if ($tag.hasClass('xl-icon-arrow-bottom')) {
+								isArrow = true;
+								$tag.parent().children('ul').hide();
+								$tag.removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
+							} else if ($tag.hasClass('xl-icon-arrow-right')) {
+								isArrow = true;
+								$tag.parent().children('ul').show();
+								$tag.removeClass('xl-icon-arrow-right').addClass('xl-icon-arrow-bottom');
+							}
+						}
+						if (!isArrow) {
+							var $a = $tag.closest('a');
+							if (e.ctrlKey) {
+								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
+								$a.hasClass('active') ? $a.removeClass('active') : $a.addClass('active');
+							} else if (e.shiftKey) {
+								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
+								var $lastActive = $root.find('.last-active');
+								if ($lastActive.length == 0) {
+									$a.addClass('active');
+								} else {
+									var $as = $root.find('a'), start, end, last, current;
+									var lastActive = $lastActive[0], currentActive = $a[0];
+									for (var i = 0; i < $as.length; i++) {
+										var ai = $as[i];
+										if (ai == lastActive) last = i;
+										if (ai == currentActive) current = i;
+									}
+									if (current < last) {
+										start = current;
+										end = last;
+									} else {
+										start = last;
+										end = current;
+									}
+									$as.removeClass('active').slice(start, end + 1).addClass('active');
+								} 
+							} else {
+								$root.find('.active').removeClass('active');
+								$a.addClass('active');
+							}
+							if (!e.shiftKey) {
+								$root.find('.last-active').removeClass('last-active');
+								$a.addClass('last-active');
+							}
+						}
+					});
+				}
 			}
-		}
+		},
+		'grid': {},
+		'msg': {
+			'tip': function(options) {
+				
+			},
+			'alert': function(template, style) {
+				var p;
+				template = template || '';
+				if (typeof template === 'string' || typeof style === 'string') {
+					p = {'template': template, 'style': style};
+				} else if (typeof template === 'object') {
+					p = template;
+				}
+				p = $.extend({'template':null,'style':'info','autoclose':false,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
+				function remove($elm) {
+					p.onClose ? p.onClose() : '';
+					$elm.removeClass('xl-msg-alert-in');
+					setTimeout(function(){$elm.remove();}, 390);
+				};
+				var $spopGroup = $('#xl_msg_alert_' + p.group);
+				$spopGroup.length > 0 ? remove($spopGroup) : '';
+				var $container = $('#xl_msg_alert_' + p.position);
+				var icon = (!p.icon) ? '' : '<i class="xl-msg-alert-icon xl-msg-alert-icon--' + p.style +'"></i>';
+				var layout ='<div class="xl-msg-alert-close">&times;</div>' + icon + '<div class="xl-msg-alert-body">' + p.template + '</div>';
+				if ($container.length == 0) {
+					var popContainer = document.createElement('div');
+					popContainer.setAttribute('class', 'xl-msg-alert-container xl-msg-alert-' + p.position);
+					popContainer.id = 'xl_msg_alert_' + p.position.replace('-', '_');
+					document.body.appendChild(popContainer);
+					$container = $('#xl_msg_alert_' + p.position.replace('-', '_'));
+				}
+				var pop = document.createElement('div');
+				pop.setAttribute('class', 'xl-msg-alert xl-msg-alert-out xl-msg-alert-in xl-msg-alert-' + p.style);
+				if (p.group && typeof p.group === 'string') {
+					pop.id = 'xl_msg_alert_' + p.group;
+				}
+				pop.innerHTML = layout;
+				$container.append(pop);
+				if (p.onOpen) {p.onOpen();}
+				var sid = null;
+				if (p.autoclose && typeof p.autoclose === 'number') {
+					sid = setTimeout(remove.bind(this, $(pop)), p.autoclose);
+				}
+				$(pop).find('.xl-msg-alert-close').on('click', function(event){
+					sid ? clearTimeout(sid) : '';
+					remove($(pop));
+				});
+			}
+		},
 	};
 	window.XL = XL;
 })();
