@@ -367,7 +367,78 @@
 				}
 			}
 		},
-		'grid': {},
+		'grid': {
+			'init': function(options) {
+				var $grid = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : $(options);
+				$grid.hasClass('xl-grid') ? '' : $grid.addClass('xl-grid');
+				if (!checkChildren($grid)) {
+					return false;
+				}
+				function check1($children) {
+					$children.children('hr').remove();
+					var $childrens = $children.children();
+					if ($childrens.length == 1) {
+						return checkChildren($childrens.eq(0));
+					}
+					return true;
+				}
+				function check2($children) {
+					$children.children('hr').remove();
+					var $childrens = $children.children();
+					if ($childrens.length == 1) {
+						return check1($children);
+					} else if ($childrens.length == 2) {
+						if (!$children.hasClass('xl-grid-left-right') && !$children.hasClass('xl-grid-top-bottom')) {
+							$children.addClass('xl-grid-left-right');
+						}
+						var $first = $childrens.eq(0), $last = $childrens.eq(1);
+						if ($first.hasClass('xl-grid') && $last.hasClass('xl-grid')) {
+							$first.after('<hr>');
+							if (!checkChildren($first)) {
+								return false;
+							}
+							if (!checkChildren($last)) {
+								return false;
+							}
+						}
+					}
+					return true;
+				}
+				function check3($children) {
+					$children.children('hr').remove();
+					var $childrens = $children.children();
+					if ($childrens.length == 1) {
+						return check1($children);
+					} else if ($childrens.length == 2) {
+						return check2($children);
+					} else if ($childrens.length > 2) {
+						$children.addClass('xl-grid-error');
+						XL.msg.alert('网格布局节点结构错误，子节点种元素节点超过2个', 'error');
+						return false;
+					}
+					return true;
+				}
+				function checkChildren($children) {
+					if ($children.hasClass('xl-grid')) {
+						var $childrens = $children.children();
+						if ($childrens.length == 1) {
+							if (!check1($children)) {
+								return false;
+							}
+						} else if ($childrens.length == 2) {
+							if (!check2($children)) {
+								return false;
+							}
+						} else if ($childrens.length >= 3) {
+							if (!check3($children)) {
+								return false;
+							}
+						}
+					}
+					return true;
+				}
+			}
+		},
 		'msg': {
 			'tip': function(options) {
 				
@@ -380,7 +451,7 @@
 				} else if (typeof template === 'object') {
 					p = template;
 				}
-				p = $.extend({'template':null,'style':'info','autoclose':false,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
+				p = $.extend({'template':null,'style':'info','autoclose':3000,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
 				function remove($elm) {
 					p.onClose ? p.onClose() : '';
 					$elm.removeClass('xl-msg-alert-in');
