@@ -11,7 +11,6 @@ ul {
 .xl-tree {
 	height: 100%;
 	width: 100%;
-	min-width: 120px;
 }
 .xl-tree-tool-system {
 	border-bottom: 1px solid #ddd;
@@ -38,7 +37,7 @@ ul {
 .xl-tree-tool-system>a:hover {
 	background-color: #f4f4f4;
 }
-.xl-tree ul {
+.xl-tree>ul {
 	display: block;
 	height: calc(100% - 31px);
 	overflow: auto;

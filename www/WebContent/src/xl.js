@@ -371,72 +371,104 @@
 			'init': function(options) {
 				var $grid = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : $(options);
 				$grid.hasClass('xl-grid') ? '' : $grid.addClass('xl-grid');
-				if (!checkChildren($grid)) {
+				if (!XL.grid.check.checkChildren($grid)) {
 					return false;
 				}
-				function check1($children) {
+				$grid.css('overflow', 'hidden');
+				var $hrs = $grid.find('.xl-grid-hr');
+				for (var i = 0; i < $hrs.length; i++) {
+					XL.grid.drag($hrs.eq(i));
+				}
+			},
+			'check': {
+				'check1': function($children) {
 					$children.children('hr').remove();
 					var $childrens = $children.children();
 					if ($childrens.length == 1) {
-						return checkChildren($childrens.eq(0));
+						return XL.grid.check.checkChildren($childrens.eq(0));
 					}
 					return true;
-				}
-				function check2($children) {
+				},
+				'check2': function($children) {
 					$children.children('hr').remove();
 					var $childrens = $children.children();
 					if ($childrens.length == 1) {
-						return check1($children);
+						return XL.grid.check.check1($children);
 					} else if ($childrens.length == 2) {
 						if (!$children.hasClass('xl-grid-left-right') && !$children.hasClass('xl-grid-top-bottom')) {
 							$children.addClass('xl-grid-left-right');
 						}
 						var $first = $childrens.eq(0), $last = $childrens.eq(1);
 						if ($first.hasClass('xl-grid') && $last.hasClass('xl-grid')) {
-							$first.after('<hr>');
-							if (!checkChildren($first)) {
+							$first.after('<hr class="xl-grid-hr">');
+							if (!XL.grid.check.checkChildren($first)) {
 								return false;
 							}
-							if (!checkChildren($last)) {
+							if (!XL.grid.check.checkChildren($last)) {
 								return false;
 							}
 						}
 					}
 					return true;
-				}
-				function check3($children) {
+				},
+				'check3': function($children) {
 					$children.children('hr').remove();
 					var $childrens = $children.children();
 					if ($childrens.length == 1) {
-						return check1($children);
+						return XL.grid.check.check1($children);
 					} else if ($childrens.length == 2) {
-						return check2($children);
+						return XL.grid.check.check2($children);
 					} else if ($childrens.length > 2) {
 						$children.addClass('xl-grid-error');
 						XL.msg.alert('网格布局节点结构错误，子节点种元素节点超过2个', 'error');
 						return false;
 					}
 					return true;
-				}
-				function checkChildren($children) {
+				},
+				'checkChildren': function($children) {
 					if ($children.hasClass('xl-grid')) {
 						var $childrens = $children.children();
 						if ($childrens.length == 1) {
-							if (!check1($children)) {
+							if (!XL.grid.check.check1($children)) {
 								return false;
 							}
 						} else if ($childrens.length == 2) {
-							if (!check2($children)) {
+							if (!XL.grid.check.check2($children)) {
 								return false;
 							}
 						} else if ($childrens.length >= 3) {
-							if (!check3($children)) {
+							if (!XL.grid.check.check3($children)) {
 								return false;
 							}
 						}
 					}
 					return true;
 				}
+			},
+			'drag': function($hr) {
+				if ($hr.attr('ready')) return; else $hr.attr('ready', true);
+				$hr.on('mousedown.drag', function(e1) {
+					getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+					var cursor = $hr.css('cursor'), x1 = e1.pageX, y1 = e1.pageY, x2, y2;
+					var $parent = $hr.parent(), $grids = $parent.children('.xl-grid');
+					var $first = $grids.eq(0), $last = $grids.eq(1);
+					$parent.on('mousemove.drag', function(e2) {
+						x2 = e2.pageX, y2 = e2.pageY;
+						if (cursor == 'ew-resize') {
+							var precent = ($first.width() + x2 - x1) / ($parent.width() - 4) * 100;
+							$first.css('cssText', 'width:calc(' + precent + '% - 2px)');
+							$last.css('cssText', 'width:calc(' + (100 - precent) + '% - 2px)');
+						} else if (cursor == 'ns-resize') {
+							var precent = ($first.height() + y2 - y1) / ($parent.height() - 4) * 100;
+							$first.css('cssText', 'height:calc(' + precent + '% - 2px)');
+							$last.css('cssText', 'height:calc(' + (100 - precent) + '% - 2px)');
+						}
+						getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+						x1 = x2, y1 = y2;
+					}).on('mouseup', function(e2){
+						$parent.off('mousemove.drag');
+		            });
+				});
 			}
 		},
 		'msg': {
