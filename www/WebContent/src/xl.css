@@ -9,10 +9,8 @@ ul {
 	list-style-image: none;
 }
 .xl-tree {
-	border-right: 1px solid #ddd;
 	height: 100%;
-	min-width: 120px;
-	overflow: auto;
+	width: 100%;
 }
 .xl-tree-tool-system {
 	border-bottom: 1px solid #ddd;
@@ -39,9 +37,10 @@ ul {
 .xl-tree-tool-system>a:hover {
 	background-color: #f4f4f4;
 }
-.xl-tree ul {
+.xl-tree>ul {
 	display: block;
 	height: calc(100% - 31px);
+	overflow: auto;
 }
 .xl-tree li {
 	margin: 0 0 0 16px;
@@ -410,6 +409,43 @@ ul {
 	border-style: solid;
 	border-color: transparent transparent #fcd000 transparent;
 	border-width: 0 6px 10px 6px;
+}
+
+.xl-grid-error {
+	color: red;
+}
+.xl-grid {
+	float: left;
+	height: 100%;
+	width: 100%;
+}
+.xl-grid-left-right>hr {
+	float: left;
+    border: 0;
+    padding: 0;
+    margin: 0;
+	height: 100%;
+	width: 4px;
+	background-color: #e1e6f6;
+	cursor: ew-resize;
+}
+.xl-grid-left-right>.xl-grid {
+	height: 100%;
+	width: calc(50% - 2px);
+}
+.xl-grid-top-bottom>hr {
+	float: left;
+    border: 0;
+    padding: 0;
+    margin: 0;
+	height: 4px;
+	width: 100%;
+	background-color: #e1e6f6;
+	cursor: ns-resize;
+}
+.xl-grid-top-bottom>.xl-grid {
+	height: calc(50% - 2px);
+	width: 100%;
 }
 
 .xl-icon-frame {
