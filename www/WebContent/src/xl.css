@@ -425,104 +425,38 @@ ul {
     padding: 0;
     margin: 0;
 	height: 100%;
-	width: 4px;
+	width: 2px;
 	background-color: #e1e6f6;
 	cursor: ew-resize;
 }
 .xl-grid-left-right>.xl-grid {
 	height: 100%;
-	width: calc(50% - 2px);
+	width: calc(50% - 1px);
 }
 .xl-grid-top-bottom>hr {
 	float: left;
     border: 0;
     padding: 0;
     margin: 0;
-	height: 4px;
+	height: 2px;
 	width: 100%;
 	background-color: #e1e6f6;
 	cursor: ns-resize;
 }
 .xl-grid-top-bottom>.xl-grid {
-	height: calc(50% - 2px);
+	height: calc(50% - 1px);
 	width: 100%;
 }
 
-.xl-icon-frame {
-	background-image: url(/src/icon/0001.ico);
-}
-.xl-icon-home {
-	background-image: url(/src/icon/0002.png);
-}
-.xl-icon-mail {
-	background-image: url(/src/icon/0003.png);
-}
-.xl-icon-mail2 {
-	background-image: url(/src/icon/0004.png);
-}
-.xl-icon-user {
-	background-image: url(/src/icon/0005.png);
-}
-.xl-icon-conf {
-	background-image: url(/src/icon/0006.png);
-}
-.xl-icon-search {
-	background-image: url(/src/icon/0007.png);
-}
-.xl-icon-web {
-	background-image: url(/src/icon/0008.gif);
-}
-.xl-icon-collapse {
-	background-image: url(/src/icon/0009.png);
-}
-.xl-icon-link {
-	background-image: url(/src/icon/0010.gif);
-}
-.xl-icon-arrow-right {
-	background-image: url(/src/icon/0011.png);
-}
-.xl-icon-arrow-bottom {
-	background-image: url(/src/icon/0012.png);
-}
-.xl-icon-web-service {
-	background-image: url(/src/icon/0013.gif);
-}
-.xl-icon-web-service2 {
-	background-image: url(/src/icon/0017.gif);
-}
-.xl-icon-java-project {
-	background-image: url(/src/icon/0014.png);
-}
-.xl-icon-java-resource {
-	background-image: url(/src/icon/0015.png);
-}
-.xl-icon-service-interface {
-	background-image: url(/src/icon/0016.gif);
-}
-.xl-icon-package {
-	background-image: url(/src/icon/0018.png);
-}
-.xl-icon-package2 {
-	background-image: url(/src/icon/0019.png);
-}
-.xl-icon-java {
-	background-image: url(/src/icon/0020.png);
-}
-.xl-icon-lib {
-	background-image: url(/src/icon/0021.gif);
-}
-.xl-icon-jar {
-	background-image: url(/src/icon/0022.png);
-}
-.xl-icon-js {
-	background-image: url(/src/icon/0023.png);
-}
-.xl-icon-folder {
-	background-image: url(/src/icon/0024.gif);
-}
-.xl-icon-text {
-	background-image: url(/src/icon/0025.gif);
-}
-.xl-icon-html {
-	background-image: url(/src/icon/0026.gif);
-}
+.xl-icon-collapse{background-image:url(/src/icon/collapse.gif);}
+.xl-icon-home{background-image:url(/src/icon/home.ico);}
+.xl-icon-email{background-image:url(/src/icon/email.png);}
+.xl-icon-user{background-image:url(/src/icon/user.png);}
+.xl-icon-cog{background-image:url(/src/icon/cog.png);}
+.xl-icon-link{background-image:url(/src/icon/link.gif);}
+.xl-icon-element{background-image:url(/src/icon/element.gif);}
+.xl-icon-controller{background-image:url(/src/icon/controller.png);}
+.xl-icon-component{background-image:url(/src/icon/component.gif);}
+.xl-icon-plugin{background-image:url(/src/icon/plugin.gif);}
+.xl-icon-exec{background-image:url(/src/icon/exec.png);}
+.xl-icon-project{background-image:url(/src/icon/project.png);}

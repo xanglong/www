@@ -20,7 +20,7 @@ public class Test {
 	public static void main(String[] args) {
 		File[] files = new File("D:/icon").listFiles();
 		for (File file : files) {
-			FileUtil.copyFile(file, new File("D:/icon2/" + file.getName().replace("_", "-").toLowerCase()));
+			findImage(file);
 		}
 	}
 	
@@ -53,7 +53,12 @@ public class Test {
 					byte[] bytes = FileUtil.readByte(file);
 					BufferedImage bufferedImage = ImageUtil.getBufferedImage(bytes);
 					if (bufferedImage != null && bufferedImage.getHeight() == 16 && bufferedImage.getWidth() == 16) {
-						fileName = fileName.replace("." + imageType.getCode(), "");
+						String md5 = md5(FileUtil.readByte(file));
+						if (md5Set.contains(md5)) {
+							continue;
+						}
+						md5Set.add(md5);
+						fileName = fileName.replace("." + imageType.getCode(), "").replace(" ", "-").replace("_", "-");
 						FileUtil.copyFile(file, new File("D:/image/" + fileName + "__" + count + "." + imageType.getCode()));
 						count++;
 						break;

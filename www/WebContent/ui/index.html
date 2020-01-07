@@ -12,90 +12,32 @@
 			.nav-right{float:right;border-left:1px solid #ddd;height:36px;width:109px;}
 			.nav-right>a{float:left;height:36px;width:36px;cursor:pointer;background-position:10px;background-repeat:no-repeat;}
 			.nav-right>a:hover{background-color: #f4f4f4;}
-			#grid{height:calc(100% - 37px);width:100%;}
+			#page{height:calc(100% - 37px);width:100%;}
+			#menusWrap{width:10%;}
+			#tabsWrap{width:calc(90% - 2px);}
 		</style>
 	</head>
 	<body>
 		<div id="nav">
-			<div class="nav-left">
-				<a class="xl-icon-home" title="首页"></a>
-			</div>
-			<div class="nav-right">
-				<a class="xl-icon-mail" title="邮件"></a>
-				<a class="xl-icon-user" title="用户"></a>
-				<a class="xl-icon-conf" title="设置"></a>
-			</div>
+			<div class="nav-left"><a class="xl-icon-home" title="首页"></a></div>
+			<div class="nav-right"><a class="xl-icon-email" title="邮件"></a><a class="xl-icon-user" title="用户"></a><a class="xl-icon-cog" title="设置"></a></div>
 		</div>
-		<div id="grid" class="xl-grid">
-			<div class="xl-grid">
-				<div class="xl-grid">
-					<div id="menu" class="xl-tree">
-						<div class="xl-tree-tool-system"><input type="text" placeholder="搜索"><a class="xl-icon-collapse" title="收起"></a><a class="xl-icon-link" title="联动"></a></div>
-						<ul>
-							<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-java-project"></i><span>www[www devlop]</span></a>
-								<ul>
-									<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-web-service"></i><span>JAS-WS Web Service</span></a>
-										<ul>
-											<li><i></i><a><i class="xl-icon-service-interface"></i><span>Service Endpoint Interfaces</span></a></li>
-											<li><i></i><a><i class="xl-icon-web-service2"></i><span>Web Services</span></a></li>
-										</ul>
-									</li>
-									<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-java-resource"></i><span>Java Resources</span></a>
-										<ul>
-											<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-java-resource"></i><span>src</span></a>
-												<ul>
-													<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-package"></i><span>com.xanglong</span></a>
-														<ul>
-															<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-package2"></i><span>edi</span></a></li>
-															<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-package"></i><span>frame</span></a></li>
-															<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-package"></i><span>i18n</span></a></li>
-															<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-package2"></i><span>web</span></a></li>
-															<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-java"></i><span>Filter</span></a></li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-											<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-lib"></i><span>Libraries</span></a>
-												<ul>
-													<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-lib"></i><span>Apache Tomcat v9.0</span></a>
-														<ul><li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-jar"></i><span>annotaions-api.jar</span></a></li></ul>
-													</li>
-													<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-lib"></i><span>JRE System Library</span></a></li>
-													<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-lib"></i><span>JUnit 5</span></a></li>
-													<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-lib"></i><span>Web App Libraries</span></a></li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-									<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-lib"></i><span>JavaScript Resources</span></a>
-										<ul>
-											<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-js"></i><span>WebContent</span></a></li>
-											<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-lib"></i><span>ECMAScript Built-In Library</span></a></li>
-											<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-web"></i><span>ECMA 3 Browser Support Library</span></a></li>
-										</ul>
-									</li>
-									<li><i></i><a><i class="xl-icon-folder"></i><span>build</span></a>
-										<ul>
-											<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-folder"></i><span>error</span></a></li>
-											<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-folder"></i><span>META-INF</span></a>
-												<ul><li><i></i><a><i class="xl-icon-text"></i><span>MANIFEST.MF</span></a></li></ul>
-											</li>
-											<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-folder"></i><span>src</span></a></li>
-											<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-folder"></i><span>WEB-INF</span></a></li>
-											<li><i></i><a><i class="xl-icon-web"></i><span>favicon.ico</span></a></li>
-											<li><i></i><a><i class="xl-icon-html"></i><span>index.html</span></a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+		<div id="page" class="xl-grid">
+			<div id="menusWrap" class="xl-grid">
+				<div id="menus" class="xl-tree">
+					<div class="xl-tree-tool-system"><input type="text" placeholder="搜索"><a class="xl-icon-collapse" title="收起"></a><a class="xl-icon-link" title="联动"></a></div>
+					<ul>
+						<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-element"></i><span>元素</span></a></li>
+						<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-controller"></i><span>控件</span></a></li>
+						<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-component"></i><span>组件</span></a></li>
+						<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-plugin"></i><span>插件</span></a></li>
+						<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-exec"></i><span>框架</span></a></li>
+						<li><i class="xl-icon-arrow-right"></i><a><i class="xl-icon-project"></i><span>项目</span></a></li>
+					</ul>
 				</div>
-				<div class="xl-grid"></div>
 			</div>
-			<div class="xl-grid xl-grid-top-bottom">
-				<div class="xl-grid"></div>
-				<div class="xl-grid"></div>
+			<div id="tabsWrap" class="xl-grid">
+				<div id="tabs"></div>
 			</div>
 		</div>
 		<script type="text/javascript" src="/src/js/jquery.min.js"></script>

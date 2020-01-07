@@ -1,4 +1,4 @@
 (function(){
-	XL.tree.init('#menu');
-	XL.grid.init('#grid');
+	XL.tree.init('#menus');
+	XL.grid.init('#page');
 })();

@@ -377,7 +377,7 @@
 				$grid.css('overflow', 'hidden');
 				var $hrs = $grid.find('.xl-grid-hr');
 				for (var i = 0; i < $hrs.length; i++) {
-					XL.grid.drag($hrs.eq(i));
+					XL.grid.drag.dragHr($hrs.eq(i));
 				}
 			},
 			'check': {
@@ -445,30 +445,38 @@
 					return true;
 				}
 			},
-			'drag': function($hr) {
-				if ($hr.attr('ready')) return; else $hr.attr('ready', true);
-				$hr.on('mousedown.drag', function(e1) {
-					getSelection ? getSelection().removeAllRanges() : document.selection.empty();
-					var cursor = $hr.css('cursor'), x1 = e1.pageX, y1 = e1.pageY, x2, y2;
-					var $parent = $hr.parent(), $grids = $parent.children('.xl-grid');
-					var $first = $grids.eq(0), $last = $grids.eq(1);
-					$parent.on('mousemove.drag', function(e2) {
-						x2 = e2.pageX, y2 = e2.pageY;
-						if (cursor == 'ew-resize') {
-							var precent = ($first.width() + x2 - x1) / ($parent.width() - 4) * 100;
-							$first.css('cssText', 'width:calc(' + precent + '% - 2px)');
-							$last.css('cssText', 'width:calc(' + (100 - precent) + '% - 2px)');
-						} else if (cursor == 'ns-resize') {
-							var precent = ($first.height() + y2 - y1) / ($parent.height() - 4) * 100;
-							$first.css('cssText', 'height:calc(' + precent + '% - 2px)');
-							$last.css('cssText', 'height:calc(' + (100 - precent) + '% - 2px)');
-						}
+			'drag': {
+				'dragHr': function($hr) {
+					if ($hr.attr('ready')) return; else $hr.attr('ready', true);
+					$hr.on('mousedown.drag', function(e1) {
 						getSelection ? getSelection().removeAllRanges() : document.selection.empty();
-						x1 = x2, y1 = y2;
-					}).on('mouseup', function(e2){
-						$parent.off('mousemove.drag');
-		            });
-				});
+						var cursor = $hr.css('cursor'), x1 = e1.pageX, y1 = e1.pageY, x2, y2;
+						var $parent = $hr.parent(), $grids = $parent.children('.xl-grid');
+						var $first = $grids.eq(0), $last = $grids.eq(1);
+						$parent.on('mousemove.drag', function(e2) {
+							x2 = e2.pageX, y2 = e2.pageY;
+							if (cursor == 'ew-resize') {
+								var precent = ($first.width() + x2 - x1) / ($parent.width() - 4) * 100;
+								precent = precent > 95 ? 95 : precent < 5 ? 5 : precent;
+								$first.css('cssText', 'width:calc(' + precent + '% - 1px)');
+								$last.css('cssText', 'width:calc(' + (100 - precent) + '% - 1px)');
+							} else if (cursor == 'ns-resize') {
+								var precent = ($first.height() + y2 - y1) / ($parent.height() - 4) * 100;
+								precent = precent > 95 ? 95 : precent < 5 ? 5 : precent;
+								$first.css('cssText', 'height:calc(' + precent + '% - 1px)');
+								precent = precent > 5 ? 5 : precent;
+								$last.css('cssText', 'height:calc(' + (100 - precent) + '% - 1px)');
+							}
+							getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+							x1 = x2, y1 = y2;
+						}).on('mouseup', function(e2){
+							$parent.off('mousemove.drag');
+			            });
+					});
+				},
+				'dragGrid': function($grid) {
+					
+				}
 			}
 		},
 		'msg': {
@@ -483,7 +491,7 @@
 				} else if (typeof template === 'object') {
 					p = template;
 				}
-				p = $.extend({'template':null,'style':'info','autoclose':3000,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
+				p = $.extend({'template':null,'style':'info','autoclose':0,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
 				function remove($elm) {
 					p.onClose ? p.onClose() : '';
 					$elm.removeClass('xl-msg-alert-in');
