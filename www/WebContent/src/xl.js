@@ -218,13 +218,13 @@
 		},
 		'tree': {
 			'init': function(options) {
-				var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : create(options);
+				var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : XL.tree.ui.createTree(options);
 				if (!$tree.hasClass('xl-tree')) {
 					return;
 				}
-				function create(p) {
-					
-				}
+				$tree.find('a').each(function(index, value){
+					value.title = value.title || $(value).children('span').html();
+				});
 				XL.tree.toolbar.init($tree);
 				XL.tree.node.click($tree);
 			},
@@ -364,6 +364,11 @@
 							}
 						}
 					});
+				}
+			},
+			'ui': {
+				'createTree': function(options) {
+					return $('<div></div>');
 				}
 			}
 		},
