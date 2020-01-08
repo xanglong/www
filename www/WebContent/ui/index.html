@@ -6,12 +6,9 @@
 		<link rel="stylesheet" href="/src/xl.css">
 		<style type="text/css">
 			#nav{height:36px;line-height:36px;border-bottom:1px solid #ddd;}
-			.nav-left{float:left;border-right:1px solid #ddd;height:36px;width:36px;}
-			.nav-left>a{float:left;height:36px;width:36px;cursor:pointer;background-position:10px;background-repeat:no-repeat;}
-			.nav-left>a:hover{background-color:#f4f4f4;}
-			.nav-right{float:right;border-left:1px solid #ddd;height:36px;width:109px;}
-			.nav-right>a{float:left;height:36px;width:36px;cursor:pointer;background-position:10px;background-repeat:no-repeat;}
-			.nav-right>a:hover{background-color: #f4f4f4;}
+			.nav-left{border-right:1px solid #ddd;width:36px;}
+			.nav-center{width:calc(100% - 147px);}
+			.nav-right{border-left:1px solid #ddd;width:109px;}
 			#page{height:calc(100% - 37px);width:100%;}
 			#menusWrap{width:10%;}
 			#tabsWrap{width:calc(90% - 2px);}
@@ -19,15 +16,25 @@
 	</head>
 	<body>
 		<div id="nav">
-			<div class="nav-left"><a class="xl-icon-home" title="首页"></a></div>
-			<div class="nav-right"><a class="xl-icon-email" title="邮件"></a><a class="xl-icon-user" title="用户"></a><a class="xl-icon-cog" title="设置"></a></div>
+			<div class="xl-nav nav-left"><a class="xl-icon-home" title="首页"></a></div>
+			<div class="xl-nav nav-center">
+				<button class="active" title="字体"><i class="xl-icon-font"></i><span>字体</span><span class="xl-nav-close">✖</span></button>
+				<button title="图标"><i class="xl-icon-image"></i><span>图标</span><span class="xl-nav-close">✖</span></button>
+				<button title="按钮"><i class="xl-icon-button"></i><span>按钮</span><span class="xl-nav-close">✖</span></button>
+				<button title="开关"><i class="xl-icon-switch"></i><span>开关</span><span class="xl-nav-close">✖</span></button>
+				<button title="标签"><i class="xl-icon-tag"></i><span>标签</span><span class="xl-nav-close">✖</span></button>
+				<button title="进度条"><i class="xl-icon-progress"></i><span>进度条</span><span class="xl-nav-close">✖</span></button>
+				<button title="单选框"><i class="xl-icon-radio"></i><span>单选框</span><span class="xl-nav-close">✖</span></button>
+				<button title="复选框"><i class="xl-icon-checkbox"></i><span>复选框</span><span class="xl-nav-close">✖</span></button>
+			</div>
+			<div class="xl-nav nav-right"><a class="xl-icon-email" title="邮件"></a><a class="xl-icon-user" title="用户"></a><a class="xl-icon-cog" title="设置"></a></div>
 		</div>
 		<div id="page" class="xl-grid">
 			<div id="menusWrap" class="xl-grid">
 				<div id="menus" class="xl-tree">
 					<div class="xl-tree-tool-system"><input type="text" placeholder="搜索"><a class="xl-icon-collapse" title="收起"></a><a class="xl-icon-link" title="联动"></a></div>
 					<ul><li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-element"></i><span>元素</span></a>
-							<ul><li><i></i><a><i class="xl-icon-font"></i><span>字体</span></a></li>
+							<ul><li><i></i><a data-href="/ui/element/font.html"><i class="xl-icon-font"></i><span>字体</span></a></li>
 								<li><i></i><a><i class="xl-icon-image"></i><span>图标</span></a></li>
 								<li><i></i><a><i class="xl-icon-button"></i><span>按钮</span></a></li>
 								<li><i></i><a><i class="xl-icon-switch"></i><span>开关</span></a></li>
@@ -47,6 +54,7 @@
 								<li><i></i><a><i class="xl-icon-time"></i><span>日期时间</span></a></li>
 								<li><i></i><a><i class="xl-icon-color"></i><span>颜色选择</span></a></li>
 								<li><i></i><a><i class="xl-icon-location"></i><span>经纬度</span></a></li>
+								<li><i></i><a><i class="xl-icon-timeline"></i><span>时间轴</span></a></li>
 							</ul>
 						</li>
 						<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-component"></i><span>组件</span></a>
@@ -71,13 +79,11 @@
 								<li><i></i><a><i class="xl-icon-code"></i><span>代码</span></a></li>
 							</ul>
 						</li>
-						<li><i></i><a><i class="xl-icon-exec"></i><span>框架</span></a></li>
-						<li><i></i><a><i class="xl-icon-project"></i><span>项目</span></a></li>
 					</ul>
 				</div>
 			</div>
 			<div id="tabsWrap" class="xl-grid">
-				<div id="tabs"></div>
+				<iframe id="home" class="xl-tab active" src="/ui/home.html"></iframe>
 			</div>
 		</div>
 		<script type="text/javascript" src="/src/js/jquery.min.js"></script>
