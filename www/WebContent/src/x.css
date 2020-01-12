@@ -9,6 +9,14 @@ ul {
 	list-style-image: none;
 }
 
+.x-no-select {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
 .x-btn {
 	display: inline-block;
     padding: 2px 14px;
@@ -626,5 +634,8 @@ ul {
 .x-icon-location{background-image:url(/src/icon/location.png);}
 .x-icon-timeline{background-image:url(/src/icon/timeline.png);}
 .x-icon-close{background-image:url(/src/icon/close.png);}
-.x-icon-arrow-left{background-image:url(/src/icon/arrow-left.ico);}
-.x-icon-arrow-right{background-image:url(/src/icon/arrow-right.ico);}
+.x-icon-book-open{background-image:url(/src/icon/book-open.png);}
+.x-icon-edit-text{background-image:url(/src/icon/edit-text.gif);}
+.x-icon-ruled-page{background-image:url(/src/icon/ruled-page.png);}
+.x-icon-arr-left{background-image:url(/src/icon/arrow-left.ico);}
+.x-icon-arr-right{background-image:url(/src/icon/arrow-right.ico);}
