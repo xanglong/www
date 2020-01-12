@@ -1,7 +1,7 @@
 (function() {
 	//jQuery拓展
 	var XL = {
-		'getLang' : function(code) {
+		'getLang' : function(code, words) {
 			if (!xlang) {
 				XL.msg.alert('语言包未加载', 'error');
 			}
@@ -9,7 +9,13 @@
 			if (!xlang[type]) {
 				XL.msg.alert(type + '语言包未加载', 'error');
 			}
-			return xlang[type][code];
+			var text = xlang[type][code];
+			if (words) {
+				for (var i=0; i < words.length; i++) {
+					text = text.replace('{'+i+'}', words[i]);
+				}
+			}
+			return text;
 		},
 		'base': {
 			'os': (function() {
@@ -678,13 +684,13 @@
 				var $center = $this.children('.x-nav-center'), isBreak = false;
 				var $buttons = $center.children();
 				if ($buttons.eq(0).outerWidth() < 66) {
-					XL.msg.alert('导航条宽度不够了', 'warning');
+					XL.msg.alert(XL.getLang('0004'), 'warning');
 					return;
 				}
 				$buttons.each(function(index, value){
 					var $button = $(value);
 					if ($button.data('url') == data.url) {
-						XL.msg.alert('【'+data.name+'】菜单已存在', 'warning');
+						XL.msg.alert(XL.getLang('0005',[data.name]), 'warning');
 						isBreak = true;
 						return false;
 					}
