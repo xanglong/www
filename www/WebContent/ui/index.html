@@ -3,91 +3,74 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>前端框架-降龙科技</title>
-		<link rel="stylesheet" href="/src/xl.css">
+		<link rel="stylesheet" href="/src/x.css">
 		<style type="text/css">
 			#nav{height:36px;line-height:36px;border-bottom:1px solid #ddd;}
-			.nav-left{border-right:1px solid #ddd;width:36px;}
-			.nav-center{width:calc(100% - 147px);}
-			.nav-right{border-left:1px solid #ddd;width:109px;}
 			#page{height:calc(100% - 37px);width:100%;}
 			#menusWrap{width:10%;}
 			#tabsWrap{width:calc(90% - 2px);}
 		</style>
 	</head>
 	<body>
-		<div id="nav">
-			<div class="xl-nav nav-left"><a class="xl-icon-home" title="首页"></a></div>
-			<div class="xl-nav nav-center">
-				<button class="active" title="字体"><i class="xl-icon-font"></i><span>字体</span><span class="xl-nav-close">✖</span></button>
-				<button title="图标"><i class="xl-icon-image"></i><span>图标</span><span class="xl-nav-close">✖</span></button>
-				<button title="按钮"><i class="xl-icon-button"></i><span>按钮</span><span class="xl-nav-close">✖</span></button>
-				<button title="开关"><i class="xl-icon-switch"></i><span>开关</span><span class="xl-nav-close">✖</span></button>
-				<button title="标签"><i class="xl-icon-tag"></i><span>标签</span><span class="xl-nav-close">✖</span></button>
-				<button title="进度条"><i class="xl-icon-progress"></i><span>进度条</span><span class="xl-nav-close">✖</span></button>
-				<button title="单选框"><i class="xl-icon-radio"></i><span>单选框</span><span class="xl-nav-close">✖</span></button>
-				<button title="复选框"><i class="xl-icon-checkbox"></i><span>复选框</span><span class="xl-nav-close">✖</span></button>
-			</div>
-			<div class="xl-nav nav-right"><a class="xl-icon-email" title="邮件"></a><a class="xl-icon-user" title="用户"></a><a class="xl-icon-cog" title="设置"></a></div>
-		</div>
-		<div id="page" class="xl-grid">
-			<div id="menusWrap" class="xl-grid">
-				<div id="menus" class="xl-tree">
-					<div class="xl-tree-tool-system"><input type="text" placeholder="搜索"><a class="xl-icon-collapse" title="收起"></a><a class="xl-icon-link" title="联动"></a></div>
-					<ul><li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-element"></i><span>元素</span></a>
-							<ul><li><i></i><a data-href="/ui/element/font.html"><i class="xl-icon-font"></i><span>字体</span></a></li>
-								<li><i></i><a><i class="xl-icon-image"></i><span>图标</span></a></li>
-								<li><i></i><a><i class="xl-icon-button"></i><span>按钮</span></a></li>
-								<li><i></i><a><i class="xl-icon-switch"></i><span>开关</span></a></li>
-								<li><i></i><a><i class="xl-icon-tag"></i><span>标签</span></a></li>
-								<li><i></i><a><i class="xl-icon-progress"></i><span>进度条</span></a></li>
-								<li><i></i><a><i class="xl-icon-radio"></i><span>单选框</span></a></li>
-								<li><i></i><a><i class="xl-icon-checkbox"></i><span>复选框</span></a></li>
+		<div id="nav"></div>
+		<div id="page">
+			<div id="menusWrap" class="x-grid">
+				<div id="menus" class="x-tree">
+					<div class="x-tree-tool-system"><input type="text" placeholder="搜索"><a class="x-icon-collapse" title="收起"></a><a class="x-icon-link" title="联动"></a></div>
+					<ul><li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-element"></i><span>元素</span></a>
+							<ul><li><i></i><a data-href="/ui/element/font.html"><i class="x-icon-font"></i><span>字体</span></a></li>
+								<li><i></i><a data-href="/ui/element/icon.html"><i class="x-icon-icon"></i><span>图标</span></a></li>
+								<li><i></i><a data-href="/ui/element/button.html"><i class="x-icon-button"></i><span>按钮</span></a></li>
+								<li><i></i><a data-href="/ui/element/switch.html"><i class="x-icon-switch"></i><span>开关</span></a></li>
+								<li><i></i><a data-href="/ui/element/tag.html"><i class="x-icon-tag"></i><span>标签</span></a></li>
+								<li><i></i><a data-href="/ui/element/progress.html"><i class="x-icon-progress"></i><span>进度条</span></a></li>
+								<li><i></i><a data-href="/ui/element/radio.html"><i class="x-icon-radio"></i><span>单选框</span></a></li>
+								<li><i></i><a data-href="/ui/element/checkbox.html"><i class="x-icon-checkbox"></i><span>复选框</span></a></li>
 							</ul>
 						</li>
-						<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-controller"></i><span>控件</span></a>
-							<ul><li><i></i><a><i class="xl-icon-input"></i><span>输入框</span></a></li>
-								<li><i></i><a><i class="xl-icon-select"></i><span>下拉框</span></a></li>
-								<li><i></i><a><i class="xl-icon-message"></i><span>提示消息</span></a></li>
-								<li><i></i><a><i class="xl-icon-toolbar"></i><span>工具条</span></a></li>
-								<li><i></i><a><i class="xl-icon-pagebar"></i><span>分页条</span></a></li>
-								<li><i></i><a><i class="xl-icon-navigator"></i><span>导航条</span></a></li>
-								<li><i></i><a><i class="xl-icon-time"></i><span>日期时间</span></a></li>
-								<li><i></i><a><i class="xl-icon-color"></i><span>颜色选择</span></a></li>
-								<li><i></i><a><i class="xl-icon-location"></i><span>经纬度</span></a></li>
-								<li><i></i><a><i class="xl-icon-timeline"></i><span>时间轴</span></a></li>
+						<li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-controller"></i><span>控件</span></a>
+							<ul><li><i></i><a data-href="/ui/controller/input.html"><i class="x-icon-input"></i><span>输入框</span></a></li>
+								<li><i></i><a data-href="/ui/controller/select.html"><i class="x-icon-select"></i><span>下拉框</span></a></li>
+								<li><i></i><a data-href="/ui/controller/message.html"><i class="x-icon-message"></i><span>提示消息</span></a></li>
+								<li><i></i><a data-href="/ui/controller/toolbar.html"><i class="x-icon-toolbar"></i><span>工具条</span></a></li>
+								<li><i></i><a data-href="/ui/controller/pagebar.html"><i class="x-icon-pagebar"></i><span>分页条</span></a></li>
+								<li><i></i><a data-href="/ui/controller/navigator.html"><i class="x-icon-navigator"></i><span>导航条</span></a></li>
+								<li><i></i><a data-href="/ui/controller/time.html"><i class="x-icon-time"></i><span>日期时间</span></a></li>
+								<li><i></i><a data-href="/ui/controller/color.html"><i class="x-icon-color"></i><span>颜色选择</span></a></li>
+								<li><i></i><a data-href="/ui/controller/location.html"><i class="x-icon-location"></i><span>经纬度</span></a></li>
+								<li><i></i><a data-href="/ui/controller/timeline.html"><i class="x-icon-timeline"></i><span>时间轴</span></a></li>
 							</ul>
 						</li>
-						<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-component"></i><span>组件</span></a>
-							<ul><li><i></i><a><i class="xl-icon-tree"></i><span>树</span></a></li>
-								<li><i></i><a><i class="xl-icon-open-page"></i><span>弹框</span></a></li>
-								<li><i></i><a><i class="xl-icon-form"></i><span>表单</span></a></li>
-								<li><i></i><a><i class="xl-icon-table"></i><span>表格</span></a></li>
-								<li><i></i><a><i class="xl-icon-org"></i><span>组织结构</span></a></li>
-								<li><i></i><a><i class="xl-icon-comments"></i><span>评论回复</span></a></li>
-								<li><i></i><a><i class="xl-icon-file"></i><span>文件管理</span></a></li>
+						<li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-component"></i><span>组件</span></a>
+							<ul><li><i></i><a data-href="/ui/component/tree.html"><i class="x-icon-tree"></i><span>树</span></a></li>
+								<li><i></i><a data-href="/ui/component/pop.html"><i class="x-icon-pop"></i><span>弹框</span></a></li>
+								<li><i></i><a data-href="/ui/component/form.html"><i class="x-icon-form"></i><span>表单</span></a></li>
+								<li><i></i><a data-href="/ui/component/table.html"><i class="x-icon-table"></i><span>表格</span></a></li>
+								<li><i></i><a data-href="/ui/component/org.html"><i class="x-icon-org"></i><span>组织结构</span></a></li>
+								<li><i></i><a data-href="/ui/component/comments.html"><i class="x-icon-comments"></i><span>评论回复</span></a></li>
+								<li><i></i><a data-href="/ui/component/file.html"><i class="x-icon-file"></i><span>文件管理</span></a></li>
 							</ul>
 						</li>
-						<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-function"></i><span>功能</span></a>
-							<ul><li><i></i><a><i class="xl-icon-select-rect"></i><span>托拽选取</span></a></li>
-								<li><i></i><a><i class="xl-icon-import"></i><span>导入</span></a></li>
-								<li><i></i><a><i class="xl-icon-export"></i><span>导出</span></a></li>
+						<li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-function"></i><span>功能</span></a>
+							<ul><li><i></i><a data-href="/ui/function/select-rect.html"><i class="x-icon-select-rect"></i><span>托拽选取</span></a></li>
+								<li><i></i><a data-href="/ui/function/import.html"><i class="x-icon-import"></i><span>导入</span></a></li>
+								<li><i></i><a data-href="/ui/function/export.html"><i class="x-icon-export"></i><span>导出</span></a></li>
 							</ul>
 						</li>
-						<li><i class="xl-icon-arrow-bottom"></i><a><i class="xl-icon-plugin"></i><span>插件</span></a>
-							<ul><li><i></i><a><i class="xl-icon-html"></i><span>富文本</span></a></li>
-								<li><i></i><a><i class="xl-icon-chart"></i><span>图表</span></a></li>
-								<li><i></i><a><i class="xl-icon-code"></i><span>代码</span></a></li>
+						<li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-plugin"></i><span>插件</span></a>
+							<ul><li><i></i><a data-href="/ui/plugin/html.html"><i class="x-icon-html"></i><span>富文本</span></a></li>
+								<li><i></i><a data-href="/ui/plugin/chart.html"><i class="x-icon-chart"></i><span>图表</span></a></li>
+								<li><i></i><a data-href="/ui/plugin/code.html"><i class="x-icon-code"></i><span>代码</span></a></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
 			</div>
-			<div id="tabsWrap" class="xl-grid">
-				<iframe id="home" class="xl-tab active" src="/ui/home.html"></iframe>
-			</div>
+			<div id="tabsWrap" class="x-grid"></div>
 		</div>
 		<script type="text/javascript" src="/src/js/jquery.min.js"></script>
-		<script type="text/javascript" src="/src/xl.js"></script>
+		<script type="text/javascript" src="/src/i18n/zh_cn.js"></script>
+		<script type="text/javascript" src="/src/x.js"></script>
 		<script type="text/javascript" src="/ui/index.js"></script>
 	</body>
 </html>

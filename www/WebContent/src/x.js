@@ -1,5 +1,16 @@
 (function() {
+	//jQuery拓展
 	var XL = {
+		'getLang' : function(code) {
+			if (!xlang) {
+				XL.msg.alert('语言包未加载', 'error');
+			}
+			var type = XL.base.getCookie('lang') || 'zh_cn';
+			if (!xlang[type]) {
+				XL.msg.alert(type + '语言包未加载', 'error');
+			}
+			return xlang[type][code];
+		},
 		'base': {
 			'os': (function() {
 				var ua = navigator.userAgent.toLowerCase();
@@ -44,7 +55,7 @@
 				return !(typeof text == 'string' && text.trim().length > 0 || typeof text == 'number');
 			},
 			'isObject': function(obj) {
-				return typeof obj != null && typeof obj == 'object' && !(obj instanceof Array);
+				return obj != null && typeof obj == 'object' && !(obj instanceof Array);
 			},
 			'getObject': function(json) {
 				var data = null;
@@ -100,12 +111,12 @@
 			'delCookie': function(cname) {
 				var exp = new Date();
 				exp.setTime(exp.getTime() - 1);
-				var cvalue = XL.base.getCookie(cname);
+				var cvalue = $.base.getCookie(cname);
 					document.cookie= cname + '=' + cvalue + ';expires=' + exp.toGMTString() + ';path=/';
 			},
-			'uuid': function() {
-				var uuid = '';
-				for (var i = 0; i < 8; i++) {
+			'uuid': function(num) {
+				var uuid = '', num = num || 8;
+				for (var i = 0; i < num; i++) {
 					uuid +=  (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 				}
 				return uuid.toUpperCase();
@@ -172,7 +183,7 @@
 			},
 			'format': function(dateTime, pattern) {
 				var date = new Date(dateTime);
-				if (XL.base.isBlank(pattern)) {
+				if ($.base.isBlank(pattern)) {
 					return date.toLocaleString();
 				}
 				return pattern.replace(/([a-z])\1*/ig, function(match, char) {
@@ -214,12 +225,12 @@
 						default: return '';
 					} 
 				}); 
-			}
+			},
 		},
 		'tree': {
 			'init': function(options) {
-				var $tree = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : XL.tree.ui.createTree(options);
-				if (!$tree.hasClass('xl-tree')) {
+				var $tree = options.$tree || XL.tree.ui.createTree(options);
+				if (!$tree.hasClass('x-tree')) {
 					return;
 				}
 				$tree.find('a').each(function(index, value){
@@ -235,11 +246,11 @@
 				},
 				'system':{
 					'init': function($tree) {
-						$tree.children('.xl-tree-tool-system').on('click', 'a', function(e) {
+						$tree.children('.x-tree-tool-system').on('click', 'a', function(e) {
 							var $a = $(this);
-							if ($a.hasClass('xl-icon-collapse')) {
+							if ($a.hasClass('x-icon-collapse')) {
 								XL.tree.toolbar.system.collapse($tree);
-							} else if ($a.hasClass('xl-icon-link')) {
+							} else if ($a.hasClass('x-icon-link')) {
 								XL.tree.toolbar.system.link($tree);
 							}
 						});
@@ -247,7 +258,7 @@
 					},
 					'collapse': function($tree) {
 						var $root = $tree.children('ul');
-						$root.find('.xl-icon-arrow-bottom').removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
+						$root.find('.x-icon-arrow-bottom').removeClass('x-icon-arrow-bottom').addClass('x-icon-arrow-right');
 						$root.find('ul').hide();
 					}, 
 					'link': function($tree) {
@@ -255,7 +266,7 @@
 					},
 					'search': function($tree) {
 						var runSid = null, $root = $tree.children('ul');
-						var searchInput = $tree.children('.xl-tree-tool-system').children('input')[0];
+						var searchInput = $tree.children('.x-tree-tool-system').children('input')[0];
 						searchInput.oninput = function(e) {
 							var sid = setTimeout(function() {
 								if (runSid != null) {
@@ -285,7 +296,7 @@
 											}
 											var $span = $(value);
 											var $parent = $span.parent();
-											while (!$parent.hasClass('xl-tree')) {
+											while (!$parent.hasClass('x-tree')) {
 												if ($parent[0].tagName == 'LI') {
 													if (!$parent.is(':hidden')) {
 														break;
@@ -317,14 +328,14 @@
 							return;
 						}
 						if (tagName == 'I') {
-							if ($tag.hasClass('xl-icon-arrow-bottom')) {
+							if ($tag.hasClass('x-icon-arrow-bottom')) {
 								isArrow = true;
 								$tag.parent().children('ul').hide();
-								$tag.removeClass('xl-icon-arrow-bottom').addClass('xl-icon-arrow-right');
-							} else if ($tag.hasClass('xl-icon-arrow-right')) {
+								$tag.removeClass('x-icon-arrow-bottom').addClass('x-icon-arrow-right');
+							} else if ($tag.hasClass('x-icon-arrow-right')) {
 								isArrow = true;
 								$tag.parent().children('ul').show();
-								$tag.removeClass('xl-icon-arrow-right').addClass('xl-icon-arrow-bottom');
+								$tag.removeClass('x-icon-arrow-right').addClass('x-icon-arrow-bottom');
 							}
 						}
 						if (!isArrow) {
@@ -372,118 +383,6 @@
 				}
 			}
 		},
-		'grid': {
-			'init': function(options) {
-				var $grid = typeof options == 'string' ? $(options) : options instanceof jQuery ? options : $(options);
-				$grid.hasClass('xl-grid') ? '' : $grid.addClass('xl-grid');
-				if (!XL.grid.check.checkChildren($grid)) {
-					return false;
-				}
-				$grid.css('overflow', 'hidden');
-				var $hrs = $grid.find('.xl-grid-hr');
-				for (var i = 0; i < $hrs.length; i++) {
-					XL.grid.drag.dragHr($hrs.eq(i));
-				}
-			},
-			'check': {
-				'check1': function($children) {
-					$children.children('hr').remove();
-					var $childrens = $children.children();
-					if ($childrens.length == 1) {
-						return XL.grid.check.checkChildren($childrens.eq(0));
-					}
-					return true;
-				},
-				'check2': function($children) {
-					$children.children('hr').remove();
-					var $childrens = $children.children();
-					if ($childrens.length == 1) {
-						return XL.grid.check.check1($children);
-					} else if ($childrens.length == 2) {
-						if (!$children.hasClass('xl-grid-left-right') && !$children.hasClass('xl-grid-top-bottom')) {
-							$children.addClass('xl-grid-left-right');
-						}
-						var $first = $childrens.eq(0), $last = $childrens.eq(1);
-						if ($first.hasClass('xl-grid') && $last.hasClass('xl-grid')) {
-							$first.after('<hr class="xl-grid-hr">');
-							if (!XL.grid.check.checkChildren($first)) {
-								return false;
-							}
-							if (!XL.grid.check.checkChildren($last)) {
-								return false;
-							}
-						}
-					}
-					return true;
-				},
-				'check3': function($children) {
-					$children.children('hr').remove();
-					var $childrens = $children.children();
-					if ($childrens.length == 1) {
-						return XL.grid.check.check1($children);
-					} else if ($childrens.length == 2) {
-						return XL.grid.check.check2($children);
-					} else if ($childrens.length > 2) {
-						$children.addClass('xl-grid-error');
-						XL.msg.alert('网格布局节点结构错误，子节点种元素节点超过2个', 'error');
-						return false;
-					}
-					return true;
-				},
-				'checkChildren': function($children) {
-					if ($children.hasClass('xl-grid')) {
-						var $childrens = $children.children();
-						if ($childrens.length == 1) {
-							if (!XL.grid.check.check1($children)) {
-								return false;
-							}
-						} else if ($childrens.length == 2) {
-							if (!XL.grid.check.check2($children)) {
-								return false;
-							}
-						} else if ($childrens.length >= 3) {
-							if (!XL.grid.check.check3($children)) {
-								return false;
-							}
-						}
-					}
-					return true;
-				}
-			},
-			'drag': {
-				'dragHr': function($hr) {
-					if ($hr.attr('ready')) return; else $hr.attr('ready', true);
-					$hr.on('mousedown.drag', function(e1) {
-						getSelection ? getSelection().removeAllRanges() : document.selection.empty();
-						var cursor = $hr.css('cursor'), x1 = e1.pageX, y1 = e1.pageY, x2, y2;
-						var $parent = $hr.parent(), $grids = $parent.children('.xl-grid');
-						var $first = $grids.eq(0), $last = $grids.eq(1);
-						$parent.on('mousemove.drag', function(e2) {
-							x2 = e2.pageX, y2 = e2.pageY;
-							if (cursor == 'ew-resize') {
-								var precent = ($first.width() + x2 - x1) / ($parent.width() - 4) * 100;
-								precent = precent > 95 ? 95 : precent < 5 ? 5 : precent;
-								$first.css('cssText', 'width:calc(' + precent + '% - 1px)');
-								$last.css('cssText', 'width:calc(' + (100 - precent) + '% - 1px)');
-							} else if (cursor == 'ns-resize') {
-								var precent = ($first.height() + y2 - y1) / ($parent.height() - 4) * 100;
-								precent = precent > 95 ? 95 : precent < 5 ? 5 : precent;
-								$first.css('cssText', 'height:calc(' + precent + '% - 1px)');
-								precent = precent > 5 ? 5 : precent;
-								$last.css('cssText', 'height:calc(' + (100 - precent) + '% - 1px)');
-							}
-							getSelection ? getSelection().removeAllRanges() : document.selection.empty();
-							x1 = x2, y1 = y2;
-						}).on('mouseup', function(e2){
-							$parent.off('mousemove.drag');
-			            });
-					});
-				},
-				'dragGrid': function($grid) {
-					
-				}
-			}
-		},
 		'msg': {
 			'tip': function(options) {
 				
@@ -496,26 +395,26 @@
 				} else if (typeof template === 'object') {
 					p = template;
 				}
-				p = $.extend({'template':null,'style':'info','autoclose':0,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
+				p = $.extend({'template':null,'style':'info','autoclose':3000,'position':'top-center','icon':true,'group':false,'onOpen':false,'onClose':false}, p);
 				function remove($elm) {
 					p.onClose ? p.onClose() : '';
-					$elm.removeClass('xl-msg-alert-in');
+					$elm.removeClass('x-msg-alert-in');
 					setTimeout(function(){$elm.remove();}, 390);
 				};
 				var $spopGroup = $('#xl_msg_alert_' + p.group);
 				$spopGroup.length > 0 ? remove($spopGroup) : '';
 				var $container = $('#xl_msg_alert_' + p.position);
-				var icon = (!p.icon) ? '' : '<i class="xl-msg-alert-icon xl-msg-alert-icon--' + p.style +'"></i>';
-				var layout ='<div class="xl-msg-alert-close">&times;</div>' + icon + '<div class="xl-msg-alert-body">' + p.template + '</div>';
+				var icon = (!p.icon) ? '' : '<i class="x-msg-alert-icon x-msg-alert-icon--' + p.style +'"></i>';
+				var layout ='<div class="x-msg-alert-close">&times;</div>' + icon + '<div class="x-msg-alert-body">' + p.template + '</div>';
 				if ($container.length == 0) {
 					var popContainer = document.createElement('div');
-					popContainer.setAttribute('class', 'xl-msg-alert-container xl-msg-alert-' + p.position);
+					popContainer.setAttribute('class', 'x-msg-alert-container x-msg-alert-' + p.position);
 					popContainer.id = 'xl_msg_alert_' + p.position.replace('-', '_');
 					document.body.appendChild(popContainer);
 					$container = $('#xl_msg_alert_' + p.position.replace('-', '_'));
 				}
 				var pop = document.createElement('div');
-				pop.setAttribute('class', 'xl-msg-alert xl-msg-alert-out xl-msg-alert-in xl-msg-alert-' + p.style);
+				pop.setAttribute('class', 'x-msg-alert x-msg-alert-out x-msg-alert-in x-msg-alert-' + p.style);
 				if (p.group && typeof p.group === 'string') {
 					pop.id = 'xl_msg_alert_' + p.group;
 				}
@@ -526,12 +425,286 @@
 				if (p.autoclose && typeof p.autoclose === 'number') {
 					sid = setTimeout(remove.bind(this, $(pop)), p.autoclose);
 				}
-				$(pop).find('.xl-msg-alert-close').on('click', function(event){
+				$(pop).find('.x-msg-alert-close').on('click', function(event){
 					sid ? clearTimeout(sid) : '';
 					remove($(pop));
 				});
 			}
 		},
-	};
+		'dom': {
+			'getAll': function (options) {
+				var attr = '', style = '', data = '';
+				if (XL.base.isObject(options)) {
+					attr = XL.dom.getAttr(options['attr']);
+					style = XL.dom.getStyle(options['style']);
+					data = XL.dom.getData(options['data']);
+				}
+				return attr + style + data;
+			},
+			'getAttr': function(attrObj) {
+				var attr = '';
+				if (XL.base.isObject(attrObj)) {
+					for (var key in attrObj) {
+						attr += key + '="' + attrObj[key] + '" ';
+					}
+				}
+				return attr;
+			},
+			'getStyle': function(styleObj) {
+				var style = '';
+				if (XL.base.isObject(styleObj)) {
+					style += 'style="'
+					for (var key in styleObj) {
+						style += key + ':' + styleObj[key] + ';';
+					}
+					style += '"';
+				}
+				return style;
+			},
+			'getData': function(dataObj) {
+				var data = '';
+				if (XL.base.isObject(dataObj)) {
+					for (var key in dataObj) {
+						data += 'data-' + key + '="' + dataObj[key] + '" ';
+					}
+				}
+				return data;
+			},
+			'create': function (options) {
+				var element = '';
+				if (XL.base.isObject(options)) {
+					var tag = options.tag;
+					if (options.tag) {
+						element = '<' + tag + ' ' + XL.dom.getAll(options) + '>' + (options.name || '');
+						var children = options.children;
+						if (children instanceof Array) {
+							for (var i = 0; i < children.length; i++) {
+								element += XL.dom.create(children[i]);
+							}
+						}
+						element += '</' + tag + '>';
+					}
+				}
+				return element;
+			},
+			'bind': function($el, options) {
+				var event = options.event;
+				if (XL.base.isObject(event)) {
+					for (var key in event) {
+						var method = event[key];
+						if (typeof method == 'function') {
+							$el.on(key, function(e) {
+								method.call(this, e, $el)
+							});
+						}
+					}
+				}
+				$el.children().each(function(index, value) {
+					XL.dom.bind($(value), options.children[index]);
+				});
+			}
+		}
+	}
 	window.XL = XL;
+	$.fn.extend({
+		'xhtml': function(options) {
+			if (!XL.base.isObject(options)) return this;
+			options.attr ? this.attr(options.attr) : '';
+			options.style ? this.css(options.css) : '';
+			options.data ? this.data(options.data) : '';
+			return this.each(function(index, value) {
+				var innerHTML = '', children = options.children;
+				if (children instanceof Array) {
+					for (var i = 0; i < children.length; i++) {
+						innerHTML += XL.dom.create(children[i]);
+					}
+				}
+				value.innerHTML = innerHTML;
+				XL.dom.bind($(value), options);
+			});
+		},
+		'xtree': function() {
+			
+		},
+		'xform': function() {
+			
+		},
+		'xtable': function() {
+			
+		},
+		'xpop': function() {
+			
+		},
+		'xgrid': function() {
+			function check($children) {
+				if ($children.hasClass('x-grid')) {
+					var $childrens = $children.children();
+					if ($childrens.length == 1) {
+						return check1($children);
+					} else if ($childrens.length == 2) {
+						return check2($children);
+					} else if ($childrens.length >= 3) {
+						return check3($children);
+					}
+				}
+				return true;
+			}
+			function check1($children) {
+				$children.children('hr').remove();
+				var $childrens = $children.children();
+				if ($childrens.length == 1) {
+					return check($childrens.eq(0));
+				}
+				return true;
+			}
+			function check2($children) {
+				$children.children('hr').remove();
+				var $childrens = $children.children();
+				if ($childrens.length == 1) {
+					return check1($children);
+				} else if ($childrens.length == 2) {
+					if (!$children.hasClass('x-grid-left-right') && !$children.hasClass('x-grid-top-bottom')) {
+						$children.addClass('x-grid-left-right');
+					}
+					var $first = $childrens.eq(0), $last = $childrens.eq(1);
+					if ($first.hasClass('x-grid') && $last.hasClass('x-grid')) {
+						$first.after('<hr class="x-grid-hr">');
+						if (!check($first)) {
+							return false;
+						}
+						if (!check($last)) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			function check3($children) {
+				$children.children('hr').remove();
+				var $childrens = $children.children();
+				if ($childrens.length == 1) {
+					return check1($children);
+				} else if ($childrens.length == 2) {
+					return check2($children);
+				} else if ($childrens.length > 2) {
+					$children.addClass('x-grid-error');
+					XL.msg.alert(XL.getLang('0001'), 'error');
+					return false;
+				}
+				return true;
+			}
+			function dragHr($hr) {
+				if ($hr.attr('ready')) return; else $hr.attr('ready', true);
+				$hr.on('mousedown.drag', function(e1) {
+					getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+					var cursor = $hr.css('cursor'), x1 = e1.pageX, y1 = e1.pageY, x2, y2;
+					var $parent = $hr.parent(), $grids = $parent.children('.x-grid');
+					var $body = $('body');
+					$body.append('<div class="x-mask-drag"></div>');
+					var $mask = $body.children('.x-mask-drag');
+					var $first = $grids.eq(0), $last = $grids.eq(1);
+					$mask.on('mousemove.drag', function(e2) {
+						x2 = e2.pageX, y2 = e2.pageY;
+						if (cursor == 'ew-resize') {
+							$mask.css('cursor', 'ew-resize');
+							var precent = ($first.width() + x2 - x1) / ($parent.width() - 4) * 100;
+							precent = precent > 95 ? 95 : precent < 5 ? 5 : precent;
+							$first.css('cssText', 'width:calc(' + precent + '% - 1px)');
+							$last.css('cssText', 'width:calc(' + (100 - precent) + '% - 1px)');
+						} else if (cursor == 'ns-resize') {
+							$mask.css('cursor', 'ns-resize');
+							var precent = ($first.height() + y2 - y1) / ($parent.height() - 4) * 100;
+							precent = precent > 95 ? 95 : precent < 5 ? 5 : precent;
+							$first.css('cssText', 'height:calc(' + precent + '% - 1px)');
+							precent = precent > 5 ? 5 : precent;
+							$last.css('cssText', 'height:calc(' + (100 - precent) + '% - 1px)');
+						}
+						getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+						x1 = x2, y1 = y2;
+					}).on('mouseup', function(e2){
+						$mask.remove();
+		            });
+				})
+			}
+			return this.each(function(index, value) {
+				var $grid = $(value);
+				$grid.hasClass('x-grid') ? '' : $grid.addClass('x-grid');
+				if (check($grid)) {
+					$grid.css('overflow', 'hidden');
+					$grid.find('.x-grid-hr').each(function(i, v){
+						dragHr($(v))
+					});
+				}
+			});
+		},
+		'xnav': function(options) {
+			var $this = this;
+			if (!XL.base.isObject(options)) return $this;
+			var left = options.left, center = options.center, right = options.right;
+			var p = {'children':[]};
+			if (left instanceof Array) {
+				var pLeft = {'tag':'div','attr':{'class':'x-nav x-nav-left'},'style':{'width':36*left.length+'px'},'children':[]};
+				for (var i = 0; i < left.length; i++) {
+					var leftObj = left[i];
+					var pLeftChild = {'tag':'a','data':{},'name':leftObj.name,'title':leftObj.title,'attr':{'class':leftObj.icon},'event':leftObj.event};
+					leftObj.url ? pLeftChild.data.url = leftObj.url : '';
+					pLeft.children.push(pLeftChild);
+				}
+				p.children.push(pLeft);
+			}
+			if (center instanceof Array) {
+				var pCenterWidth = 'calc(100% - '+(36*(left.length+(right instanceof Array?right.length:0))+2)+'px)';
+				var pCenter = {'tag':'div','attr':{'class':'x-nav x-nav-center'},'style':{'width':pCenterWidth},'children':[]};
+				for (var i = 0; i < center.length; i++) {
+					var centerObj = center[i];
+					pCenter.children.push({
+						'tag':'button','data':{'url':centerObj.url},'attr':{'title':centerObj.title||centerObj.name},'event':centerObj.event,
+						'children':[{'tag':'i','attr':{'class':centerObj.icon}},{'tag':'span','name':centerObj.name},{'tag':'span','attr':{'class':'x-nav-close'},'name':'✖'}]
+					});
+				}
+				p.children.push(pCenter);
+			}
+			if (right instanceof Array) {
+				var pRight = {'tag':'div','attr':{'class':'x-nav x-nav-right'},'style':{'width':36*right.length+'px'},'children':[]};
+				for (var i = 0; i < right.length; i++) {
+					var rightObj = right[i];
+					var pRightChild = {'tag':'a','data':{},'name':rightObj.name,'title':rightObj.title,'attr':{'class':rightObj.icon},'event':rightObj.event};
+					rightObj.url ? pRightChild.data.url = rightObj.url : '';
+					pRight.children.push(pRightChild);
+				}
+				p.children.push(pRight);
+			}
+			$this['add'] = function(data) {
+				var $center = $this.children('.x-nav-center'), isBreak = false;
+				var $buttons = $center.children();
+				if ($buttons.eq(0).outerWidth() < 66) {
+					XL.msg.alert('导航条宽度不够了', 'warning');
+					return;
+				}
+				$buttons.each(function(index, value){
+					var $button = $(value);
+					if ($button.data('url') == data.url) {
+						XL.msg.alert('【'+data.name+'】菜单已存在', 'warning');
+						isBreak = true;
+						return false;
+					}
+				});
+				if (isBreak) return;
+				$center.append('<button title="'+(data.title||data.name)+'" data-url="'+data.url+'"><i class="'+data.icon+'"></i><span>'+data.name+'</span><span class="x-nav-close">✖</span></button>');
+				resize();
+				$center.children().last().click();
+			}
+			function resize() {
+				var $center = $this.children('.x-nav-center');
+				var $buttons = $center.children().css('width','');
+				if ($buttons.last().offset().top > 3) {
+					$buttons.css('cssText', 'width:calc('+(100/$buttons.length)+'% - '+(3+3/$buttons.length)+'px');
+				}
+			}
+			$this.resize = resize;
+			var result = $this.xhtml(p);
+			resize();
+			return result;
+		}
+	});
 })();
