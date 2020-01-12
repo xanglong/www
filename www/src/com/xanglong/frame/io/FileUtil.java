@@ -144,20 +144,20 @@ public class FileUtil {
 	 * @param file 文件对象
 	 * */
 	public static void deleteFile(File file) {
-		if (!file.delete()) {
-			if (file.isDirectory()) {
-				File[] files = file.listFiles();
-				if (files != null) {
-					for (File f : files) {
-						if (f.isDirectory()) {
-							deleteFile(f);
-						}
-			        }
-				}
-            } else {
-            	file.delete();
-            }
-		}
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			if (files != null) {
+				for (File f : files) {
+					if (f.isDirectory()) {
+						deleteFile(f);
+					} else {
+						f.delete();
+					}
+		        }
+			}
+			
+        }
+		file.delete();
 	}
 	
 	/**
