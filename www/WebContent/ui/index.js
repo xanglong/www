@@ -3,7 +3,6 @@
 	$('#page').xgrid();
 	var $nav = $('#nav').xnav({
 		'left':[{'icon':'x-icon-home','title':'首页','url':'/ui/home.html'}],
-		'center':[{'icon':'x-icon-edit-text','name':'说明','url':'/ui/document/instruct.html'}],
 		'right':[{'icon':'x-icon-email','title':'邮箱'},{'icon':'x-icon-user','title':'用户'},{'icon':'x-icon-cog','title':'设置'}]
 	});
 	$tree.children('ul').on('click', 'a', function(e) {
@@ -17,21 +16,20 @@
 	var functions = {
 		'navClick': function($el) {
 			var url = $el.data('url'), tabid = $el.data('tabid');
-			$tabs.children('.active').removeClass('active');
-			$center.children('.active').removeClass('active');
-			$el.addClass('active');
+			$tabs.children('.x-active').removeClass('x-active');
+			$center.children('.x-active').removeClass('x-active');
+			$el.addClass('x-active');
 			if (url) {
 				if (tabid) {
-					$('#'+tabid).addClass('active');
+					$('#'+tabid).addClass('x-active');
 				} else {
 					var uuid = XL.base.uuid(2);
 					$el.attr('data-tabid', uuid);
-					$tabs.append('<iframe id="'+uuid+'" class="x-tab active" src="'+url+'"></iframe>');
+					$tabs.append('<iframe id="'+uuid+'" class="x-tab x-active" src="'+url+'"></iframe>');
 				}
 			}
 		}
 	};
-	functions.navClick($center.children().eq(0));
 	$left.on('click', 'a', function(e){
 		functions.navClick($(this));
 	});
@@ -53,4 +51,6 @@
 			functions.navClick($button);
 		}
 	});
+	//打开正在开发的页面
+	$tree.find('.x-icon-ruled-page').click();
 })();

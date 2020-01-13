@@ -88,7 +88,7 @@ ul {
     background-color: #f7f7f7;
     border: 1px solid #eaeaea;
 }
-.x-nav>button.active {
+.x-nav>button.x-active {
 	color: #000;
     background-color: #ffff;
     border: 1px solid #eaeaea;
@@ -203,7 +203,7 @@ ul {
 .x-tree li>a:hover {
 	background-color: #e5f3ff;
 }
-.x-tree li>a.active {
+.x-tree li>a.x-active {
 	background-color: #cde8ff;
 }
 .x-tree li>a>span {
@@ -574,7 +574,7 @@ ul {
 	width: 100%;
 	display: none;
 }
-.x-tab.active {
+.x-tab.x-active {
 	display: block;
 }
 

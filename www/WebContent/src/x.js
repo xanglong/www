@@ -1,5 +1,4 @@
 (function() {
-	//jQuery拓展
 	var XL = {
 		'getLang' : function(code, words) {
 			if (!xlang) {
@@ -464,12 +463,12 @@
 							var $a = $tag.closest('a');
 							if (e.ctrlKey) {
 								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-								$a.hasClass('active') ? $a.removeClass('active') : $a.addClass('active');
+								$a.hasClass('x-active') ? $a.removeClass('x-active') : $a.addClass('x-active');
 							} else if (e.shiftKey) {
 								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-								var $lastActive = $root.find('.last-active');
+								var $lastActive = $root.find('.x-last-active');
 								if ($lastActive.length == 0) {
-									$a.addClass('active');
+									$a.addClass('x-active');
 								} else {
 									var $as = $root.find('a'), start, end, last, current;
 									var lastActive = $lastActive[0], currentActive = $a[0];
@@ -485,15 +484,15 @@
 										start = last;
 										end = current;
 									}
-									$as.removeClass('active').slice(start, end + 1).addClass('active');
+									$as.removeClass('x-active').slice(start, end + 1).addClass('x-active');
 								} 
 							} else {
-								$root.find('.active').removeClass('active');
-								$a.addClass('active');
+								$root.find('.x-active').removeClass('x-active');
+								$a.addClass('x-active');
 							}
 							if (!e.shiftKey) {
-								$root.find('.last-active').removeClass('last-active');
-								$a.addClass('last-active');
+								$root.find('.x-last-active').removeClass('x-last-active');
+								$a.addClass('x-last-active');
 							}
 						}
 					});
@@ -665,7 +664,7 @@
 					$buttons.each(function(index, value){
 						var $button = $(value);
 						if ($button.data('url') == data.url) {
-							XL.msg.alert(XL.getLang('0005',[data.name]), 'warning');
+							$button.click();
 							isBreak = true;
 							return false;
 						}

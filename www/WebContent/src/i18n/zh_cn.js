@@ -4,7 +4,6 @@
 		'0002':'左移',
 		'0003':'右移',
 		'0004':'导航条宽度不够了',
-		'0005':'【{0}】菜单已存在',
 	};
 	if (typeof xlang == 'undefined')  window.xlang = {};
 	xlang.zh_cn = zh_cn;
