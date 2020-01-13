@@ -353,7 +353,7 @@
 					children ? XL.dom.bind($(value), children[index]) : '';
 				});
 			},
-			'noSelectelect': function() {
+			'noSelect': function() {
 				getSelection ? getSelection().removeAllRanges() : document.selection.empty();
 			}
 		}
