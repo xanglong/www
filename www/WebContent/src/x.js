@@ -1,5 +1,4 @@
 (function() {
-	//jQuery拓展
 	var XL = {
 		'getLang' : function(code, words) {
 			if (!xlang) {
@@ -233,162 +232,6 @@
 				}); 
 			},
 		},
-		'tree': {
-			'init': function(options) {
-				var $tree = options.$tree || XL.tree.ui.createTree(options);
-				if (!$tree.hasClass('x-tree')) {
-					return;
-				}
-				$tree.find('a').each(function(index, value){
-					value.title = value.title || $(value).children('span').html();
-				});
-				XL.tree.toolbar.init($tree);
-				XL.tree.node.click($tree);
-			},
-			'toolbar': {
-				'init': function($tree) {
-					XL.tree.toolbar.system.init($tree);
-					XL.tree.toolbar.custom.init($tree);
-				},
-				'system':{
-					'init': function($tree) {
-						$tree.children('.x-tree-tool-system').on('click', 'a', function(e) {
-							var $a = $(this);
-							if ($a.hasClass('x-icon-collapse')) {
-								XL.tree.toolbar.system.collapse($tree);
-							} else if ($a.hasClass('x-icon-link')) {
-								XL.tree.toolbar.system.link($tree);
-							}
-						});
-						XL.tree.toolbar.system.search($tree);
-					},
-					'collapse': function($tree) {
-						var $root = $tree.children('ul');
-						$root.find('.x-icon-arrow-bottom').removeClass('x-icon-arrow-bottom').addClass('x-icon-arrow-right');
-						$root.find('ul').hide();
-					}, 
-					'link': function($tree) {
-						
-					},
-					'search': function($tree) {
-						var runSid = null, $root = $tree.children('ul');
-						var searchInput = $tree.children('.x-tree-tool-system').children('input')[0];
-						searchInput.oninput = function(e) {
-							var sid = setTimeout(function() {
-								if (runSid != null) {
-									clearTimeout(runSid);
-									runSid = null;
-								}
-								runSid = sid;
-								$root.find('span').each(function(index, value) {
-									var $em = $(value).children('em');
-									if ($em.length > 0) {
-										value.outerHTML = value.outerHTML.replace(/<em>/g, '').replace(/<\/em>/g, '');
-									}
-								});
-								if (searchInput.value == '') {
-									$root.find('li').show();
-								} else {
-									$root.find('li').hide();
-									var text = searchInput.value, textLower = text.toLowerCase();
-									$root.find('span').each(function(index, value) {
-										var ctx = value.textContent, ctxLower = ctx.toLowerCase();
-										if (ctxLower.indexOf(textLower) != -1) {
-											var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
-											for (var i = 0; i < words.length - 1; i++) {
-												var start = wordIndex + words[i].length, end = start + textLower.length;
-												newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
-												wordIndex = end;
-											}
-											var $span = $(value);
-											var $parent = $span.parent();
-											while (!$parent.hasClass('x-tree')) {
-												if ($parent[0].tagName == 'LI') {
-													if (!$parent.is(':hidden')) {
-														break;
-													}
-													$parent.show();
-												}
-												$parent = $parent.parent();
-											}
-											$span.html(newCtx + ctx.substring(wordIndex));
-										}
-									});
-								}
-							}, 50);
-						};
-					}
-				},
-				'custom': {
-					'init': function($tree) {
-						
-					}
-				}
-			},
-			'node': {
-				'click': function($tree) {
-					var $root = $tree.children('ul');
-					$root.on('click', function(e) {
-						var $tag = $(e.target), tagName = e.target.tagName, isArrow = false;
-						if (tagName == 'UL' || tagName == 'LI') {
-							return;
-						}
-						if (tagName == 'I') {
-							if ($tag.hasClass('x-icon-arrow-bottom')) {
-								isArrow = true;
-								$tag.parent().children('ul').hide();
-								$tag.removeClass('x-icon-arrow-bottom').addClass('x-icon-arrow-right');
-							} else if ($tag.hasClass('x-icon-arrow-right')) {
-								isArrow = true;
-								$tag.parent().children('ul').show();
-								$tag.removeClass('x-icon-arrow-right').addClass('x-icon-arrow-bottom');
-							}
-						}
-						if (!isArrow) {
-							var $a = $tag.closest('a');
-							if (e.ctrlKey) {
-								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-								$a.hasClass('active') ? $a.removeClass('active') : $a.addClass('active');
-							} else if (e.shiftKey) {
-								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-								var $lastActive = $root.find('.last-active');
-								if ($lastActive.length == 0) {
-									$a.addClass('active');
-								} else {
-									var $as = $root.find('a'), start, end, last, current;
-									var lastActive = $lastActive[0], currentActive = $a[0];
-									for (var i = 0; i < $as.length; i++) {
-										var ai = $as[i];
-										if (ai == lastActive) last = i;
-										if (ai == currentActive) current = i;
-									}
-									if (current < last) {
-										start = current;
-										end = last;
-									} else {
-										start = last;
-										end = current;
-									}
-									$as.removeClass('active').slice(start, end + 1).addClass('active');
-								} 
-							} else {
-								$root.find('.active').removeClass('active');
-								$a.addClass('active');
-							}
-							if (!e.shiftKey) {
-								$root.find('.last-active').removeClass('last-active');
-								$a.addClass('last-active');
-							}
-						}
-					});
-				}
-			},
-			'ui': {
-				'createTree': function(options) {
-					return $('<div></div>');
-				}
-			}
-		},
 		'msg': {
 			'tip': function(options) {
 				
@@ -405,7 +248,7 @@
 				function remove($elm) {
 					p.onClose ? p.onClose() : '';
 					$elm.removeClass('x-msg-alert-in');
-					setTimeout(function(){$elm.remove();}, 390);
+					setTimeout(function() {$elm.remove();}, 390);
 				};
 				var $spopGroup = $('#xl_msg_alert_' + p.group);
 				$spopGroup.length > 0 ? remove($spopGroup) : '';
@@ -506,8 +349,12 @@
 					}
 				}
 				$el.children().each(function(index, value) {
-					XL.dom.bind($(value), options.children[index]);
+					var children = options.children;
+					children ? XL.dom.bind($(value), children[index]) : '';
 				});
+			},
+			'noSelect': function() {
+				getSelection ? getSelection().removeAllRanges() : document.selection.empty();
 			}
 		}
 	}
@@ -529,8 +376,131 @@
 				XL.dom.bind($(value), options);
 			});
 		},
-		'xtree': function() {
-			
+		'xtree': function(options) {
+			var $this = this;
+			if ($this.children().length == 0) {
+				
+			}
+			$this.find('a').each(function(index, value){
+				value.title = value.title || $(value).children('span').html();
+			});
+			$this.children('.x-tree-tool-system').on('click', 'a', function(e) {
+				var $a = $(this);
+				if ($a.hasClass('x-icon-collapse')) {
+					var $root = $this.children('ul');
+					$root.find('.x-icon-arrow-bottom').removeClass('x-icon-arrow-bottom').addClass('x-icon-arrow-right');
+					$root.find('ul').hide();
+				}
+			});
+			var functions = {
+				'search': function() {
+					var runSid = null, $root = $this.children('ul');
+					var searchInput = $this.children('.x-tree-tool-system').children('input')[0];
+					searchInput.oninput = function(e) {
+						var sid = setTimeout(function() {
+							if (runSid != null) {
+								clearTimeout(runSid);
+								runSid = null;
+							}
+							runSid = sid;
+							$root.find('span').each(function(index, value) {
+								var $em = $(value).children('em');
+								if ($em.length > 0) {
+									value.outerHTML = value.outerHTML.replace(/<em>/g, '').replace(/<\/em>/g, '');
+								}
+							});
+							if (searchInput.value == '') {
+								$root.find('li').show();
+							} else {
+								$root.find('li').hide();
+								var text = searchInput.value, textLower = text.toLowerCase();
+								$root.find('span').each(function(index, value) {
+									var ctx = value.textContent, ctxLower = ctx.toLowerCase();
+									if (ctxLower.indexOf(textLower) != -1) {
+										var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
+										for (var i = 0; i < words.length - 1; i++) {
+											var start = wordIndex + words[i].length, end = start + textLower.length;
+											newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
+											wordIndex = end;
+										}
+										var $span = $(value);
+										var $parent = $span.parent();
+										while (!$parent.hasClass('x-tree')) {
+											if ($parent[0].tagName == 'LI') {
+												if (!$parent.is(':hidden')) {
+													break;
+												}
+												$parent.show();
+											}
+											$parent = $parent.parent();
+										}
+										$span.html(newCtx + ctx.substring(wordIndex));
+									}
+								});
+							}
+						}, 50);
+					};
+				},
+				'click': function() {
+					var $root = $this.children('ul');
+					$root.on('click', function(e) {
+						var $tag = $(e.target), tagName = e.target.tagName, isArrow = false;
+						if (tagName == 'UL' || tagName == 'LI') {
+							return;
+						}
+						if (tagName == 'I') {
+							if ($tag.hasClass('x-icon-arrow-bottom')) {
+								isArrow = true;
+								$tag.parent().children('ul').hide();
+								$tag.removeClass('x-icon-arrow-bottom').addClass('x-icon-arrow-right');
+							} else if ($tag.hasClass('x-icon-arrow-right')) {
+								isArrow = true;
+								$tag.parent().children('ul').show();
+								$tag.removeClass('x-icon-arrow-right').addClass('x-icon-arrow-bottom');
+							}
+						}
+						if (!isArrow) {
+							var $a = $tag.closest('a');
+							if (e.ctrlKey) {
+								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
+								$a.hasClass('x-active') ? $a.removeClass('x-active') : $a.addClass('x-active');
+							} else if (e.shiftKey) {
+								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
+								var $lastActive = $root.find('.x-last-active');
+								if ($lastActive.length == 0) {
+									$a.addClass('x-active');
+								} else {
+									var $as = $root.find('a'), start, end, last, current;
+									var lastActive = $lastActive[0], currentActive = $a[0];
+									for (var i = 0; i < $as.length; i++) {
+										var ai = $as[i];
+										if (ai == lastActive) last = i;
+										if (ai == currentActive) current = i;
+									}
+									if (current < last) {
+										start = current;
+										end = last;
+									} else {
+										start = last;
+										end = current;
+									}
+									$as.removeClass('x-active').slice(start, end + 1).addClass('x-active');
+								} 
+							} else {
+								$root.find('.x-active').removeClass('x-active');
+								$a.addClass('x-active');
+							}
+							if (!e.shiftKey) {
+								$root.find('.x-last-active').removeClass('x-last-active');
+								$a.addClass('x-last-active');
+							}
+						}
+					});
+				}
+			};
+			functions.search();
+			functions.click();
+			return $this;
 		},
 		'xform': function() {
 			
@@ -602,7 +572,7 @@
 			function dragHr($hr) {
 				if ($hr.attr('ready')) return; else $hr.attr('ready', true);
 				$hr.on('mousedown.drag', function(e1) {
-					getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+					XL.dom.noSelect();
 					var cursor = $hr.css('cursor'), x1 = e1.pageX, y1 = e1.pageY, x2, y2;
 					var $parent = $hr.parent(), $grids = $parent.children('.x-grid');
 					var $body = $('body');
@@ -625,7 +595,7 @@
 							precent = precent > 5 ? 5 : precent;
 							$last.css('cssText', 'height:calc(' + (100 - precent) + '% - 1px)');
 						}
-						getSelection ? getSelection().removeAllRanges() : document.selection.empty();
+						XL.dom.noSelect();
 						x1 = x2, y1 = y2;
 					}).on('mouseup', function(e2){
 						$mask.remove();
@@ -644,73 +614,77 @@
 			});
 		},
 		'xnav': function(options) {
-			var $this = this;
-			if (!XL.base.isObject(options)) return $this;
-			var left = options.left, center = options.center, right = options.right;
-			var p = {'children':[]};
-			if (left instanceof Array) {
-				var pLeft = {'tag':'div','attr':{'class':'x-nav x-nav-left'},'style':{'width':36*left.length+'px'},'children':[]};
-				for (var i = 0; i < left.length; i++) {
-					var leftObj = left[i];
-					var pLeftChild = {'tag':'a','data':{},'name':leftObj.name,'title':leftObj.title,'attr':{'class':leftObj.icon},'event':leftObj.event};
-					leftObj.url ? pLeftChild.data.url = leftObj.url : '';
-					pLeft.children.push(pLeftChild);
+			var $this = this.addClass('x-no-select');
+			if ($this.children().length == 0) {
+				if (!XL.base.isObject(options)) return $this;
+				var left = options.left, center = options.center, right = options.right;
+				var p = {'children':[]};
+				if (left instanceof Array) {
+					var pLeft = {'tag':'div','attr':{'class':'x-nav x-nav-left'},'style':{'width':36*left.length+'px'},'children':[]};
+					for (var i = 0; i < left.length; i++) {
+						var leftObj = left[i];
+						var pLeftChild = {'tag':'a','data':{},'name':leftObj.name,'title':leftObj.title,'attr':{'class':leftObj.icon},'event':leftObj.event};
+						leftObj.url ? pLeftChild.data.url = leftObj.url : '';
+						pLeft.children.push(pLeftChild);
+					}
+					p.children.push(pLeft);
 				}
-				p.children.push(pLeft);
-			}
-			if (center instanceof Array) {
-				var pCenterWidth = 'calc(100% - '+(36*(left.length+(right instanceof Array?right.length:0))+2)+'px)';
+				var pCenterWidth = 'calc(100% - '+(36*(left.length+right.length)+2)+'px)';
 				var pCenter = {'tag':'div','attr':{'class':'x-nav x-nav-center'},'style':{'width':pCenterWidth},'children':[]};
-				for (var i = 0; i < center.length; i++) {
-					var centerObj = center[i];
-					pCenter.children.push({
-						'tag':'button','data':{'url':centerObj.url},'attr':{'title':centerObj.title||centerObj.name},'event':centerObj.event,
-						'children':[{'tag':'i','attr':{'class':centerObj.icon}},{'tag':'span','name':centerObj.name},{'tag':'span','attr':{'class':'x-nav-close'},'name':'✖'}]
-					});
+				if (center instanceof Array) {
+					for (var i = 0; i < center.length; i++) {
+						var centerObj = center[i];
+						pCenter.children.push({
+							'tag':'button','data':{'url':centerObj.url},'attr':{'title':centerObj.title||centerObj.name},'event':centerObj.event,
+							'children':[{'tag':'i','attr':{'class':centerObj.icon}},{'tag':'span','name':centerObj.name},{'tag':'span','attr':{'class':'x-nav-close'},'name':'✖'}]
+						});
+					}
 				}
 				p.children.push(pCenter);
-			}
-			if (right instanceof Array) {
-				var pRight = {'tag':'div','attr':{'class':'x-nav x-nav-right'},'style':{'width':36*right.length+'px'},'children':[]};
-				for (var i = 0; i < right.length; i++) {
-					var rightObj = right[i];
-					var pRightChild = {'tag':'a','data':{},'name':rightObj.name,'title':rightObj.title,'attr':{'class':rightObj.icon},'event':rightObj.event};
-					rightObj.url ? pRightChild.data.url = rightObj.url : '';
-					pRight.children.push(pRightChild);
-				}
-				p.children.push(pRight);
-			}
-			$this['add'] = function(data) {
-				var $center = $this.children('.x-nav-center'), isBreak = false;
-				var $buttons = $center.children();
-				if ($buttons.eq(0).outerWidth() < 66) {
-					XL.msg.alert(XL.getLang('0004'), 'warning');
-					return;
-				}
-				$buttons.each(function(index, value){
-					var $button = $(value);
-					if ($button.data('url') == data.url) {
-						XL.msg.alert(XL.getLang('0005',[data.name]), 'warning');
-						isBreak = true;
-						return false;
+				if (right instanceof Array) {
+					var pRight = {'tag':'div','attr':{'class':'x-nav x-nav-right'},'style':{'width':36*right.length+'px'},'children':[]};
+					for (var i = 0; i < right.length; i++) {
+						var rightObj = right[i];
+						var pRightChild = {'tag':'a','data':{},'name':rightObj.name,'title':rightObj.title,'attr':{'class':rightObj.icon},'event':rightObj.event};
+						rightObj.url ? pRightChild.data.url = rightObj.url : '';
+						pRight.children.push(pRightChild);
 					}
-				});
-				if (isBreak) return;
-				$center.append('<button title="'+(data.title||data.name)+'" data-url="'+data.url+'"><i class="'+data.icon+'"></i><span>'+data.name+'</span><span class="x-nav-close">✖</span></button>');
-				resize();
-				$center.children().last().click();
-			}
-			function resize() {
-				var $center = $this.children('.x-nav-center');
-				var $buttons = $center.children().css('width','');
-				if ($buttons.last().offset().top > 3) {
-					$buttons.css('cssText', 'width:calc('+(100/$buttons.length)+'% - '+(3+3/$buttons.length)+'px');
+					p.children.push(pRight);
 				}
+				$this.xhtml(p);
 			}
-			$this.resize = resize;
-			var result = $this.xhtml(p);
-			resize();
-			return result;
+			$.extend($this, {
+				'add': function(data) {
+					var $center = $this.children('.x-nav-center'), isBreak = false;
+					var $buttons = $center.children();
+					if ($buttons.eq(0).outerWidth() < 66) {
+						XL.msg.alert(XL.getLang('0004'), 'warning');
+						return;
+					}
+					$buttons.each(function(index, value){
+						var $button = $(value);
+						if ($button.data('url') == data.url) {
+							$button.click();
+							isBreak = true;
+							return false;
+						}
+					});
+					if (isBreak) return;
+					$center.append('<button title="'+(data.title||data.name)+'" data-url="'+data.url+'"><i class="'+data.icon+'"></i><span>'+data.name+'</span><span class="x-nav-close">✖</span></button>');
+					$this.resize();
+					$center.children().last().click();
+				},
+				'resize': function() {
+					var $center = $this.children('.x-nav-center');
+					var $buttons = $center.children().css('width','');
+					var $last = $buttons.last();
+					if ($last.length > 0 && $last.offset().top > 3) {
+						$buttons.css('cssText', 'width:calc('+(100/$buttons.length)+'% - '+(3+3/$buttons.length)+'px');
+					}
+				}
+			});
+			$this.resize();
+			return $this;
 		}
 	});
 })();

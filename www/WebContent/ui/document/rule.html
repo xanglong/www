@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>说明-前端框架-降龙科技</title>
+		<style type="text/css">
+			.view{width:700px;}
+			h4,h5{padding-left:10px;margin:10px 0;}
+			p{font-size:12px;padding-left:24px;}
+			li{font-size:12px;line-height:20px;}
+			table{margin-left:1.5em;border:1px solid #ddd;width:100%;border-spacing:0;border-collapse:collapse;font-size:12px;}
+			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
+			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
+			code,kbd{padding:2px 4px;font-size:90%;color:#37474f;background-color:#f3f5f7;border-radius:4px;}
+		</style>
+	</head>
+	<body>
+		<div class="view"><h4>约定</h4></div>
+		<div class="view">
+			<h5>一、元素定义</h5>
+			<p>框架中包含各种元素，这些元素可大可小，可简单可复杂，甚至还有一些专门用于某些场景使用的元素，为了学习和使用本框架更加方便，我们对预算的定义分为以下四类：</p>
+			<ul>
+				<li><b>控件：</b>由一个或者一些网页元素组成的单元，例如：文本框、复选框、下拉框。</li>
+				<li><b>组件：</b>由一组控件组成的单元，例如：表单组件、表格组件、树组件。</li>
+				<li><b>方法：</b>用于完成控件或者组件功能的JavaScript代码，例如：托拽方法、缩放方法、裁剪方法。</li>
+				<li><b>插件：</b>区别于框架组件的第三方组件，例如：日期选择插件、富文本插件、图表插件。</li>
+				<li><b>视图：</b>特定业务场景下的通用网页结构，例如：评论视图、通讯录视图、购物车视图。</li>
+			</ul>
+			<p>样式的渲染和方法的运行使得元素有不同的类型、状态和参数，定义如下：</p>
+			<ul>
+				<li><b>类型：</b>同一种界面单元的不同类型，例如：按钮有主要按钮、次要按钮及危险按钮等，导航菜单类型有普通导航及顶部固定导航等。任何时候都应该只为同一个界面元素指定一种类型，默认类型无需指定。。</li>
+				<li><b>状态：</b>同一种类型元素允许在不同的状态中切换，例如：按钮有正常状态和不可用状态，下拉菜单有展开及收拢状态，菜单项目有选中和未选中状态等。在同一个界面元素中允许叠加多个状态。。</li>
+				<li><b>参数：</b>参数为元素如何展现提供依据，例如：表格是否隔行变色，是否启用鼠标悬停等。可以同时指定多个参数。</li>
+			</ul>
+		</div>
+		<div class="view">
+			<h5>二、状态和参数</h5>
+			<p>很多状态和参数在不同的控件或组件中具有一致的用法和相同的含义，这些通用的状态和参数具有固定的CSS类名。</p>
+			<table>
+ 				<thead><tr><th style="width:100px;">名称</th><th>说明</th></tr></thead>
+				<tbody>
+					<tr><td><code>.x-active</code></td><td>指示控件或者其子项目已经被激活。</td>	</tr>
+					<tr><td><code>.x-hover</code></td><td>指示控件正处于鼠标悬停状态，在CSS中相对于<code>:hover</code>选择器。</td></tr>
+					<tr><td><code>.x-focus</code></td><td>指示控件正处于聚焦状态，在CSS中相对于<code>:focus</code>选择器。</td></tr>
+					<tr><td><code>.x-disabled</code></td><td>指示控件处于不可用状态，通常与DOM属性<code>disabled="disabled"</code>一起使用。</td></tr>
+					<tr><td><code>.x-in</code></td><td>用于控制控件显示或消失的动画过程。在控件显示时指示控件已完成CSS动画并完全显示；在控件消失时如果移除该状态指示控件已准备执行控件消失动画；与状态<code>.collapse</code>一起使用时表示处于完全展开状态。</td></tr>
+					<tr><td><code>.x-open</code></td><td>指示隐藏的内容已经完全展示。</td></tr>
+					<tr><td><code>.x-collapse</code></td><td>指示当前组件可以被折叠或展开。与状态<code>.in</code>一起出现时表示组件已被展开，没有此状态则反之。</td></tr>
+					<tr><td><code>.x-collapsing</code></td><td>指示当前组件正处于折叠或展开的动画过程中。</td></tr>
+				</tbody>
+			</table>
+			<p style="text-align:center;margin-bottom:30px;">表1：状态的定义</p>
+			<table>
+				<thead><tr><th style="width:100px">名称</th><th>说明</th></tr></thead>
+				<tbody>
+					<tr><td><code>.x-bordered</code></td><td>使得组件具备边框样式。</td></tr>
+					<tr><td><code>.x-borderless</code></td><td>移除控件的边框样式。</td></tr>
+					<tr><td><code>.x-inverse</code></td><td>指示组件使用与默认颜色样式相对的样式。</td></tr>
+					<tr><td><code>.x-fixed</code></td><td>指示当前组件位置被固定，不受页面交互影响。</td></tr>
+					<tr><td><code>.x-with-icon</code></td><td>指示当前组件在显示内容时能够额外显示一个图标。</td></tr>
+					<tr><td><code>.x-with-padding</code></td><td>指示当前组件内容显示区域包含更多的边距。</td></tr>
+				</tbody>
+			</table>
+			<p style="text-align:center;margin-bottom:30px;">表2：参数的定义</p>
+		</div>
+		<div class="view">
+			<h5>三、名称规则</h5>
+			<p>这里的名称只涉及到前端的名称规则，后端的暂时不在这里展示。</p>
+			<ul>
+				<li>文件编码统一使用 UTF-8 编码； </li>
+				<li>命名时以符合语义为主要参考指标，CSS属性书写规范，采用统一风格及命名方法；  </li>
+				<li>结构清晰，层级关系明朗，以不超过三级为标准；  </li>
+				<li>同一表现形式的样式要求可重复利用，模块组件类的样式要求可整体外部移植； </li>
+				<li>编写 CSS 的时候，应当避免使用CSS Hack，能不用则不用; </li>
+				<li>所有页面默认都针对Firefox 等最接近标准的浏览器进行设计，然后使用 IE 特有条件注释功能进行针对性修正; </li>
+				<li>请使用英文进行命名，尽量避免使用拼音。命名要求具有可读性，尽量避免使用缩写。命名虽然允许数字，但应尽量避免使用数字命名; </li>
+			</ul>
+			<table>
+				<thead><tr><th style="width:100px">名称</th><th>说明</th></tr></thead>
+				<tbody>
+					<tr><td>ID</td><td>驼峰命名法<code>treeNode</code>、下划线命名法<code>tree_node</code></td></tr>
+					<tr><td>类</td><td>中线命名法<code>.x-tree-node</code>框架样式类名必须前缀"x-"</td></tr>
+					<tr><td>方法</td><td>驼峰命名法<code>nodeClick</code>、连写命名法<code>nodeclick</code></td></tr>
+					<tr><td>变量</td><td>驼峰命名法<code>userName</code>、下划线命名法<code>user_name</code>、连写命名法<code>username</code></td></tr>
+					<tr><td>文件</td><td>连写命名法<code>orglogo</code>、下划线命名法<code>org_logo</code></td></tr>
+					<tr><td>控件</td><td>小写<code>xtree</code>框架控件名必须前缀"x"</td></tr>
+				</tbody>
+			</table>
+			<p style="text-align:center;margin-bottom:30px;">表3：命名规则</p>
+		</div>
+		<div class="view">
+			<h5>四、控件开发</h5>
+			<p>这里指的是自研控件的一些约定。</p>
+			<ul>
+				<li>所有前端控件都再jQuery对象上开发；</li>
+				<li>所有控件的暴露方法都挂载在控件对应的jQuery对象上，方便索引、查询；</li>
+				<li>所有控件都封装在一个闭包下，内部方法都统一在一个方法对象上，方便折起、拎出来；</li>
+			</ul>
+			<p style="text-align:center;margin-bottom:30px;">表4：控件开发</p>
+		</div>
+	</body>
+</html>

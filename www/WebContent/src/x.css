@@ -9,6 +9,14 @@ ul {
 	list-style-image: none;
 }
 
+.x-no-select {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
 .x-btn {
 	display: inline-block;
     padding: 2px 14px;
@@ -80,7 +88,7 @@ ul {
     background-color: #f7f7f7;
     border: 1px solid #eaeaea;
 }
-.x-nav>button.active {
+.x-nav>button.x-active {
 	color: #000;
     background-color: #ffff;
     border: 1px solid #eaeaea;
@@ -195,7 +203,7 @@ ul {
 .x-tree li>a:hover {
 	background-color: #e5f3ff;
 }
-.x-tree li>a.active {
+.x-tree li>a.x-active {
 	background-color: #cde8ff;
 }
 .x-tree li>a>span {
@@ -566,7 +574,7 @@ ul {
 	width: 100%;
 	display: none;
 }
-.x-tab.active {
+.x-tab.x-active {
 	display: block;
 }
 
@@ -626,5 +634,8 @@ ul {
 .x-icon-location{background-image:url(/src/icon/location.png);}
 .x-icon-timeline{background-image:url(/src/icon/timeline.png);}
 .x-icon-close{background-image:url(/src/icon/close.png);}
-.x-icon-arrow-left{background-image:url(/src/icon/arrow-left.ico);}
-.x-icon-arrow-right{background-image:url(/src/icon/arrow-right.ico);}
+.x-icon-book-open{background-image:url(/src/icon/book-open.png);}
+.x-icon-edit-text{background-image:url(/src/icon/edit-text.gif);}
+.x-icon-ruled-page{background-image:url(/src/icon/ruled-page.png);}
+.x-icon-arr-left{background-image:url(/src/icon/arrow-left.ico);}
+.x-icon-arr-right{background-image:url(/src/icon/arrow-right.ico);}
