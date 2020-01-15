@@ -223,10 +223,6 @@ ul {
 	display: inline-block;
 	line-height: 24px;
 }
-.x-tree li>a>span>em {
-	background-color: #ffff00;
-}
-
 .x-msg-alert-container {
 	z-index: 2000;
 	position: fixed;

@@ -710,7 +710,7 @@
 								var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
 								for (var i = 0; i < words.length - 1; i++) {
 									var start = wordIndex + words[i].length, end = start + textLower.length;
-									newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
+									newCtx += ctx.substring(wordIndex, start) + '<em class="x-highlight">' + ctx.substring(start, end) + '</em>';
 									wordIndex = end;
 								}
 								var $span = $(value);
