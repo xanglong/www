@@ -393,54 +393,6 @@
 				}
 			});
 			var functions = {
-				'search': function() {
-					var runSid = null, $root = $this.children('ul');
-					var searchInput = $this.children('.x-tree-tool-system').children('input')[0];
-					searchInput.oninput = function(e) {
-						var sid = setTimeout(function() {
-							if (runSid != null) {
-								clearTimeout(runSid);
-								runSid = null;
-							}
-							runSid = sid;
-							$root.find('span').each(function(index, value) {
-								var $em = $(value).children('em');
-								if ($em.length > 0) {
-									value.outerHTML = value.outerHTML.replace(/<em>/g, '').replace(/<\/em>/g, '');
-								}
-							});
-							if (searchInput.value == '') {
-								$root.find('li').show();
-							} else {
-								$root.find('li').hide();
-								var text = searchInput.value, textLower = text.toLowerCase();
-								$root.find('span').each(function(index, value) {
-									var ctx = value.textContent, ctxLower = ctx.toLowerCase();
-									if (ctxLower.indexOf(textLower) != -1) {
-										var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
-										for (var i = 0; i < words.length - 1; i++) {
-											var start = wordIndex + words[i].length, end = start + textLower.length;
-											newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
-											wordIndex = end;
-										}
-										var $span = $(value);
-										var $parent = $span.parent();
-										while (!$parent.hasClass('x-tree')) {
-											if ($parent[0].tagName == 'LI') {
-												if (!$parent.is(':hidden')) {
-													break;
-												}
-												$parent.show();
-											}
-											$parent = $parent.parent();
-										}
-										$span.html(newCtx + ctx.substring(wordIndex));
-									}
-								});
-							}
-						}, 50);
-					};
-				},
 				'click': function() {
 					var $root = $this.children('ul');
 					$root.on('click', function(e) {
@@ -498,7 +450,13 @@
 					});
 				}
 			};
-			functions.search();
+			var $toolSystem = $this.children('.x-tree-tool-system');
+			if ($toolSystem.length > 0) {
+				var $input = $toolSystem.children('input');
+				if ($input.length > 0) {
+					$this.xsearch({'$input':$input});
+				}
+			}
 			functions.click();
 			return $this;
 		},
@@ -684,6 +642,114 @@
 				}
 			});
 			$this.resize();
+			return $this;
+		},
+		'xsearch': function(options) {
+			var $input = options.$input;
+			if ($input == null || !($input instanceof jQuery) || $input.length != 1 || $input[0].tagName != 'INPUT') {
+				XL.msg.alert(XL.getLang('0005'), 'error');
+				return;
+			}
+			options = $.extend(true, {'nodeType': 'span'}, options);
+			var functions = {
+				'clearSearch': function($this) {
+					$this.find('.x-highlight').each(function(index, value) {
+						value.outerHTML = value.textContent;
+					});
+				},
+				'search': function($tags, text) {
+					var textLower = text.toLowerCase();
+					for (var i = 0; i < $tags.length; i++) {
+						var tag = $tags[i], childNodes = tag.childNodes, newInnerHTML = '';
+						for (var j = 0; j < childNodes.length; j++) {
+							var childNode = childNodes[j];
+							if (childNode.nodeName == '#text') {
+								var ctx = childNode.textContent, ctxLower = ctx.toLowerCase();
+								if (ctxLower.indexOf(textLower) != -1) {
+									var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
+									for (var k = 0; k < words.length - 1; k++) {
+										var start = wordIndex + words[k].length, end = start + textLower.length;
+										newCtx += ctx.substring(wordIndex, start) + '<em class="x-highlight">' + ctx.substring(start, end) + '</em>';
+										wordIndex = end;
+									}
+									newInnerHTML += newCtx + ctx.substring(wordIndex);
+								} else {
+									newInnerHTML += ctx;
+								}
+							} else {
+								newInnerHTML += childNode.outerHTML;
+							}
+						}
+						tag.innerHTML = newInnerHTML;
+					}
+				},
+				'deepSearch': function($this, text) {
+					$this.children().each(function(index, value) {
+						var $value = $(value), $childens = $value.children();
+						if ($childens.length > 0) {
+							$childens.each(function(i, v) {
+								functions.deepSearch($(v), text);
+							});
+						} else {
+							functions.search($value, text);
+						}
+					});
+				},
+				'xtreeSearch': function($this, text) {
+					var $root = $this.children('ul');
+					if (text.length == 0) {
+						$root.find('ul').removeClass('x-search-hide').removeClass('x-search-show');
+						$root.find('li').removeClass('x-search-hide').removeClass('x-search-show');
+					} else {
+						$root.find('ul').addClass('x-search-hide');
+						$root.find('li').addClass('x-search-hide');
+						var textLower = text.toLowerCase();
+						$root.find('span').each(function(index, value) {
+							var ctx = value.textContent, ctxLower = ctx.toLowerCase();
+							if (ctxLower.indexOf(textLower) != -1) {
+								var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
+								for (var i = 0; i < words.length - 1; i++) {
+									var start = wordIndex + words[i].length, end = start + textLower.length;
+									newCtx += ctx.substring(wordIndex, start) + '<em>' + ctx.substring(start, end) + '</em>';
+									wordIndex = end;
+								}
+								var $span = $(value);
+								var $parent = $span.parent();
+								while (!$parent.hasClass('x-tree')) {
+									var tagName = $parent[0].tagName;
+									if (tagName == 'LI' || tagName == 'UL') {
+										$parent.removeClass('x-search-hide').addClass('x-search-show');
+									}
+									$parent = $parent.parent();
+								}
+								$span.html(newCtx + ctx.substring(wordIndex));
+							}
+						});
+					}
+				}
+			};
+			var $this = $(this), input = $input[0], runSid = null;
+			input.oninput = function(e) {
+				var sid = setTimeout(function() {
+					if (runSid != null) {
+						clearTimeout(runSid);
+						runSid = null;
+					}
+					runSid = sid;
+					functions.clearSearch($this);
+					var text = input.value.trim();
+					if ($this.hasClass('x-tree')) {
+						functions.xtreeSearch($this, text);
+					}
+					if (text.length > 0) {
+						if (options.nodeType) {
+							functions.search($this.find(options.nodeType), text);
+						} else {
+							functions.deepSearch($this, text);
+						}
+					}
+				}, 50);
+			};
 			return $this;
 		}
 	});

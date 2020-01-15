@@ -4,6 +4,7 @@
 		'0002':'左移',
 		'0003':'右移',
 		'0004':'导航条宽度不够了',
+		'0005':'input输入框元素jQuery对象不能为空',
 	};
 	if (typeof xlang == 'undefined')  window.xlang = {};
 	xlang.zh_cn = zh_cn;

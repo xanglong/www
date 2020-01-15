@@ -16,6 +16,18 @@ ul {
 	-khtml-user-select: none;
 	user-select: none;
 }
+.x-highlight {
+	background-color: #ffff00;
+}
+.x-hide {
+	display: none;
+}
+.x-search-hide {
+	display: none!important;
+}
+.x-search-show {
+	display: block!important;
+}
 
 .x-btn {
 	display: inline-block;

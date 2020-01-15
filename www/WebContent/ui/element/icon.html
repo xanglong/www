@@ -1,10 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>图标-元素-前端框架-降龙科技</title>
+		<style type="text/css">
+			.view{width:700px;}
+			h4,h5{padding-left:10px;margin:10px 0;}
+			p{font-size:12px;padding-left:24px;}
+			.list{float:left;border:1px solid #ddd;margin-left:24px;font-size:12px;}
+			.list>li{float:left;width:275px;}
+			.list>li>i{margin-left:10px;padding:0px;vertical-align:top;height:24px;width:16px;line-height:24px;display:inline-block;cursor:pointer;text-decoration:none;vertical-align:top;text-align:center;background-repeat:no-repeat;background-position:0 4px;}
+			.list>li>span{padding-left:10px;display:inline-block;height:24px;line-height:24px;}
+			.list>li>span:nth-child(2){width:135px;}
+			.list>li>span:nth-child(3){width:90px;}
+			#imgSearch{outline:none;border:1px solid #ddd;padding:0 5px;height:28px;font-size:12px;}
+		</style>
+		<link rel="stylesheet" href="/src/x.css">
+	</head>
+	<body>
+		<div class="view"><h4>图标</h4></div>
+		<div class="view">
+			<h5>一、图片</h5>
+			<p>图片可以表现彩色，会有立体感，而且图片作为图标写法接单，小部件使用引入文件也不大。</p>
+			<p><input id="imgSearch" type="text" placeholder="搜索"></p>
+		</div>
+		<div style="width:calc(100% - 50px);">
+			<ul class="list" id="imgSearchList">
+				<li><i class="x-icon-collapse"></i><span>x-icon-collapse</span><span>收起</span></li>
+				<li><i class="x-icon-home"></i><span>x-icon-home</span><span>首页</span></li>
+				<li><i class="x-icon-email"></i><span>x-icon-email</span><span>邮箱</span></li>
+				<li><i class="x-icon-user"></i><span>x-icon-user</span><span>用户</span></li>
+				<li><i class="x-icon-cog"></i><span>x-icon-cog</span><span>设置</span></li>
+				<li><i class="x-icon-link"></i><span>x-icon-link</span><span>联动</span></li>
+				<li><i class="x-icon-element"></i><span>x-icon-element</span><span>元素</span></li>
+				<li><i class="x-icon-controller"></i><span>x-icon-controller</span><span>控制</span></li>
+				<li><i class="x-icon-component"></i><span>x-icon-component</span><span>组件</span></li>
+				<li><i class="x-icon-plugin"></i><span>x-icon-plugin</span><span>插件</span></li>
+				<li><i class="x-icon-exec"></i><span>x-icon-exec</span><span>执行</span></li>
+				<li><i class="x-icon-project"></i><span>x-icon-project</span><span>项目</span></li>
+				<li><i class="x-icon-arrow-bottom"></i><span>x-icon-arrow-bottom</span><span>向右箭头</span></li>
+				<li><i class="x-icon-arrow-right"></i><span>x-icon-arrow-right</span><span>向下箭头</span></li>
+				<li><i class="x-icon-icon"></i><span>x-icon-icon</span><span>图标</span></li>
+				<li><i class="x-icon-button"></i><span>x-icon-button</span><span>按钮</span></li>
+				<li><i class="x-icon-switch"></i><span>x-icon-switch</span><span>开关</span></li>
+				<li><i class="x-icon-tag"></i><span>x-icon-tag</span><span>标签</span></li>
+				<li><i class="x-icon-progress"></i><span>x-icon-progress</span><span>进度条</span></li>
+				<li><i class="x-icon-radio"></i><span>x-icon-radio</span><span>单选框</span></li>
+				<li><i class="x-icon-checkbox"></i><span>x-icon-checkbox</span><span>复选框</span></li>
+				<li><i class="x-icon-input"></i><span>x-icon-input</span><span>输入框</span></li>
+				<li><i class="x-icon-select"></i><span>x-icon-select</span><span>下拉框</span></li>
+				<li><i class="x-icon-pop"></i><span>x-icon-pop</span><span>弹出框</span></li>
+				<li><i class="x-icon-message"></i><span>x-icon-message</span><span>消息</span></li>
+				<li><i class="x-icon-toolbar"></i><span>x-icon-toolbar</span><span>工具条</span></li>
+				<li><i class="x-icon-pagebar"></i><span>x-icon-pagebar</span><span>分页条</span></li>
+				<li><i class="x-icon-navigator"></i><span>x-icon-navigator</span><span>导航</span></li>
+				<li><i class="x-icon-form"></i><span>x-icon-form</span><span>表单</span></li>
+				<li><i class="x-icon-table"></i><span>x-icon-table</span><span>表格</span></li>
+				<li><i class="x-icon-html"></i><span>x-icon-html</span><span>富文本</span></li>
+				<li><i class="x-icon-time"></i><span>x-icon-time</span><span>时间</span></li>
+				<li><i class="x-icon-function"></i><span>x-icon-function</span><span>方法</span></li>
+				<li><i class="x-icon-tree"></i><span>x-icon-tree</span><span>树</span></li>
+				<li><i class="x-icon-org"></i><span>x-icon-org</span><span>组织机构</span></li>
+				<li><i class="x-icon-select-rect"></i><span>x-icon-select-rect</span><span>矩形选择</span></li>
+				<li><i class="x-icon-comments"></i><span>x-icon-comments</span><span>评论</span></li>
+				<li><i class="x-icon-chart"></i><span>x-icon-chart</span><span>报表</span></li>
+				<li><i class="x-icon-file"></i><span>x-icon-file</span><span>文件</span></li>
+				<li><i class="x-icon-import"></i><span>x-icon-import</span><span>导入</span></li>
+				<li><i class="x-icon-export"></i><span>x-icon-export</span><span>导出</span></li>
+				<li><i class="x-icon-code"></i><span>x-icon-code</span><span>代码</span></li>
+				<li><i class="x-icon-font"></i><span>x-icon-font</span><span>字体</span></li>
+				<li><i class="x-icon-color"></i><span>x-icon-color</span><span>颜色</span></li>
+				<li><i class="x-icon-location"></i><span>x-icon-location</span><span>经纬度</span></li>
+				<li><i class="x-icon-timeline"></i><span>x-icon-timeline</span><span>时间轴</span></li>
+				<li><i class="x-icon-close"></i><span>x-icon-close</span><span>关闭</span></li>
+				<li><i class="x-icon-book-open"></i><span>x-icon-book-open</span><span>打开的书</span></li>
+				<li><i class="x-icon-edit-text"></i><span>x-icon-edit-text</span><span>编辑文本</span></li>
+				<li><i class="x-icon-ruled-page"></i><span>x-icon-ruled-page</span><span>规则页</span></li>
+				<li><i class="x-icon-arr-left"></i><span>x-icon-arr-left</span><span>向左箭头</span></li>
+				<li><i class="x-icon-arr-right"></i><span>x-icon-arr-right</span><span>向右箭头</span></li>
+			</ul>
+		</div>
+		<script type="text/javascript" src="/src/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/src/i18n/zh_cn.js"></script>
+		<script type="text/javascript" src="/src/x.js"></script>
+		<script type="text/javascript">
+			(function(){
+				$('#imgSearchList').xsearch({'$input':$('#imgSearch')});
+			})();
+		</script>
+	</body>
 </html>
