@@ -1,10 +1,12 @@
 package com.xanglong.frame.io;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -19,6 +21,26 @@ import com.xanglong.i18n.zh_cn.FrameException;
 
 /**文件处理工具类*/
 public class FileUtil {
+	
+	/**
+	 * 按照行读取文件的字符串
+	 * @param file 文件对象
+	 * @return 字符串行列表
+	 * */
+	public static List<String> readLine(File file) {
+		List<String> list = new ArrayList<>();
+		try (FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+		){
+			String str;
+			while ((str = bufferedReader.readLine()) != null) {
+				list.add(str);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	/**
 	 * 读取文件内容为字符串

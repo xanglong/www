@@ -1,10 +1,12 @@
-html, body, ul {
+html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 	width: 100%;
 }
 ul {
+	margin: 0;
+	padding: 0;
 	list-style: none;
 	list-style-image: none;
 }
@@ -15,6 +17,15 @@ ul {
 	-ms-user-select: none;
 	-khtml-user-select: none;
 	user-select: none;
+}
+.x-highlight {
+	background-color: #ffff00;
+}
+.x-hide {
+	display: none;
+}
+.x-search-hide {
+	display: none!important;
 }
 
 .x-btn {
@@ -211,10 +222,6 @@ ul {
 	display: inline-block;
 	line-height: 24px;
 }
-.x-tree li>a>span>em {
-	background-color: #ffff00;
-}
-
 .x-msg-alert-container {
 	z-index: 2000;
 	position: fixed;

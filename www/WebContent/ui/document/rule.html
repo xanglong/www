@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>说明-前端框架-降龙科技</title>
+		<title>约定-文档-前端框架-降龙科技</title>
 		<style type="text/css">
 			.view{width:700px;}
 			h4,h5{padding-left:10px;margin:10px 0;}
@@ -34,7 +34,7 @@
 			</ul>
 		</div>
 		<div class="view">
-			<h5>二、状态和参数</h5>
+			<h5>二、状态样式</h5>
 			<p>很多状态和参数在不同的控件或组件中具有一致的用法和相同的含义，这些通用的状态和参数具有固定的CSS类名。</p>
 			<table>
  				<thead><tr><th style="width:100px;">名称</th><th>说明</th></tr></thead>
@@ -43,25 +43,15 @@
 					<tr><td><code>.x-hover</code></td><td>指示控件正处于鼠标悬停状态，在CSS中相对于<code>:hover</code>选择器。</td></tr>
 					<tr><td><code>.x-focus</code></td><td>指示控件正处于聚焦状态，在CSS中相对于<code>:focus</code>选择器。</td></tr>
 					<tr><td><code>.x-disabled</code></td><td>指示控件处于不可用状态，通常与DOM属性<code>disabled="disabled"</code>一起使用。</td></tr>
-					<tr><td><code>.x-in</code></td><td>用于控制控件显示或消失的动画过程。在控件显示时指示控件已完成CSS动画并完全显示；在控件消失时如果移除该状态指示控件已准备执行控件消失动画；与状态<code>.collapse</code>一起使用时表示处于完全展开状态。</td></tr>
-					<tr><td><code>.x-open</code></td><td>指示隐藏的内容已经完全展示。</td></tr>
 					<tr><td><code>.x-collapse</code></td><td>指示当前组件可以被折叠或展开。与状态<code>.in</code>一起出现时表示组件已被展开，没有此状态则反之。</td></tr>
-					<tr><td><code>.x-collapsing</code></td><td>指示当前组件正处于折叠或展开的动画过程中。</td></tr>
-				</tbody>
-			</table>
-			<p style="text-align:center;margin-bottom:30px;">表1：状态的定义</p>
-			<table>
-				<thead><tr><th style="width:100px">名称</th><th>说明</th></tr></thead>
-				<tbody>
+					<tr><td><code>.x-hide</code></td><td>指示当前组件被影藏不可见。</td></tr>
 					<tr><td><code>.x-bordered</code></td><td>使得组件具备边框样式。</td></tr>
 					<tr><td><code>.x-borderless</code></td><td>移除控件的边框样式。</td></tr>
 					<tr><td><code>.x-inverse</code></td><td>指示组件使用与默认颜色样式相对的样式。</td></tr>
 					<tr><td><code>.x-fixed</code></td><td>指示当前组件位置被固定，不受页面交互影响。</td></tr>
-					<tr><td><code>.x-with-icon</code></td><td>指示当前组件在显示内容时能够额外显示一个图标。</td></tr>
-					<tr><td><code>.x-with-padding</code></td><td>指示当前组件内容显示区域包含更多的边距。</td></tr>
 				</tbody>
 			</table>
-			<p style="text-align:center;margin-bottom:30px;">表2：参数的定义</p>
+			<p style="text-align:center;margin-bottom:30px;">表1：状态样式</p>
 		</div>
 		<div class="view">
 			<h5>三、名称规则</h5>
@@ -86,17 +76,22 @@
 					<tr><td>控件</td><td>小写<code>xtree</code>框架控件名必须前缀"x"</td></tr>
 				</tbody>
 			</table>
-			<p style="text-align:center;margin-bottom:30px;">表3：命名规则</p>
+			<p style="text-align:center;margin-bottom:30px;">表2：命名规则</p>
 		</div>
 		<div class="view">
-			<h5>四、控件开发</h5>
+			<h5>四、代码规约</h5>
 			<p>这里指的是自研控件的一些约定。</p>
-			<ul>
-				<li>所有前端控件都再jQuery对象上开发；</li>
-				<li>所有控件的暴露方法都挂载在控件对应的jQuery对象上，方便索引、查询；</li>
-				<li>所有控件都封装在一个闭包下，内部方法都统一在一个方法对象上，方便折起、拎出来；</li>
-			</ul>
-			<p style="text-align:center;margin-bottom:30px;">表4：控件开发</p>
+			<table>
+				<thead><tr><th style="width:100px">名称</th><th>说明</th></tr></thead>
+				<tbody>
+					<tr><td>ID</td><td>所有前端控件都再jQuery对象上开发；</td></tr>
+					<tr><td>类</td><td>所有控件的暴露方法都挂载在控件对应的jQuery对象上，方便索引、查询；</td></tr>
+					<tr><td>方法</td><td>所有控件都封装在一个闭包下，内部方法都统一在一个方法对象上，方便折起、拎出来；</td></tr>
+					<tr><td>变量</td><td>所有方法都要做参数校验和信息提示；</td></tr>
+					<tr><td>文件</td><td>元素做参数时都用jQuery对象传，参数名用"$"+标签名，例如："$input"、"$span"</td></tr>
+				</tbody>
+			</table>
+			<p style="text-align:center;margin-bottom:30px;">表3：代码规约</p>
 		</div>
 	</body>
 </html>
