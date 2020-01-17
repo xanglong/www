@@ -650,22 +650,26 @@
 				XL.msg.alert(XL.getLang('0005'), 'error');
 				return;
 			}
-			options = $.extend(true, {'nodeType': 'span'}, options);
+			options = $.extend(true, {'nodeType':'span','hide':false,'closest':'li'}, options);
 			var functions = {
 				'clearSearch': function($this) {
 					$this.find('.x-highlight').each(function(index, value) {
 						value.outerHTML = value.textContent;
 					});
+					$this.find('.x-search-hide').removeClass('x-search-hide');
+					$this.find('.x-search-find').removeClass('x-search-find');
 				},
 				'search': function($tags, text) {
 					var textLower = text.toLowerCase();
 					for (var i = 0; i < $tags.length; i++) {
-						var tag = $tags[i], childNodes = tag.childNodes, newInnerHTML = '';
+						var tag = $tags[i], $tag = $tags.eq(i), newInnerHTML = '';
+						var childNodes = tag.childNodes;
 						for (var j = 0; j < childNodes.length; j++) {
 							var childNode = childNodes[j];
 							if (childNode.nodeName == '#text') {
 								var ctx = childNode.textContent, ctxLower = ctx.toLowerCase();
 								if (ctxLower.indexOf(textLower) != -1) {
+									$tag.hasClass('x-search-find') ? '' : $tag.addClass('x-search-find');
 									var words = ctxLower.split(textLower), newCtx = '', wordIndex = 0;
 									for (var k = 0; k < words.length - 1; k++) {
 										var start = wordIndex + words[k].length, end = start + textLower.length;
@@ -681,6 +685,14 @@
 							}
 						}
 						tag.innerHTML = newInnerHTML;
+						if (options.hide) {
+							var $closest = options.closest ? $tag.closest(options.closest) : $tag;
+							if ($tag.hasClass('x-search-find')) {
+								$closest.removeClass('x-search-hide');
+							} else {
+								$closest.hasClass('x-search-find') ? '' : $closest.addClass('x-search-hide');
+							}
+						}
 					}
 				},
 				'deepSearch': function($this, text) {
