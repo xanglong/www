@@ -5,6 +5,9 @@ public enum FontType {
 
 	EOT("eot", "字体"),
 	WOFF("woff", "字体"),
+	WOFF2("woff2", "字体"),
+	TTF("ttf", "字体"),
+	OTF("otf", "字体")
 	;
 
 	private String code;
