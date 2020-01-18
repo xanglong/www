@@ -52,5 +52,5 @@
 		}
 	});
 	//打开正在开发的页面
-	$tree.find('.x-icon-icon').click();
+	$tree.find('.x-icon-edit-text').click();
 })();

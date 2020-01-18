@@ -5,32 +5,117 @@
 		<title>说明-文档-前端框架-降龙科技</title>
 		<style type="text/css">
 			.view{width:700px;}
-			h4,h5{padding-left:10px;margin:10px 0;}
+			h4,h5,h6{padding-left:10px;margin:10px 0;}
 			p{font-size:12px;padding-left:24px;}
 			li{font-size:12px;line-height:20px;}
+			table{margin-left:1.5em;border:1px solid #ddd;width:100%;border-spacing:0;border-collapse:collapse;font-size:12px;}
+			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
+			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
 		</style>
 	</head>
 	<body>
 		<div class="view"><h4>说明</h4></div>
 		<div class="view">
-			<h5>一、下载</h5>
+			<h5>一、框架对比</h5>
+			<p>前端流行三大框架，各有所长，对比如下：</p>
+			<table>
+				<thead><tr><th></th><th>Angular</th><th>React</th><th>Vue</th></tr></thead>
+				<tbody>
+					<tr><td>组织方式</td>	<td>MVC</td><td>模块化</td><td>模块化</td></tr>
+					<tr><td>数据绑定</td>	<td>双向绑定</td>	<td>单向绑定</td>	<td>双向绑定</td>	</tr>
+					<tr><td>模板能力</td>	<td>强大</td><td>自由</td><td>自由</td></tr>
+					<tr><td>自由度</td><td>较小</td><td>大</td><td>较大</td></tr>
+					<tr><td>路由</td><td>静态路由</td><td>动态路由</td><td>动态路由</td></tr>
+					<tr><td>背景</td><td>Google</td><td>Facebook</td><td>阿里巴巴</td></tr>
+					<tr><td>文档</td><td>英文</td><td>英文</td><td>多语言</td></tr>
+					<tr><td>上手难度</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td></tr>
+					<tr><td>App方案</td><td>lonic</td><td>RN</td><td>Weex</td></tr>
+				</tbody>
+			</table>
+			<h6>Angular</h6>
+			<p>Angular是一款优秀的前端JS框架，已经被用于Google的多款产品当中。</p>
+			<p><b>特性：</b></p>
 			<ul>
-				<li>GitHub：<a target="_blank" href="https://github.com/xanglong/www">降龙</a></li>
-				<li>直接下载：<a target="_blank" href="/src/x.css">最新样式</a><a target="_blank" href="/src/x.js" style="padding-left:10px;">最新脚本</a></li>
+				<li>良好的应用程序结构。</li>
+				<li>双向数据绑定。</li>
+				<li>指令。</li>
+				<li>HTML模板。</li>
+				<li>可嵌入、注入和测试。</li>
+			</ul>
+			<p><b>优点：</b></p>
+			<ul>
+				<li>模板功能强大丰富，自带了极其丰富的angular指令。</li>
+				<li>是一个比较完善的前端框架，包含服务，模板，数据双向绑定，模块化，路由，过滤器，依赖注入等所有功能；</li>
+				<li>自定义指令，自定义指令后可以在项目中多次使用。</li>
+				<li>ng模块化比较大胆的引入了Java的一些东西（依赖注入），容易写出可复用的代码，对于敏捷开发的团队来说非常有帮助。</li>
+				<li>angularjs是互联网巨人谷歌开发，这也意味着他有一个坚实的基础和社区支持。</li>
+			</ul>
+			<p><b>缺点：</b></p>
+			<ul>
+				<li>angular 入门很容易 但深入后概念很多, 学习中较难理解。</li>
+				<li>文档例子少, 官方文档基本只写了api, 很多时候具体怎么用都是google来的, 或直接问misko,angular的作者。</li>
+				<li>对IE6/7 兼容不算特别好, 就是可以用jQuery自己手写代码解决一些。</li>
+				<li>指令的应用的最佳实践教程少, angular其实很灵活, 如果不看一些作者的使用原则,很容易写出 四不像的代码。</li>
+				<li>DI 依赖注入 如果代码压缩需要显示声明。</li>
+			</ul>
+			<h6>React</h6>
+			<p>React 起源于 Facebook 的内部项目，用来架设 Instagram 的网站， 并于 2013年 5 月开源。React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。</p>
+			<p><b>特性：</b></p>
+			<ul>
+				<li>声明式设计：React采用声明范式，可以轻松描述应用。</li>
+				<li>高效：React通过对DOM的模拟，最大限度地减少与DOM的交互。</li>
+				<li>灵活：React可以与已知的库或框架很好地配合。</li>
+			</ul>
+			<p><b>优点：</b></p>
+			<ul>
+				<li>速度快：在UI渲染过程中，React通过在虚拟DOM中的微操作来实现对实际DOM的局部更新。</li>
+				<li>跨浏览器兼容：虚拟DOM帮助我们解决了跨浏览器问题，它为我们提供了标准化的API，甚至在IE8中都是没问题的。</li>
+				<li>模块化：为你程序编写独立的模块化UI组件，这样当某个或某些组件出现问题是，可以方便地进行隔离。</li>
+				<li>单向数据流：Flux是一个用于在JS应用中创建单向数据层的架构，它随着React视图库的开发而被Facebook概念化。</li>
+				<li>同构、纯粹的JS：因为搜索引擎的爬虫程序依赖的是服务端响应而不是JS的执行，预渲染你的应用有助于搜索引擎优化。</li>
+				<li>兼容性好：比如使用RequireJS来加载和打包，而Browserify和Webpack适用于构建大型应用。</li>
+			</ul>
+			<p><b>缺点：</b></p>
+			<ul>
+				<li>React本身只是一个V而已，并不是一个完整的框架。</li>
+			</ul>
+			<h6>Vue</h6>
+			<p>Vue是尤雨溪编写的一个构建数据驱动的Web界面的库，准确来说不是一个框架，它聚焦在V（view）视图层。</p>
+			<p><b>特性：</b></p>
+			<ul>
+				<li>轻量级的框架。</li>
+				<li>双向数据绑定。</li>
+				<li>指令。</li>
+				<li>插件化。</li>
+			</ul>
+			<p><b>优点：</b></p>
+			<ul>
+				<li>简单：官方文档很清晰，比 Angular 简单易学。</li>
+				<li>快速：异步批处理方式更新 DOM。</li>
+				<li>组合：用解耦的、可复用的组件组合你的应用程序。</li>
+				<li>紧凑：~18kb min+gzip，且无依赖。</li>
+				<li>强大：表达式 无需声明依赖的可推导属性 (computed properties)。</li>
+				<li>对模块友好：可以通过 NPM、Bower 或 Duo 安装，不强迫你所有的代码都遵循 Angular 的各种规定，使用场景更加灵活。</li>
+			</ul>
+			<p><b>缺点：</b></p>
+			<ul>
+				<li>新生儿：Vue.js是一个新的项目，没有angular那么成熟。</li>
+				<li>影响度不是很大：google了一下，有关于Vue.js多样性或者说丰富性少于其他一些有名的库。</li>
+				<li>不支持IE8</li>
 			</ul>
 		</div>
 		<div class="view">
-			<h5>二、文章</h5>
+			<h5>二、设计理念</h5>
+			<p>一个人要实现一个企业级的框架很不容易，需要花大量的精力，在实践前端框架的过程中我遵循简单傻瓜的思路设计。</p>
 			<ul>
-				<li>知乎专栏：<a target="_blank" href="https://zhuanlan.zhihu.com/xanglong">降龙</a></li>
-				<li>微信公众号：<a target="_blank" href="http://mp.weixin.qq.com/mp/homepage?__biz=MzU1ODU3MjAyNw==&hid=1&sn=d459ec0cf7b02e02e962cda85acc85fb">文章列表</a></li>
-			</ul>
-		</div>
-		<div class="view">
-			<h5>三、联系方式</h5>
-			<ul>
-				<li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=630697743&amp;site=qq&amp;menu=yes"><img src="/src/img/qq.png"></a></li>
-				<li><a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=efcfe0e3d4a3fb910d88d7887d9f4552e1d2c7f3e0027cb2fffc3e065bdf0872"><img src="/src/img/qun.png"></a></li>
+				<li>一定要有例子，不能像Angular一样做的很强大却没人会用，学习成本不能太高。</li>
+				<li>控件一定要丰富，就是得用丰富的控件来满足不同的业务需求和交互场景。</li>
+				<li>样式和api设计上保证引入其它框架或者插件不会产生冲突。</li>
+				<li>要提供强大的开发工具帮助开发人员快速构建想要的页面和交互。</li>
+				<li>要有后端系统支持模板页面的搜索和上传分享，集思广益。</li>
+				<li>面向对象设计，由方法构造控件对象，则控件可操作的属性和方法就在控件本身。</li>
+				<li>更多的注重效率，提高效率节省时间是第一目标，其它的交给前端开发自己处理。</li>
+				<li>在设计上取长补短，多参考其它框架的优秀设计和实现。</li>
 			</ul>
 		</div>
 	</body>
