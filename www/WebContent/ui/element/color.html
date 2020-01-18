@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>颜色-元素-前端框架-降龙科技</title>
+		<link rel="stylesheet" href="/src/x.css">
+		<style type="text/css">
+			.view{width:700px;}
+			h4,h5{padding-left:10px;margin:10px 0;}
+			h6{margin:10px 0 10px 24px;}
+			p{font-size:12px;padding-left:24px;}
+			.list{float:left;border:1px solid #ddd;margin:0 0 24px 24px;font-size:12px;line-height:24px;}
+			.list>li{float:left;margin-top:2px;}
+			.list>li>span{float:left;line-height:27px;display:inline-block;width:132px;text-align:right;}
+			.list>li>input{float:right;width:44px;}
+			p>input[type="text"]{margin-right:10px;outline:none;border:1px solid #ddd;padding:0 5px;height:28px;font-size:12px;}
+		</style>
+	</head>
+	<body>
+		<div class="view"><h4>颜色</h4></div>
+		<div class="view">
+			<h5>一、原生控件</h5>
+			<p>浏览器本身就按照标准实现了颜色选择控件，一般地我们只需要对input框做样式调整就可以使用了。</p>
+			<p><b>优点：</b>浏览器底层实现，保证不出问题，而且功能很丰富。</p>
+			<p><b>缺点：</b>只能在浏览器左上角打开，不友好，一般都被弃用。</p>
+			<p style="line-height:30px;">
+				红：<input type="color" value="#FF0000">
+				橙：<input type="color" value="#FF7D00">
+				黄：<input type="color" value="#FFFF00">
+				绿：<input type="color" value="#00FF00">
+				青：<input type="color" value="#00FFFF">
+				蓝：<input type="color" value="#0000FF">
+				紫：<input type="color" value="#FF00FF">
+			</p>
+			<p>你可以点击上面的颜色框进行颜色选择。</p>
+		</div>
+		<h5>二、颜色定义</h5>
+		<div class="view">
+			<p>各行各业的产品都或多或少对颜色有不同的产品定位，因此对颜色的定义也是很重要的。</p>
+			<p><input id="colorSearch" class="search-input" type="text" placeholder="搜索"></p>
+		</div>
+		<ul class="list" id="colorSearchList" style="width:calc(100% - 50px);">
+			<li><span>浅粉红：</span><input type="color" value="#FFB6C1"></li>
+			<li><span>粉红：</span><input type="color" value="#FFC0CB"></li>
+			<li><span>深红(猩红)：</span><input type="color" value="#DC143C"></li>
+			<li><span>淡紫红：</span><input type="color" value="#FFF0F5"></li>
+			<li><span>弱紫罗兰红：</span><input type="color" value="#DB7093"></li>
+			<li><span>热情的粉红：</span><input type="color" value="#FF69B4"></li>
+			<li><span>深粉红：</span><input type="color" value="#FF1493"></li>
+			<li><span>中紫罗兰红：</span><input type="color" value="#C71585"></li>
+			<li><span>暗紫色(兰花紫)：</span><input type="color" value="#DA70D6"></li>
+			<li><span>蓟色：</span><input type="color" value="#D8BFD8"></li>
+			<li><span>洋李色(李子紫)：</span><input type="color" value="#DDA0DD"></li>
+			<li><span>紫罗兰：</span><input type="color" value="#EE82EE"></li>
+			<li><span>洋红(玫瑰红)：</span><input type="color" value="#FF00FF"></li>
+			<li><span>紫红(灯笼海棠)：</span><input type="color" value="#FF00FF"></li>
+			<li><span>深洋红：</span><input type="color" value="#8B008B"></li>
+			<li><span>紫色：</span><input type="color" value="#800080"></li>
+			<li><span>中兰花紫：</span><input type="color" value="#BA55D3"></li>
+			<li><span>暗紫罗兰：</span><input type="color" value="#9400D3"></li>
+			<li><span>暗兰花紫：</span><input type="color" value="#9932CC	"></li>
+			<li><span>靛青/紫兰色：</span><input type="color" value="#4B0082"></li>
+			<li><span>蓝紫罗兰：</span><input type="color" value="#8A2BE2"></li>
+			<li><span>中紫色：</span><input type="color" value="#9370DB"></li>
+			<li><span>中暗蓝色(中板岩蓝)：</span><input type="color" value="#7B68EE"></li>
+			<li><span>石蓝色(板岩蓝)：</span><input type="color" value="#6A5ACD"></li>
+			<li><span>暗灰蓝色(暗板岩蓝)：</span><input type="color" value="#483D8B"></li>
+			<li><span>淡紫色(熏衣草淡紫)：</span><input type="color" value="#E6E6FA"></li>
+			<li><span>幽灵白：</span><input type="color" value="#E6E6FA"></li>
+			<li><span>纯蓝：</span><input type="color" value="#F8F8FF"></li>
+			<li><span>中蓝色：</span><input type="color" value="#0000CD"></li>
+			<li><span>午夜蓝：</span><input type="color" value="#191970"></li>
+			<li><span>暗蓝色：</span><input type="color" value="#00008B"></li>
+			<li><span>海军蓝：</span><input type="color" value="#000080"></li>
+			<li><span>皇家蓝/宝蓝：</span><input type="color" value="#4169E1"></li>
+			<li><span>矢车菊蓝：</span><input type="color" value="#6495ED"></li>
+			<li><span>亮钢蓝：</span><input type="color" value="#B0C4DE"></li>
+			<li><span>亮蓝灰(亮石板灰)：</span><input type="color" value="#778899"></li>
+			<li><span>灰石色(石板灰)：</span><input type="color" value="#708090"></li>
+			<li><span>闪兰色(道奇蓝)：</span><input type="color" value="#1E90FF"></li>
+			<li><span>爱丽丝蓝：</span><input type="color" value="#F0F8FF"></li>
+			<li><span>钢蓝/铁青：</span><input type="color" value="#4682B4"></li>
+			<li><span>亮天蓝色：</span><input type="color" value="#87CEFA"></li>
+			<li><span>天蓝色：</span><input type="color" value="#87CEEB"></li>
+			<li><span>深天蓝：</span><input type="color" value="#00BFFF"></li>
+			<li><span>亮蓝：</span><input type="color" value="#ADD8E6"></li>
+			<li><span>粉蓝色(火药青)：</span><input type="color" value="#B0E0E6"></li>
+			<li><span>军兰色(军服蓝)：</span><input type="color" value="#5F9EA0"></li>
+			<li><span>蔚蓝色：</span><input type="color" value="#F0FFFF"></li>
+			<li><span>淡青色：</span><input type="color" value="#E0FFFF"></li>
+			<li><span>弱绿宝石：</span><input type="color" value="#AFEEEE"></li>
+			<li><span>青色：</span><input type="color" value="#00FFFF"></li>
+			<li><span>浅绿色(水色)：</span><input type="color" value="#00FFFF"></li>
+			<li><span>暗绿宝石：</span><input type="color" value="#00CED1"></li>
+			<li><span>暗瓦灰色(暗石板灰)：</span><input type="color" value="#2F4F4F"></li>
+			<li><span>暗青色：</span><input type="color" value="#008B8B"></li>
+			<li><span>水鸭色：</span><input type="color" value="#008080"></li>
+			<li><span>中绿宝石：</span><input type="color" value="#48D1CC"></li>
+			<li><span>浅海洋绿：</span><input type="color" value="#20B2AA"></li>
+			<li><span>绿宝石：</span><input type="color" value="#40E0D0"></li>
+			<li><span>宝石碧绿：</span><input type="color" value="#7FFFD4"></li>
+			<li><span>中宝石碧绿：</span><input type="color" value="#66CDAA"></li>
+			<li><span>中春绿色：</span><input type="color" value="#00FA9A"></li>
+			<li><span>薄荷奶油：</span><input type="color" value="#F5FFFA"></li>
+			<li><span>春绿色：</span><input type="color" value="#00FF7F"></li>
+			<li><span>中海洋绿：</span><input type="color" value="#3CB371"></li>
+			<li><span>海洋绿：</span><input type="color" value="#2E8B57"></li>
+			<li><span>蜜色(蜜瓜色)：</span><input type="color" value="#F0FFF0"></li>
+			<li><span>淡绿色：</span><input type="color" value="#90EE90"></li>
+			<li><span>弱绿色：</span><input type="color" value="#98FB98"></li>
+			<li><span>暗海洋绿：</span><input type="color" value="#8FBC8F"></li>
+			<li><span>闪光深绿：</span><input type="color" value="#32CD32"></li>
+			<li><span>闪光绿：</span><input type="color" value="#00FF00"></li>
+			<li><span>森林绿：</span><input type="color" value="#228B22"></li>
+			<li><span>纯绿：</span><input type="color" value="#008000"></li>
+			<li><span>暗绿色：</span><input type="color" value="#006400"></li>
+			<li><span>黄绿色(查特酒绿)：</span><input type="color" value="#7FFF00"></li>
+			<li><span>草绿色(草坪绿)：</span><input type="color" value="#7CFC00"></li>
+			<li><span>绿黄色：</span><input type="color" value="#ADFF2F"></li>
+			<li><span>暗橄榄绿：</span><input type="color" value="#556B2F"></li>
+			<li><span>黄绿色：</span><input type="color" value="#9ACD32"></li>
+			<li><span>橄榄褐色：</span><input type="color" value="#6B8E23"></li>
+			<li><span>米色/灰棕色：</span><input type="color" value="#F5F5DC"></li>
+			<li><span>亮菊黄：</span><input type="color" value="#FAFAD2"></li>
+			<li><span>浅黄色：</span><input type="color" value="#FFFFE0"></li>
+			<li><span>纯黄：</span><input type="color" value="#FFFF00"></li>
+			<li><span>橄榄：</span><input type="color" value="#808000"></li>
+			<li><span>暗黄褐色(深卡叽布)：</span><input type="color" value="#BDB76B"></li>
+			<li><span>柠檬绸：</span><input type="color" value="#FFFACD"></li>
+			<li><span>灰菊黄(苍麒麟色)：</span><input type="color" value="#EEE8AA"></li>
+			<li><span>黄褐色(卡叽布)：</span><input type="color" value="#F0E68C"></li>
+			<li><span>金色：</span><input type="color" value="#FFD700"></li>
+			<li><span>玉米丝色：</span><input type="color" value="#FFF8DC"></li>
+			<li><span>金菊黄：</span><input type="color" value="#DAA520"></li>
+			<li><span>暗金菊黄：</span><input type="color" value="#B8860B"></li>
+			<li><span>花白色：</span><input type="color" value="#FFFAF0"></li>
+			<li><span>老花色(旧蕾丝)：</span><input type="color" value="#FDF5E6"></li>
+			<li><span>浅黄色(小麦色)：</span><input type="color" value="#F5DEB3"></li>
+			<li><span>鹿皮色(鹿皮靴)：</span><input type="color" value="#FFE4B5"></li>
+			<li><span>番木色(番木瓜)：</span><input type="color" value="#FFEFD5"></li>
+			<li><span>白杏色：</span><input type="color" value="#FFEBCD"></li>
+			<li><span>纳瓦白(土著白)：</span><input type="color" value="#FFDEAD"></li>
+			<li><span>古董白：</span><input type="color" value="#FAEBD7"></li>
+			<li><span>茶色：</span><input type="color" value="#D2B48C"></li>
+			<li><span>硬木色：</span><input type="color" value="#DEB887"></li>
+			<li><span>陶坯黄：</span><input type="color" value="#FFE4C4"></li>
+			<li><span>深橙色：</span><input type="color" value="#FF8C00"></li>
+			<li><span>亚麻布：</span><input type="color" value="#FAF0E6"></li>
+			<li><span>秘鲁色：</span><input type="color" value="#CD853F"></li>
+			<li><span>桃肉色：</span><input type="color" value="#FFDAB9"></li>
+			<li><span>沙棕色：</span><input type="color" value="#F4A460"></li>
+			<li><span>巧克力色：</span><input type="color" value="#D2691E"></li>
+			<li><span>重褐色(马鞍棕色)：</span><input type="color" value="#8B4513"></li>
+			<li><span>海贝壳：</span><input type="color" value="#FFF5EE"></li>
+			<li><span>黄土赭色：</span><input type="color" value="#A0522D"></li>
+			<li><span>浅鲑鱼肉色：</span><input type="color" value="#FFA07A"></li>
+			<li><span>珊瑚：</span><input type="color" value="#FF7F50"></li>
+			<li><span>橙红色：</span><input type="color" value="#FF4500"></li>
+			<li><span>深鲜肉/鲑鱼色：</span><input type="color" value="#E9967A"></li>
+			<li><span>番茄红：</span><input type="color" value="#FF6347"></li>
+			<li><span>浅玫瑰色(薄雾玫瑰)：</span><input type="color" value="#FFE4E1"></li>
+			<li><span>鲜肉/鲑鱼色：</span><input type="color" value="#FA8072"></li>
+			<li><span>雪白色：</span><input type="color" value="#FFFAFA"></li>
+			<li><span>淡珊瑚色：</span><input type="color" value="#F08080"></li>
+			<li><span>玫瑰棕色：</span><input type="color" value="#CD5C5C"></li>
+			<li><span>印度红：</span><input type="color" value="#66CDAA"></li>
+			<li><span>纯红：</span><input type="color" value="#FF0000"></li>
+			<li><span>棕色：</span><input type="color" value="#A52A2A"></li>
+			<li><span>火砖色(耐火砖)：</span><input type="color" value="#B22222"></li>
+			<li><span>深红色：</span><input type="color" value="#8B0000"></li>
+			<li><span>栗色：</span><input type="color" value="#800000"></li>
+			<li><span>纯白：</span><input type="color" value="#FFFFFF"></li>
+			<li><span>白烟：</span><input type="color" value="#F5F5F5"></li>
+			<li><span>淡灰色(庚斯博罗灰)：</span><input type="color" value="#DCDCDC"></li>
+			<li><span>浅灰色：</span><input type="color" value="#D3D3D3"></li>
+			<li><span>银灰色：</span><input type="color" value="#C0C0C0"></li>
+			<li><span>深灰色：</span><input type="color" value="#A9A9A9"></li>
+			<li><span>灰色：</span><input type="color" value="#808080"></li>
+			<li><span>暗淡的灰色：</span><input type="color" value="#696969"></li>
+			<li><span>纯黑：</span><input type="color" value="#000000"></li>
+		</ul>
+		<h5>三、配色方案</h5>
+		<div class="view">
+			<h6>1、柔和、明亮、温柔</h6>
+			<p>亮度高的色彩搭配在一起就会得到柔和、明亮、温和的感觉。为了避免刺眼，设计师一般会用低亮度的前景色调和，同时色彩在色环之间的距离也有助于避免沉闷。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#CCFFFF">
+				<input type="color" value="#FFCCCC">
+				<input type="color" value="#FFFF99">
+				<input type="color" value="#CCCCFF">
+				<input type="color" value="#FF9966">
+				<input type="color" value="#FF6666">
+				<input type="color" value="#FFCC99">
+				<input type="color" value="#CCFF99">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#CCFFCC">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#99CC99">
+				<input type="color" value="#99CCCC">
+			</p>
+		</div>
+		<div class="view">
+			<h6>2、柔和、洁净、爽朗</h6>
+			<p>对于柔和、清洁、爽朗的印象，色环中蓝到绿相邻的颜色应该是最适合的。并且亮度偏高。可以看到，几乎每个组合都有白色参与。当然在实际设计时，可以用蓝绿相反色相的高亮度有彩色代替白色。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#CCFF99">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#99CCFF">
+				<input type="color" value="#99CCCC">
+				<input type="color" value="#CCFFCC">
+				<input type="color" value="#66CCCC">
+				<input type="color" value="#CCCCFF">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#CCFFFF">
+				<input type="color" value="#66CCFF">
+				<input type="color" value="#6699CC">
+			</p>
+		</div>
+		<div class="view">
+			<h6>3、可爱、快乐、有趣</h6>
+			<p>可爱、快乐、有趣印象中的色彩搭配特点是，色相分布均匀，冷暖搭配，饱和度高，色彩分辨度高。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#66CCCC">
+				<input type="color" value="#CCFF66">
+				<input type="color" value="#FF99CC">
+				<input type="color" value="#FF9999">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#FFCC99">
+				<input type="color" value="#FF6666">
+				<input type="color" value="#FFFF66">
+				<input type="color" value="#99CC66">
+				<input type="color" value="#666699">
+				<input type="color" value="#99CC33">
+				<input type="color" value="#FF9900">
+				<input type="color" value="#FFCC00">
+				<input type="color" value="#FF0033">
+				<input type="color" value="#FF9966">
+				<input type="color" value="#CCFF00">
+				<input type="color" value="#CC3399">
+				<input type="color" value="#FF6600">
+				<input type="color" value="#993366">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#666633">
+			</p>
+		</div>
+		<div class="view">
+			<h6>4、活泼、快乐、有趣</h6>
+			<p>活泼、快乐、有趣相对前一种印象，色彩选择更加广泛，?最重要的变化是将纯白色用低饱和有彩色或者灰色取代。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#CC9999">
+				<input type="color" value="#FFFF99">
+				<input type="color" value="#666699">
+				<input type="color" value="#FF9900">
+				<input type="color" value="#FFFF00">
+				<input type="color" value="#0099CC">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#CC3399">
+				<input type="color" value="#99CC00">
+				<input type="color" value="#FF6666">
+				<input type="color" value="#3399CC">
+				<input type="color" value="#CC6600">
+				<input type="color" value="#999999">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#FF9933">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#009933">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#FF6600">
+				<input type="color" value="#FFFF66">
+				<input type="color" value="#009966">
+				<input type="color" value="#CC6633">
+				<input type="color" value="#FFCC99">
+				<input type="color" value="#CC0066">
+				<input type="color" value="#009999">
+				<input type="color" value="#FFCC33">
+			</p>
+		</div>
+		<div class="view">
+			<h6>5、运动型、轻快</h6>
+			<p>运动的色彩要强化激烈、刺激的感受，同时还要体现健康、快乐、阳光。因此饱和度较高、亮度偏低的色彩在这类印象中经常登场。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#FF6666">
+				<input type="color" value="#FFFF00">
+				<input type="color" value="#006699">
+				<input type="color" value="#FF9966">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#0066CC">
+				<input type="color" value="#339933">
+				<input type="color" value="#FFCC33">
+				<input type="color" value="#336699">
+				<input type="color" value="#FF9900">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#CC6600">
+				<input type="color" value="#CCCC44">
+				<input type="color" value="#99CC33">
+				<input type="color" value="#0099CC">
+				<input type="color" value="#99CCCC">
+				<input type="color" value="#FF0033">
+				<input type="color" value="#333399">
+				<input type="color" value="#CCCC00">
+				<input type="color" value="#33CC99">
+			</p>
+		</div>
+		<div class="view">
+			<h6>6、轻快、华丽、动感</h6>
+			<p>华丽的印象要求页面充斥有彩色，并且饱和度偏高，而亮度适当减弱则能强化这种印象。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#990066">
+				<input type="color" value="#FFCC00">
+				<input type="color" value="#CC0033">
+				<input type="color" value="#FFCC33">
+				<input type="color" value="#333399">
+				<input type="color" value="#FF0033">
+				<input type="color" value="#666699">
+				<input type="color" value="#FFFF00">
+				<input type="color" value="#006699">
+				<input type="color" value="#FFFF33">
+				<input type="color" value="#009999">
+				<input type="color" value="#CC3366">
+				<input type="color" value="#CCCC00">
+				<input type="color" value="#FF9933">
+				<input type="color" value="#663399">
+				<input type="color" value="#336699">
+				<input type="color" value="#CC3333">
+				<input type="color" value="#FFCCCC">
+				<input type="color" value="#99CC00">
+				<input type="color" value="#003399">
+				<input type="color" value="#FF6600">
+			</p>
+		</div>
+		<div class="view">
+			<h6>7、狂野、充沛、动感</h6>
+			<p>狂野的印象空间中少不了低亮度的色彩，甚至可以用适当的黑色搭配。其他有彩色的饱和度高，对比强烈。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#990066">
+				<input type="color" value="#FFFF00">
+				<input type="color" value="#003399">
+				<input type="color" value="#CC0033">
+				<input type="color" value="#000000">
+				<input type="color" value="#F00000">
+				<input type="color" value="#CC3333">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#003366">
+				<input type="color" value="#333333">
+				<input type="color" value="#CCCC00">
+				<input type="color" value="#99CC00">
+				<input type="color" value="#FF0033">
+				<input type="color" value="#FF9900">
+				<input type="color" value="#009966">
+				<input type="color" value="#666666">
+				<input type="color" value="#FF6600">
+				<input type="color" value="#993333">
+				<input type="color" value="#663366">
+			</p>
+		</div>
+		<div class="view">
+			<h6>8、华丽、花哨、女性化</h6>
+			<p>女性化的页面中紫色和品红是主角、粉红、绿色也是常用色相。一般它们之间要进行高饱和的搭配。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#FFFF99">
+				<input type="color" value="#993399">
+				<input type="color" value="#FF99CC">
+				<input type="color" value="#FF6666">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#339999">
+				<input type="color" value="#003399">
+				<input type="color" value="#CCFF00">
+				<input type="color" value="#66CC99">
+				<input type="color" value="#CC6699">
+				<input type="color" value="#CC3399">
+				<input type="color" value="#FFCC99">
+				<input type="color" value="#FFCCCC">
+				<input type="color" value="#993366">
+				<input type="color" value="#FFFF00">
+				<input type="color" value="#666699">
+				<input type="color" value="#99CC66">
+				<input type="color" value="#663366">
+				<input type="color" value="#FF33CC">
+				<input type="color" value="#CCCC99">
+			</p>
+		</div>
+		<div class="view">
+			<h6>9、回味、女性化、优雅</h6>
+			<p>优雅的感觉很奇特，色彩的饱和度一般要降下来。一般以蓝、红之间的相邻，调节亮度和饱和度进行搭配。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#CC99CC">
+				<input type="color" value="#CC3399">
+				<input type="color" value="#FFCCCC">
+				<input type="color" value="#FF99CC">
+				<input type="color" value="#CCCCFF">
+				<input type="color" value="#9933CC">
+				<input type="color" value="#9999CC">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#663366">
+				<input type="color" value="#FF9999">
+				<input type="color" value="#996666">
+				<input type="color" value="#CC9999">
+				<input type="color" value="#996699">
+			</p>
+		</div>
+		<div class="view">
+			<h6>10、高尚、自然、安稳</h6>
+			<p>高尚一般要用低亮度的黄绿色，色彩亮度降下去，注意色彩的平衡，页面就会显得安稳。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#FFFF99">
+				<input type="color" value="#CC9933">
+				<input type="color" value="#CC9966">
+				<input type="color" value="#CCCC66">
+				<input type="color" value="#669999">
+				<input type="color" value="#FF9966">
+				<input type="color" value="#996600">
+				<input type="color" value="#CCCC00">
+				<input type="color" value="#660033">
+				<input type="color" value="#CC6600">
+				<input type="color" value="#666600">
+				<input type="color" value="#CCCCFF">
+				<input type="color" value="#009999">
+				<input type="color" value="#FFCC33">
+				<input type="color" value="#999966">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#339999">
+				<input type="color" value="#99CC99">
+				<input type="color" value="#669933">
+				<input type="color" value="#336633">
+				<input type="color" value="#666633">
+				<input type="color" value="#999933">
+				<input type="color" value="#660000">
+				<input type="color" value="#CC9900">
+			</p>
+		</div>
+		<div class="view">
+			<h6>11、冷静、自然</h6>
+			<p>绿色是冷静、自然印象的主角，但是绿色作为页面的主要色彩，容易陷入过于消极的感觉传达，因此应该特别重视图案的设计。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#FFFF99">
+				<input type="color" value="#99CC99">
+				<input type="color" value="#666600">
+				<input type="color" value="#996633">
+				<input type="color" value="#99CC66">
+				<input type="color" value="#006600">
+				<input type="color" value="#66CC66">
+				<input type="color" value="#CCFF99">
+				<input type="color" value="#CCCC66">
+				<input type="color" value="#CCFFCC">
+				<input type="color" value="#669933">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#663300">
+				<input type="color" value="#666633">
+				<input type="color" value="#999933">
+				<input type="color" value="#CC9966">
+				<input type="color" value="#003300">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#006633">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#999999">
+				<input type="color" value="#333300">
+			</p>
+		</div>
+		<div class="view">
+			<h6>12、传统、高雅、优雅</h6>
+			<p>传统的内容一般要降低色彩的饱和度，特别是棕色很适合。前面介绍紫色也是高雅和优雅印象的常用色相。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#999933">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#CC99CC">
+				<input type="color" value="#CC9966">
+				<input type="color" value="#666666">
+				<input type="color" value="#CC9999">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#333333">
+				<input type="color" value="#9966CC">
+				<input type="color" value="#996699">
+				<input type="color" value="#669999">
+				<input type="color" value="#999999">
+				<input type="color" value="#339966">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#663366">
+				<input type="color" value="#CCCCFF">
+				<input type="color" value="#9999CC">
+				<input type="color" value="#663300">
+			</p>
+		</div>
+		<div class="view">
+			<h6>13、传统、稳重、古典</h6>
+			<p>传统、稳重、古典都是保守的印象，色彩的选择上应该尽量用低亮度的暖色，这种搭配符合成熟的审美。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#6699CC">
+				<input type="color" value="#663366">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#990033">
+				<input type="color" value="#CCFF66">
+				<input type="color" value="#FF9900">
+				<input type="color" value="#666699">
+				<input type="color" value="#660033">
+				<input type="color" value="#99CC99">
+				<input type="color" value="#663300">
+				<input type="color" value="#FF9933">
+				<input type="color" value="#FFFF66">
+				<input type="color" value="#006633">
+				<input type="color" value="#CCCC00">
+				<input type="color" value="#999933">
+				<input type="color" value="#660099">
+				<input type="color" value="#993366">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#666633">
+				<input type="color" value="#996600">
+				<input type="color" value="#CCCC66">
+				<input type="color" value="#666600">
+				<input type="color" value="#009933">
+				<input type="color" value="#CC9900">
+				<input type="color" value="#666666">
+				<input type="color" value="#CC3366">
+			</p>
+		</div>
+		<div class="view">
+			<h6>14、忠厚、稳重、有品位</h6>
+			<p>亮度、饱和度偏低的色彩会给人忠厚、稳重的感觉。这样的搭配为了避免色彩过于保守，使页面僵化、消极，应当注重冷暖结合和明暗对比。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#6699CC">
+				<input type="color" value="#663366">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#990033">
+				<input type="color" value="#CCFF66">
+				<input type="color" value="#FF9900">
+				<input type="color" value="#666699">
+				<input type="color" value="#660033">
+				<input type="color" value="#99CC99">
+				<input type="color" value="#663300">
+				<input type="color" value="#FF9933">
+				<input type="color" value="#FFFF66">
+				<input type="color" value="#006633">
+				<input type="color" value="#CCCC00">
+				<input type="color" value="#999933">
+				<input type="color" value="#660099">
+				<input type="color" value="#993366">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#666633">
+				<input type="color" value="#996600">
+				<input type="color" value="#CCCC66">
+				<input type="color" value="#666600">
+				<input type="color" value="#009933">
+				<input type="color" value="#CC9900">
+				<input type="color" value="#666666">
+				<input type="color" value="#CC3366">
+			</p>
+		</div>
+		<div class="view">
+			<h6>15、简单、洁净、进步</h6>
+			<p>简单、洁净的色彩在色相上可以用蓝、绿表现，并大面积留白。而进步的印象可以多用蓝色，搭配低饱和甚至灰色。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#CC9933">
+				<input type="color" value="#336666">
+				<input type="color" value="#996633">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#336633">
+				<input type="color" value="#990033">
+				<input type="color" value="#FFCC99">
+				<input type="color" value="#333366">
+				<input type="color" value="#669999">
+				<input type="color" value="#996600">
+				<input type="color" value="#993333">
+				<input type="color" value="#CC9966">
+				<input type="color" value="#003300">
+				<input type="color" value="#CCCC99">
+				<input type="color" value="#663300">
+				<input type="color" value="#999933">
+				<input type="color" value="#333333">
+				<input type="color" value="#663366">
+				<input type="color" value="#666666">
+				<input type="color" value="#999900">
+				<input type="color" value="#CC99CC">
+				<input type="color" value="#CCCCCC">
+			</p>
+		</div>
+		<div class="view">
+			<h6>16、简单、时尚、高雅</h6>
+			<p>灰色是最为平衡的色彩，并且是塑料金属质感的主要色彩之一，因而要表达高雅、时尚，可以适当使用，甚至大面积使用。但是要注重图案和质感的构造。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#666699">
+				<input type="color" value="#CCFF66">
+				<input type="color" value="#003366">
+				<input type="color" value="#99CCFF">
+				<input type="color" value="#336699">
+				<input type="color" value="#CCCC33">
+				<input type="color" value="#0099FF">
+				<input type="color" value="#FFFFCC">
+				<input type="color" value="#99CC33">
+				<input type="color" value="#000000">
+				<input type="color" value="#0099CC">
+				<input type="color" value="#666666">
+				<input type="color" value="#3399CC">
+				<input type="color" value="#ABCDEF">
+			</p>
+		</div>
+		<div class="view">
+			<h6>17、简单、进步、时尚</h6>
+			<p>表现进步的色彩主要以蓝色为主，搭配灰色。而色彩的明度统一、色相相邻，在色彩上会显得简洁。</p>
+			<p style="line-height:30px;">
+				<input type="color" value="#99CCFF">
+				<input type="color" value="#FFFF66">
+				<input type="color" value="#666666">
+				<input type="color" value="#336666">
+				<input type="color" value="#FFFFFF">
+				<input type="color" value="#999999">
+				<input type="color" value="#0099CC">
+				<input type="color" value="#CCCCCC">
+				<input type="color" value="#663366">
+				<input type="color" value="#6699CC">
+				<input type="color" value="#333366">
+				<input type="color" value="#669999">
+				<input type="color" value="#333333">
+				<input type="color" value="#ABCDEF">
+			</p>
+		</div>
+		<div class="view" style="height:1px;"></div>
+		<script type="text/javascript" src="/src/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/src/i18n/zh_cn.js"></script>
+		<script type="text/javascript" src="/src/x.js"></script>
+		<script type="text/javascript">
+			(function(){
+				$('#colorSearchList').xsearch({'$input':$('#colorSearch'),'hide':true});
+			})();
+		</script>
+	</body>
+</html>
