@@ -17,12 +17,12 @@
 			<div id="menusWrap" class="x-grid">
 				<div id="menus" class="x-tree">
 					<div class="x-tree-tool-system"><input type="text" placeholder="搜索"><a class="x-icon-collapse" title="收起"></a><a class="x-icon-link" title="联动"></a></div>
-					<ul><li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-book-open"></i><span>文档</span></a>
-							<ul><li><i></i><a data-url="/ui/document/instruct.html"><i class="x-icon-edit-text"></i><span>说明</span></a></li>
+					<ul><li><i class="x-icon-arrow-right"></i><a><i class="x-icon-book-open"></i><span>文档</span></a>
+							<ul style="display:none;"><li><i></i><a data-url="/ui/document/instruct.html"><i class="x-icon-edit-text"></i><span>说明</span></a></li>
 								<li><i></i><a data-url="/ui/document/rule.html"><i class="x-icon-ruled-page"></i><span>约定</span></a></li>
 							</ul>
 						</li>
-						<li><i class="x-icon-arrow-right"></i><a><i class="x-icon-element"></i><span>元素</span></a>
+						<li><i class="x-icon-arrow-bottom"></i><a><i class="x-icon-element"></i><span>元素</span></a>
 							<ul><li><i></i><a data-url="/ui/element/color.html"><i class="x-icon-color"></i><span>颜色</span></a></li>
 								<li><i></i><a data-url="/ui/element/icon.html"><i class="x-icon-icon"></i><span>图标</span></a></li>
 								<li><i></i><a data-url="/ui/element/button.html"><i class="x-icon-button"></i><span>按钮</span></a></li>
@@ -40,7 +40,7 @@
 			(function(){
 				var $tree = $('#menus').xtree();
 				$('#page').xgrid();
-				var $nav = $('#nav').xnav({
+				var $nav = $('#nav').xnavs({
 					'left':[{'icon':'x-icon-home','title':'首页','url':'/ui/home.html'}],
 					'right':[{'icon':'x-icon-email','title':'邮箱'},{'icon':'x-icon-user','title':'用户'},{'icon':'x-icon-cog','title':'设置'}]
 				});
@@ -55,16 +55,16 @@
 				var functions = {
 					'navClick': function($el) {
 						var url = $el.data('url'), tabid = $el.data('tabid');
-						$tabs.children('.x-active').removeClass('x-active');
-						$center.children('.x-active').removeClass('x-active');
-						$el.addClass('x-active');
+						$tabs.children('.active').removeClass('active');
+						$center.children('.active').removeClass('active');
+						$el.addClass('active');
 						if (url) {
 							if (tabid) {
-								$('#'+tabid).addClass('x-active');
+								$('#'+tabid).addClass('active');
 							} else {
 								var uuid = XL.base.uuid(2);
 								$el.attr('data-tabid', uuid);
-								$tabs.append('<iframe id="'+uuid+'" class="x-tab x-active" src="'+url+'"></iframe>');
+								$tabs.append('<iframe id="'+uuid+'" class="x-tab active" src="'+url+'"></iframe>');
 							}
 						}
 					}
@@ -91,7 +91,7 @@
 					}
 				});
 				//打开正在开发的页面
-				$tree.find('.x-icon-color').click();
+				$tree.find('.x-icon-button').click();
 			})();
 		</script>
 	</body>

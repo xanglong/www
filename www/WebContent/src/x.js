@@ -415,12 +415,12 @@
 							var $a = $tag.closest('a');
 							if (e.ctrlKey) {
 								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-								$a.hasClass('x-active') ? $a.removeClass('x-active') : $a.addClass('x-active');
+								$a.hasClass('active') ? $a.removeClass('active') : $a.addClass('active');
 							} else if (e.shiftKey) {
 								getSelection ? getSelection().removeAllRanges() : $root[0].selection.empty();
-								var $lastActive = $root.find('.x-last-active');
+								var $lastActive = $root.find('.last-active');
 								if ($lastActive.length == 0) {
-									$a.addClass('x-active');
+									$a.addClass('active');
 								} else {
 									var $as = $root.find('a'), start, end, last, current;
 									var lastActive = $lastActive[0], currentActive = $a[0];
@@ -436,15 +436,15 @@
 										start = last;
 										end = current;
 									}
-									$as.removeClass('x-active').slice(start, end + 1).addClass('x-active');
+									$as.removeClass('active').slice(start, end + 1).addClass('active');
 								} 
 							} else {
-								$root.find('.x-active').removeClass('x-active');
-								$a.addClass('x-active');
+								$root.find('.active').removeClass('active');
+								$a.addClass('active');
 							}
 							if (!e.shiftKey) {
-								$root.find('.x-last-active').removeClass('x-last-active');
-								$a.addClass('x-last-active');
+								$root.find('.last-active').removeClass('last-active');
+								$a.addClass('last-active');
 							}
 						}
 					});
@@ -571,7 +571,7 @@
 				}
 			});
 		},
-		'xnav': function(options) {
+		'xnavs': function(options) {
 			var $this = this.addClass('x-no-select');
 			if ($this.children().length == 0) {
 				if (!XL.base.isObject(options)) return $this;

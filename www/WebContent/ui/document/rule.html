@@ -9,7 +9,7 @@
 			h4,h5{padding-left:10px;margin:10px 0;}
 			p{font-size:12px;padding-left:24px;}
 			li{font-size:12px;line-height:20px;}
-			table{margin-left:1.5em;border:1px solid #ddd;width:100%;border-spacing:0;border-collapse:collapse;font-size:12px;}
+			table{margin-left:24px;border:1px solid #ddd;width:calc(100% - 24px);border-spacing:0;border-collapse:collapse;font-size:12px;}
 			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
 			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
 			code,kbd{padding:2px 4px;font-size:90%;color:#37474f;background-color:#f3f5f7;border-radius:4px;}
@@ -40,16 +40,16 @@
 			<table>
  				<thead><tr><th style="width:100px;">名称</th><th>说明</th></tr></thead>
 				<tbody>
-					<tr><td><code>.x-active</code></td><td>指示控件或者其子项目已经被激活。</td>	</tr>
-					<tr><td><code>.x-hover</code></td><td>指示控件正处于鼠标悬停状态，在CSS中相对于<code>:hover</code>选择器。</td></tr>
-					<tr><td><code>.x-focus</code></td><td>指示控件正处于聚焦状态，在CSS中相对于<code>:focus</code>选择器。</td></tr>
-					<tr><td><code>.x-disabled</code></td><td>指示控件处于不可用状态，通常与DOM属性<code>disabled="disabled"</code>一起使用。</td></tr>
-					<tr><td><code>.x-collapse</code></td><td>指示当前组件可以被折叠或展开。与状态<code>.in</code>一起出现时表示组件已被展开，没有此状态则反之。</td></tr>
-					<tr><td><code>.x-hide</code></td><td>指示当前组件被影藏不可见。</td></tr>
-					<tr><td><code>.x-bordered</code></td><td>使得组件具备边框样式。</td></tr>
-					<tr><td><code>.x-borderless</code></td><td>移除控件的边框样式。</td></tr>
-					<tr><td><code>.x-inverse</code></td><td>指示组件使用与默认颜色样式相对的样式。</td></tr>
-					<tr><td><code>.x-fixed</code></td><td>指示当前组件位置被固定，不受页面交互影响。</td></tr>
+					<tr><td><code>.active</code></td><td>指示控件或者其子项目已经被激活。</td>	</tr>
+					<tr><td><code>.hover</code></td><td>指示控件正处于鼠标悬停状态，在CSS中相对于<code>:hover</code>选择器。</td></tr>
+					<tr><td><code>.focus</code></td><td>指示控件正处于聚焦状态，在CSS中相对于<code>:focus</code>选择器。</td></tr>
+					<tr><td><code>.disabled</code></td><td>指示控件处于不可用状态，通常与DOM属性<code>disabled="disabled"</code>一起使用。</td></tr>
+					<tr><td><code>.collapse</code></td><td>指示当前组件可以被折叠或展开。与状态<code>.in</code>一起出现时表示组件已被展开，没有此状态则反之。</td></tr>
+					<tr><td><code>.hide</code></td><td>指示当前组件被影藏不可见。</td></tr>
+					<tr><td><code>.bordered</code></td><td>使得组件具备边框样式。</td></tr>
+					<tr><td><code>.borderless</code></td><td>移除控件的边框样式。</td></tr>
+					<tr><td><code>.inverse</code></td><td>指示组件使用与默认颜色样式相对的样式。</td></tr>
+					<tr><td><code>.fixed</code></td><td>指示当前组件位置被固定，不受页面交互影响。</td></tr>
 				</tbody>
 			</table>
 			<p style="text-align:center;margin-bottom:30px;">表1：状态样式</p>
