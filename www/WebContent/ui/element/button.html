@@ -4,26 +4,768 @@
 		<meta charset="UTF-8">
 		<title>按钮-元素-前端框架-降龙科技</title>
 		<link rel="stylesheet" href="/src/x.css">
+		<link rel="stylesheet" href="/src/css/font-awesome.min.css">
 		<style type="text/css">
 			.view{width:700px;}
 			h4,h5{padding-left:10px;margin:10px 0;}
+			h6{margin:10px 0 10px 24px;}
 			p{font-size:12px;padding-left:24px;}
 			li{font-size:12px;line-height:20px;}
 			ul{display:block;list-style-type:disc;margin:1em;padding-inline-start:24px;}
-			table{margin-left:1.5em;border:1px solid #ddd;width:100%;border-spacing:0;border-collapse:collapse;font-size:12px;}
+			table{margin:0 0 10px 24px;border:1px solid #ddd;width:calc(100% - 24px);border-spacing:0;border-collapse:collapse;font-size:12px;}
 			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
 			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
+			.button-table td>a{margin-right:8px;}
+			.button-table td>a:last-child{margin-right:0;}
+			code,kbd{padding:2px 4px;font-size:90%;color:#37474f;background-color:#f3f5f7;border-radius:4px;}
 		</style>
 	</head>
 	<body>
-		<div class="view"><h4>按钮</h4></div>
+		<h4>按钮</h4>
+		<h5>一、描述</h5>
 		<div class="view">
-			<h5>一、描述</h5>
-			<p>抛弃别人玩的那套xlarge、large、small来定义按钮大小，直接改用数字，就分4个级别。</p>
-			<table>
-				<thead><tr><th>按钮</th><th>颜色</th><th>大小</th><th>图标</th></tr></thead>
+			<p>按钮有矩形、圆角矩形、圆形，有平面的、立体的，也可以带有图片或者字体图标的，可以有不同的尺寸和字体大小。</p>
+			<p>
+				<b>正常：</b>
+				<a class="x-btn">默认</a>
+				<a class="x-btn x-btn-primary">首要</a>
+				<a class="x-btn x-btn-success">成功</a>
+				<a class="x-btn x-btn-info">信息</a>
+				<a class="x-btn x-btn-warning">警告</a>
+				<a class="x-btn x-btn-danger">危险</a>
+				<a class="x-btn x-btn-inverse">反色</a>
+				<a class="x-btn x-btn-link">链接</a>
+			</p>
+			<p>
+				<b>禁用：</b>
+				<a class="x-btn disabled">默认</a>
+				<a class="x-btn disabled x-btn-primary">首要</a>
+				<a class="x-btn disabled x-btn-success">成功</a>
+				<a class="x-btn disabled x-btn-info">信息</a>
+				<a class="x-btn disabled x-btn-warning">警告</a>
+				<a class="x-btn disabled x-btn-danger">危险</a>
+				<a class="x-btn disabled x-btn-inverse">反色</a>
+				<a class="x-btn disabled x-btn-link">链接</a>
+			</p>
+			<p>以上展示了14个按钮，分别为本站前端框架集成的常用按钮中正常和禁用的样子。</p>
+		</div>
+		<h5>二、尺寸设计</h5>
+		<div class="view">
+			<p>二次开发时注意：字体加粗应当不影响按钮的宽度和高度，代码按照当前显示的样子写即可。</p>
+			<table class="button-table">
+				<thead><tr><th>尺寸</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
-					<tr><td></td><td></td><td></td><td></td></tr>
+					<tr>
+						<td>默认</td>
+						<td><a class="x-btn x-btn-xlarge" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-primary" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-primary x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-primary" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-primary x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-primary" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-primary x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-primary" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-primary x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-success" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-success x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-success" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-success x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-success" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-success x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-success" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-success x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-info" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-info x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-info" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-info x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-info" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-info x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-info" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-info x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-warning" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-warning x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-warning" title="二级"><span>二级</span>	</a>
+							<a class="x-btn x-btn-large x-btn-warning x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-warning" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-warning x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-warning" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-warning x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-danger" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-danger x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-danger" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-danger x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-danger" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-danger x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-danger" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-danger x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-inverse" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-inverse x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-inverse" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-inverse x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-inverse" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-inverse x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-inverse" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-inverse x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>链接</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-link" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-link x-btn-bordered" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-link" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large x-btn-link x-btn-bordered" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-link" title="三级"><span>三级</span></a>
+							<a class="x-btn x-btn-link x-btn-bordered" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-link" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small x-btn-link x-btn-bordered" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td><a class="x-btn x-btn-xlarge disabled" title="一级"><span>一级</span></a>
+							<a class="x-btn x-btn-xlarge disabled" title="一级"><span>一级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large disabled" title="二级"><span>二级</span></a>
+							<a class="x-btn x-btn-large disabled" title="二级"><span>二级</span></a>
+						</td>
+						<td><a class="x-btn disabled" title="三级"><span>三级</span></a>
+							<a class="x-btn disabled" title="三级"><span>三级</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small disabled" title="四级"><span>四级</span></a>
+							<a class="x-btn x-btn-small disabled" title="四级"><span>四级</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>三、图片按钮</h5>
+		<div class="view">
+			<p>系统的图标库提供了很多图片图标，可以作为按钮的图标使用。</p>
+			<table class="button-table">
+				<thead><tr><th>尺寸</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td><a class="x-btn x-btn-xlarge" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+							<a class="x-btn x-btn-large x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+						</td>
+						<td><a class="x-btn" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+							<a class="x-btn x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+							<a class="x-btn x-btn-small x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-large x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+						</td>
+						<td><a class="x-btn x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-small x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+							<a class="x-btn x-btn-large x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+						</td>
+						<td><a class="x-btn x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+							<a class="x-btn x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+							<a class="x-btn x-btn-small x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+							<a class="x-btn x-btn-large x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+						</td>
+						<td><a class="x-btn x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+							<a class="x-btn x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+							<a class="x-btn x-btn-small x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i><span>放大</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-large x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+						</td>
+						<td><a class="x-btn x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-small x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i><span>加密</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-large x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+						</td>
+						<td><a class="x-btn x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-small x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i><span>附件</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+							<a class="x-btn x-btn-large x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+						</td>
+						<td><a class="x-btn x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+							<a class="x-btn x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+							<a class="x-btn x-btn-small x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i><span>应用</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>链接</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-link" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-link" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+							<a class="x-btn x-btn-large x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+						</td>
+						<td><a class="x-btn x-btn-link" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+							<a class="x-btn x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-link" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+							<a class="x-btn x-btn-small x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i><span>导入</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td><a class="x-btn x-btn-xlarge disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+							<a class="x-btn x-btn-xlarge disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+							<a class="x-btn x-btn-large disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+						</td>
+						<td><a class="x-btn disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+							<a class="x-btn disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+							<a class="x-btn x-btn-small disabled" title="导出"><i class="x-icon x-icon-export"></i><span>导出</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>四、字体按钮</h5>
+		<div class="view">
+			<p>当使用第三方图标作为按钮图标时，用法就很简单了，图标就等于是文本一样，不用做过多处理。</p>
+			<table class="button-table">
+				<thead><tr><th>尺寸</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td><a class="x-btn x-btn-xlarge" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+							<a class="x-btn x-btn-large x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+						</td>
+						<td><a class="x-btn" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+							<a class="x-btn x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+							<a class="x-btn x-btn-small x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-large x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+						</td>
+						<td><a class="x-btn x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+							<a class="x-btn x-btn-small x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+							<a class="x-btn x-btn-large x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+						</td>
+						<td><a class="x-btn x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+							<a class="x-btn x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+							<a class="x-btn x-btn-small x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+							<a class="x-btn x-btn-large x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+						</td>
+						<td><a class="x-btn x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+							<a class="x-btn x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+							<a class="x-btn x-btn-small x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i><span>放大</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-large x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+						</td>
+						<td><a class="x-btn x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+							<a class="x-btn x-btn-small x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i><span>加密</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-large x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+						</td>
+						<td><a class="x-btn x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+							<a class="x-btn x-btn-small x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i><span>附件</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+							<a class="x-btn x-btn-large x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+						</td>
+						<td><a class="x-btn x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+							<a class="x-btn x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+							<a class="x-btn x-btn-small x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i><span>音乐</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>链接</td>
+						<td><a class="x-btn x-btn-xlarge x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+							<a class="x-btn x-btn-xlarge x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+							<a class="x-btn x-btn-large x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+						</td>
+						<td><a class="x-btn x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+							<a class="x-btn x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+							<a class="x-btn x-btn-small x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i><span>刷新</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td><a class="x-btn x-btn-xlarge disabled"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+							<a class="x-btn x-btn-xlarge disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+						</td>
+						<td><a class="x-btn x-btn-large disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+							<a class="x-btn x-btn-large disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+						</td>
+						<td><a class="x-btn disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+							<a class="x-btn disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+						</td>
+						<td><a class="x-btn x-btn-small disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+							<a class="x-btn x-btn-small disabled" title="设置"><i class="fa x-icon fa-cog"></i><span>设置</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>五、仅剩图片</h5>
+		<div class="view">
+			<p>加入<code>x-btn-icon</code>类，使得图标水平居中就可以达到效果了，也可以根据图标，自己开发按钮。</p>
+			<table class="button-table">
+				<thead><tr><th>尺寸</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+						</td>
+						<td><a class="x-btn" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+							<a class="x-btn x-btn-icon x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-bordered" title="新增"><i class="x-icon x-icon-app-form-add"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+							<a class="x-btn x-btn-icon x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-primary x-btn-bordered" title="编辑"><i class="x-icon x-icon-app-form-edit"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+							<a class="x-btn x-btn-icon x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-success x-btn-bordered" title="删除"><i class="x-icon x-icon-app-form-delete"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+							<a class="x-btn x-btn-icon x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-info" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-info x-btn-bordered" title="放大"><i class="x-icon x-icon-app-form-magnify"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-warning" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-warning x-btn-bordered" title="加密"><i class="x-icon x-icon-app-key"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-danger" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-danger x-btn-bordered" title="附件"><i class="x-icon x-icon-app-link"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i></a>
+							<a class="x-btn x-btn-icon x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-inverse" title="应用"><i class="x-icon x-icon-app"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-inverse x-btn-bordered" title="应用"><i class="x-icon x-icon-app"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>链接</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-link" title="导入"><i class="x-icon x-icon-import"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-link" title="导入"><i class="x-icon x-icon-import"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-link" title="导入"><i class="x-icon x-icon-import"></i></a>
+							<a class="x-btn x-btn-icon x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-link" title="导入"><i class="x-icon x-icon-import"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-link x-btn-bordered" title="导入"><i class="x-icon x-icon-import"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+							<a class="x-btn x-btn-icon disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small disabled" title="导出"><i class="x-icon x-icon-export"></i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>六、仅剩字体</h5>
+		<div class="view">
+			<p>加入<code>x-btn-icon</code>类，使得图标水平居中就可以达到效果了，也可以根据图标，自己开发按钮。</p>
+			<table class="button-table">
+				<thead><tr><th>尺寸</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge" title="新增"><i class="fa x-icon fa-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large" title="新增"><i class="fa x-icon fa-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon" title="新增"><i class="fa x-icon fa-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small" title="新增"><i class="fa x-icon fa-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-bordered" title="新增"><i class="fa x-icon fa-plus"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+							<a class="x-btn x-btn-icon x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-primary x-btn-bordered" title="编辑"><i class="fa x-icon fa-pencil"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+							<a class="x-btn x-btn-icon x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-success x-btn-bordered" title="删除"><i class="fa x-icon fa-trash-o"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-info" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-info x-btn-bordered" title="放大"><i class="fa x-icon fa-search-plus"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-warning" title="加密"><i class="fa x-icon fa-key"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-warning x-btn-bordered" title="加密"><i class="fa x-icon fa-key"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-danger" title="附件"><i class="fa x-icon fa-link"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-danger x-btn-bordered" title="附件"><i class="fa x-icon fa-link"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i></a>
+							<a class="x-btn x-btn-icon x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-inverse" title="音乐"><i class="fa x-icon fa-music"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-inverse x-btn-bordered" title="音乐"><i class="fa x-icon fa-music"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>链接</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+							<a class="x-btn x-btn-icon x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small x-btn-link" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small x-btn-link x-btn-bordered" title="刷新"><i class="fa x-icon fa-refresh"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td><a class="x-btn x-btn-icon x-btn-xlarge disabled"><i class="fa x-icon fa-cog"></i></a>
+							<a class="x-btn x-btn-icon x-btn-xlarge disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-large disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+							<a class="x-btn x-btn-icon x-btn-large disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+							<a class="x-btn x-btn-icon disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+						</td>
+						<td><a class="x-btn x-btn-icon x-btn-small disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+							<a class="x-btn x-btn-icon x-btn-small disabled" title="设置"><i class="fa x-icon fa-cog"></i></a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
