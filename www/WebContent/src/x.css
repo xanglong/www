@@ -19,6 +19,7 @@ ul {
 }
 .x-highlight {
 	background-color: #ffff00;
+	font-style: normal;
 }
 .x-hide {
 	display: none;
@@ -1157,16 +1158,16 @@ i.x-icon {
 	line-height: 16px;
 }
 .x-btn>.x-icon {
-	margin: -3px 4px 0 -2px;
+	margin: -2px 4px 0 -2px;
 }
 .x-btn-xlarge>.x-icon {
-	margin: -3px 6px 0 -2px
+	margin: -2px 6px 0 -2px
 }
 .x-btn-large>.x-icon {
-	margin: -3px 5px 0 -2px;
+	margin: -2px 5px 0 -2px;
 }
 .x-btn-small>.x-icon {
-	margin: -3px 2px 0 -2px;
+	margin: -2px 2px 0 -2px;
 }
 .x-btn-icon>.x-icon {
 	margin-right: 0;
