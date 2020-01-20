@@ -3,20 +3,18 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>按钮-元素-前端框架-降龙科技</title>
-		<link rel="stylesheet" href="/src/x.css">
 		<link rel="stylesheet" href="/src/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/src/x.css">
 		<style type="text/css">
 			.view{width:700px;}
 			h4,h5{padding-left:10px;margin:10px 0;}
 			h6{margin:10px 0 10px 24px;}
 			p{font-size:12px;padding-left:24px;}
-			li{font-size:12px;line-height:20px;}
-			ul{display:block;list-style-type:disc;margin:1em;padding-inline-start:24px;}
 			table{margin:0 0 10px 24px;border:1px solid #ddd;width:calc(100% - 24px);border-spacing:0;border-collapse:collapse;font-size:12px;}
 			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
 			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
-			.button-table td>a{margin-right:8px;}
-			.button-table td>a:last-child{margin-right:0;}
+			td>a{margin-right:8px;}
+			td>a:last-child{margin-right:0;}
 			code,kbd{padding:2px 4px;font-size:90%;color:#37474f;background-color:#f3f5f7;border-radius:4px;}
 		</style>
 	</head>
@@ -47,12 +45,12 @@
 				<a class="x-btn disabled x-btn-inverse">反色</a>
 				<a class="x-btn disabled x-btn-link">链接</a>
 			</p>
-			<p>以上展示了14个按钮，分别为本站前端框架集成的常用按钮中正常和禁用的样子。</p>
+			<p>以上展示了16个按钮，分别为本站前端框架集成的常用按钮中正常和禁用的样子。</p>
 		</div>
 		<h5>二、尺寸设计</h5>
 		<div class="view">
 			<p>二次开发时注意：字体加粗应当不影响按钮的宽度和高度，代码按照当前显示的样子写即可。</p>
-			<table class="button-table">
+			<table>
 				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
 					<tr>
@@ -196,7 +194,7 @@
 		<h5>三、图片按钮</h5>
 		<div class="view">
 			<p>系统的图标库提供了很多图片图标，可以作为按钮的图标使用。</p>
-			<table class="button-table">
+			<table>
 				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
 					<tr>
@@ -340,7 +338,7 @@
 		<h5>四、字体按钮</h5>
 		<div class="view">
 			<p>当使用第三方图标作为按钮图标时，用法就很简单了，图标就等于是文本一样，不用做过多处理。</p>
-			<table class="button-table">
+			<table>
 				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
 					<tr>
@@ -484,7 +482,7 @@
 		<h5>五、仅剩图片</h5>
 		<div class="view">
 			<p>加入<code>x-btn-icon</code>类，使得图标水平居中就可以达到效果了，也可以根据图标，自己开发按钮。</p>
-			<table class="button-table">
+			<table>
 				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
 					<tr>
@@ -628,7 +626,7 @@
 		<h5>六、仅剩字体</h5>
 		<div class="view">
 			<p>加入<code>x-btn-icon</code>类，使得图标水平居中就可以达到效果了，也可以根据图标，自己开发按钮。</p>
-			<table class="button-table">
+			<table>
 				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
 					<tr>
@@ -772,7 +770,7 @@
 		<h5>七、块级按钮</h5>
 		<div class="view">
 			<p>考虑到移动端产品时，按钮就需要设计成支持块级填充。</p>
-			<table class="button-table">
+			<table>
 				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
 				<tbody>
 					<tr>
@@ -842,8 +840,5 @@
 				</tbody>
 			</table>
 		</div>
-		<script type="text/javascript" src="/src/js/jquery.min.js"></script>
-		<script type="text/javascript" src="/src/i18n/zh_cn.js"></script>
-		<script type="text/javascript" src="/src/x.js"></script>
 	</body>
 </html>
