@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>工具条-元素-前端框架-降龙科技</title>
+		<link rel="stylesheet" href="/src/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/src/x.css">
+		<style type="text/css">
+			.view{width:700px;}
+			.view2{width:900px;}
+			h4,h5{padding-left:10px;margin:10px 0;}
+			h6{margin:10px 0 10px 24px;}
+			p{font-size:12px;padding-left:24px;}
+			.p{margin-left:24px;}
+			.p .x-btn{width:110px;}
+			table{margin:0 0 10px 24px;border:1px solid #ddd;width:calc(100% - 24px);border-spacing:0;border-collapse:collapse;font-size:12px;}
+			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
+			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
+			td>a{margin-right:8px;}
+			td>a:last-child{margin-right:0;}
+		</style>
+	</head>
+	<body>
+		<h4>工具条</h4>
+		<h5>一、描述</h5>
+		<div class="view">
+			<p>有了按钮元素后，把几个按钮排列在一起就形成了按钮组，按钮和按钮组构成了工具条。</p>
+			<p><b>注意：</b>后面的元素介绍不引入link链接型按钮，因为在工具条中一般不常见。</p>
+			<p><b>水平方向：</b>设置了按钮宽度110px</p>
+			<div class="p">
+				<div class="x-btn-group">
+					<button class="x-btn x-btn-primary" title="左边"><span>左边</span></button>
+					<button class="x-btn x-btn-primary" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-primary" title="右边"><span>右边</span></button>
+				</div>
+				<p></p>
+				<div class="x-btn-group">
+					<button class="x-btn x-btn-bordered x-btn-primary" title="左边"><span>左边</span></button>
+					<button class="x-btn x-btn-bordered x-btn-primary" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-bordered x-btn-primary" title="右边"><span>右边</span></button>
+				</div>
+				<p></p>
+				<div class="x-btn-group">
+					<button class="x-btn x-btn-success" title="左边"><span>左边</span></button>
+					<button class="x-btn x-btn-success" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-success" title="右边"><span>右边</span></button>
+				</div>
+				<p></p>
+				<div class="x-btn-group">
+					<button class="x-btn x-btn-bordered x-btn-success" title="左边"><span>左边</span></button>
+					<button class="x-btn x-btn-bordered x-btn-success" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-bordered x-btn-success" title="右边"><span>右边</span></button>
+				</div>
+			</div>
+			<p><b>垂直方向：</b>设置了按钮宽度110px</p>
+			<div class="p">
+				<div class="x-btn-group x-btn-group-vertical">
+					<button class="x-btn x-btn-primary" title="上边"><span>上边</span></button>
+					<button class="x-btn x-btn-primary" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-primary" title="下边"><span>下边</span></button>
+				</div>
+				<div class="x-btn-group x-btn-group-vertical">
+					<button class="x-btn x-btn-primary x-btn-bordered" title="上边"><span>上边</span></button>
+					<button class="x-btn x-btn-primary x-btn-bordered" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-primary x-btn-bordered" title="下边"><span>下边</span></button>
+				</div>
+				<div class="x-btn-group x-btn-group-vertical">
+					<button class="x-btn x-btn-success" title="上边"><span>上边</span></button>
+					<button class="x-btn x-btn-success" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-success" title="下边"><span>下边</span></button>
+				</div>
+				<div class="x-btn-group x-btn-group-vertical">
+					<button class="x-btn x-btn-success x-btn-bordered" title="上边"><span>上边</span></button>
+					<button class="x-btn x-btn-success x-btn-bordered" title="中间"><span>中间</span></button>
+					<button class="x-btn x-btn-success x-btn-bordered" title="下边"><span>下边</span></button>
+				</div>
+			</div>
+		</div>
+		<h5>二、尺寸设计：水平方向</h5>
+		<div class="view">
+			<p>很多业务系统的都是传统的表格管理界面，工具条上的按钮经常需要按组划分，方便使用和权限控制。</p>
+			<table>
+				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn" title="新增"><span>新增</span></button>
+								<button class="x-btn" title="编辑"><span>编辑</span></button>
+								<button class="x-btn" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>三、尺寸设计：垂直方向</h5>
+		<div class="view">
+			<p>很少有见到使用垂直方向布局按钮的工具条，例如有一些复杂系统的查询页面会用到。</p>
+			<table>
+				<thead><tr><th>尺寸</th><th>默认</th><th>首要</th><th>成功</th><th>信息</th><th>警告</th><th>危险</th><th>反色</th><th>禁用</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>一级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>二级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-large disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-large disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>三级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn" title="新增"><span>新增</span></button>
+								<button class="x-btn" title="编辑"><span>编辑</span></button>
+								<button class="x-btn" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>四级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-primary" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-success" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-info" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-warning" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-danger" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-inverse" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small disabled" title="新增"><span>新增</span></button>
+								<button class="x-btn x-btn-small disabled" title="编辑"><span>编辑</span></button>
+								<button class="x-btn x-btn-small disabled" title="删除"><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>四、图片图标：水平方向</h5>
+		<div class="view2">
+			<p>常见的我们都习惯在工具条上的按钮带有图标，这里示例图标用图片展示。</p>
+			<table>
+				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>五、图片图标：垂直方向</h5>
+		<div class="view2">
+			<p>很少有见到使用垂直方向布局按钮的工具条，例如有一些复杂系统的查询页面会用到。</p>
+			<table>
+				<thead><tr><th>尺寸</th><th>默认</th><th>首要</th><th>成功</th><th>信息</th><th>警告</th><th>危险</th><th>反色</th><th>禁用</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>一级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>二级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>三级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>四级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-primary" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-success" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-info" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-warning" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-danger" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-inverse" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small disabled" title="新增"><i class="x-icon x-icon-app-form-add"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small disabled" title="编辑"><i class="x-icon x-icon-app-form-edit"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small disabled" title="删除"><i class="x-icon x-icon-app-form-delete"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>六、字体图标：水平方向</h5>
+		<div class="view2">
+			<p>常见的我们都习惯在工具条上的按钮带有图标，这里示例图标用图片展示。</p>
+			<table>
+				<thead><tr><th>颜色</th><th>一级按钮</th><th>二级按钮</th><th>三级按钮</th><th>四级按钮</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>默认</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>首要</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>反色</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>禁用</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-xlarge disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-large disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group">
+								<button class="x-btn x-btn-small disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>七、字体图标：垂直方向</h5>
+		<div class="view2">
+			<p>很少有见到使用垂直方向布局按钮的工具条，例如有一些复杂系统的查询页面会用到。</p>
+			<table>
+				<thead><tr><th>尺寸</th><th>默认</th><th>首要</th><th>成功</th><th>信息</th><th>警告</th><th>危险</th><th>反色</th><th>禁用</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>一级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-xlarge disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-xlarge disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>二级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-large disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-large disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-large disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>三级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>四级</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-primary" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-primary" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-success" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-success" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-info" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-info" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-warning" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-warning" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-danger" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-danger" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small x-btn-inverse" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small x-btn-inverse" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+						<td>
+							<div class="x-btn-group x-btn-group-vertical">
+								<button class="x-btn x-btn-small disabled" title="新增"><i class="fa x-icon fa-plus"></i><span>新增</span></button>
+								<button class="x-btn x-btn-small disabled" title="编辑"><i class="fa x-icon fa-pencil"></i><span>编辑</span></button>
+								<button class="x-btn x-btn-small disabled" title="删除"><i class="fa x-icon fa-trash-o"></i><span>删除</span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
