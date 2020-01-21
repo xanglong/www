@@ -1,5 +1,5 @@
 (function() {
-	var XL = {
+	var fns = {
 		'getLang' : function(code, words) {
 			if (!xlang) {
 				XL.msg.alert('语言包未加载', 'error');
@@ -302,7 +302,7 @@
 			'getStyle': function(styleObj) {
 				var style = '';
 				if (XL.base.isObject(styleObj)) {
-					style += 'style="'
+					style += 'style="';
 					for (var key in styleObj) {
 						style += key + ':' + styleObj[key] + ';';
 					}
@@ -357,8 +357,8 @@
 				getSelection ? getSelection().removeAllRanges() : document.selection.empty();
 			}
 		}
-	}
-	window.XL = XL;
+	};
+	window.XL = fns;
 	$.fn.extend({
 		'xhtml': function(options) {
 			if (!XL.base.isObject(options)) return this;
