@@ -9,10 +9,414 @@
 			h4,h5{padding-left:10px;margin:10px 0;}
 			h6{margin:10px 0 10px 24px;}
 			p{font-size:12px;padding-left:24px;}
+			.progress-view-wrap{padding-left:24px;height:240px;}
+			.progress-view{float:left;width:calc(50% - 12px);}
+			.progress-view:first-child{padding-right:24px;}
+			.progress-view>p{padding-left:0;}
+			table{margin:0 0 10px 24px;border:1px solid #ddd;width:calc(100% - 24px);border-spacing:0;border-collapse:collapse;font-size:12px;}
+			table>thead>tr>th{font-weight:700;color:#353535;vertical-align:bottom;background-color:#f1f1f1;border-bottom:1px solid #ddd;}
+			td,th{border:1px solid #ddd;padding:8px;line-height:1.53846154;text-align:left;}
 		</style>
 	</head>
 	<body>
 		<h4>进度条</h4>
-		<h5>一、描述</h5>
+		<h5>一、基本示例</h5>
+		<div class="view">
+			<p>一些可定量或者定时操作的接口为了交互能更加友好我们就需要用到进度条。</p>
+			<div class="progress-view-wrap">
+				<div class="progress-view">
+					<p><b>不同颜色，文字居左：</b></p>
+					<div class="x-progress"><div style="width:30%;" class="x-progress-bar">20%</div></div>
+					<div class="x-progress x-progress-danger"><div style="width:40%;" class="x-progress-bar">40%</div></div>
+					<div class="x-progress x-progress-success"><div style="width:60%;" class="x-progress-bar">60%</div></div>
+					<div class="x-progress x-progress-warning"><div style="width:80%;" class="x-progress-bar">80%</div></div>
+					<div class="x-progress x-progress-info"><div style="width:100%;" class="x-progress-bar">100%</div></div>
+				</div>
+				<div class="progress-view">
+					<p><b>不同大小，文字居中：</b></p>
+					<div class="x-progress x-progress-small"><div style="width:30%;" class="x-progress-bar"></div><div class="x-progress-bar-text">30%</div></div>
+					<div class="x-progress"><div style="width:40%;" class="x-progress-bar"></div><div class="x-progress-bar-text">40%</div></div>
+					<div class="x-progress x-progress-large"><div style="width:50%;" class="x-progress-bar"></div><div class="x-progress-bar-text">50%</div></div>
+					<div class="x-progress x-progress-xlarge"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div>
+				</div>
+			</div>
+			<div class="progress-view-wrap">
+				<div class="progress-view">
+					<p><b>静态条纹，文字居左：</b></p>
+					<div class="x-progress x-progress-striped"><div style="width:60%;" class="x-progress-bar">60%</div></div>
+					<div class="x-progress x-progress-danger x-progress-striped"><div style="width:60%;" class="x-progress-bar">60%</div></div>
+					<div class="x-progress x-progress-success x-progress-striped"><div style="width:60%;" class="x-progress-bar">60%</div></div>
+					<div class="x-progress x-progress-warning x-progress-striped"><div style="width:60%;" class="x-progress-bar">60%</div></div>
+					<div class="x-progress x-progress-info x-progress-striped"><div style="width:60%;" class="x-progress-bar">60%</div></div>
+				</div>
+				<div class="progress-view">
+					<p><b>动态条纹，文字居中：</b></p>
+					<div class="x-progress x-progress-striped active"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div>
+					<div class="x-progress x-progress-danger x-progress-striped active"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div>
+					<div class="x-progress x-progress-success x-progress-striped active"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div>
+					<div class="x-progress x-progress-warning x-progress-striped active"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div>
+					<div class="x-progress x-progress-info x-progress-striped active"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div>
+				</div>
+			</div>
+			<p><b>复合进度条：</b></p>
+			<div class="x-progress" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:20%;" class="x-progress-bar x-progress-bar-danger">20%</div>
+				<div style="width:20%;" class="x-progress-bar x-progress-bar-success">20%</div>
+				<div style="width:20%;" class="x-progress-bar x-progress-bar-warning">20%</div>
+				<div style="width:20%;" class="x-progress-bar x-progress-bar-info">20%</div>
+			</div>
+		</div>
+		<h5>二、大小颜色：文字居左</h5>
+		<div class="view">
+			<table>
+				<thead><tr><th>颜色</th><th>一级</th><th>二级</th><th>三级</th><th>四级</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>首要</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:30%;" class="x-progress-bar">30%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:40%;" class="x-progress-bar">40%</div></div></td>
+						<td><div class="x-progress"><div style="width:50%;" class="x-progress-bar">50%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:60%;" class="x-progress-bar">60%</div></div></td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:40%;" class="x-progress-bar x-progress-bar-success">40%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:50%;" class="x-progress-bar x-progress-bar-success">50%</div></div></td>
+						<td><div class="x-progress"><div style="width:60%;" class="x-progress-bar x-progress-bar-success">60%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:70%;" class="x-progress-bar x-progress-bar-success">70%</div></div></td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:50%;" class="x-progress-bar x-progress-bar-info">50%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:60%;" class="x-progress-bar x-progress-bar-info">60%</div></div></td>
+						<td><div class="x-progress"><div style="width:70%;" class="x-progress-bar x-progress-bar-info">70%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:80%;" class="x-progress-bar x-progress-bar-info">80%</div></div></td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:60%;" class="x-progress-bar x-progress-bar-warning">60%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:70%;" class="x-progress-bar x-progress-bar-warning">70%</div></div></td>
+						<td><div class="x-progress"><div style="width:80%;" class="x-progress-bar x-progress-bar-warning">80%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:90%;" class="x-progress-bar x-progress-bar-warning">90%</div></div></td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:70%;" class="x-progress-bar x-progress-bar-danger">70%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:80%;" class="x-progress-bar x-progress-bar-danger">80%</div></div></td>
+						<td><div class="x-progress"><div style="width:90%;" class="x-progress-bar x-progress-bar-danger">90%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:100%;" class="x-progress-bar x-progress-bar-danger">100%</div></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>三、大小颜色：文字居中</h5>
+		<div class="view">
+			<table>
+				<thead><tr><th>颜色</th><th>一级</th><th>二级</th><th>三级</th><th>四级</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>首要</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:30%;" class="x-progress-bar"></div><div class="x-progress-bar-text">30%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:40%;" class="x-progress-bar"></div><div class="x-progress-bar-text">40%</div></div></td>
+						<td><div class="x-progress"><div style="width:50%;" class="x-progress-bar"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div></td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:40%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">40%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:50%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress"><div style="width:60%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:70%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">70%</div></div></td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:50%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:60%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress"><div style="width:70%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:80%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">80%</div></div></td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:60%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:70%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress"><div style="width:80%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">80%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:90%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">90%</div></div></td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><div class="x-progress x-progress-xlarge"><div style="width:70%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-large"><div style="width:80%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">80%</div></div></td>
+						<td><div class="x-progress"><div style="width:90%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">90%</div></div></td>
+						<td><div class="x-progress x-progress-small"><div style="width:100%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">100%</div></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>四、大小颜色，静态条纹：文字居左</h5>
+		<div class="view">
+			<table>
+				<thead><tr><th>颜色</th><th>一级</th><th>二级</th><th>三级</th><th>四级</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>首要</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:30%;" class="x-progress-bar">30%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:40%;" class="x-progress-bar">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:50%;" class="x-progress-bar">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:60%;" class="x-progress-bar">60%</div></div></td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:40%;" class="x-progress-bar x-progress-bar-success">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:50%;" class="x-progress-bar x-progress-bar-success">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:60%;" class="x-progress-bar x-progress-bar-success">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:70%;" class="x-progress-bar x-progress-bar-success">70%</div></div></td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:50%;" class="x-progress-bar x-progress-bar-info">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:60%;" class="x-progress-bar x-progress-bar-info">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:70%;" class="x-progress-bar x-progress-bar-info">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:80%;" class="x-progress-bar x-progress-bar-info">80%</div></div></td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:60%;" class="x-progress-bar x-progress-bar-warning">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:70%;" class="x-progress-bar x-progress-bar-warning">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:80%;" class="x-progress-bar x-progress-bar-warning">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:90%;" class="x-progress-bar x-progress-bar-warning">90%</div></div></td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:70%;" class="x-progress-bar x-progress-bar-danger">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:80%;" class="x-progress-bar x-progress-bar-danger">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:90%;" class="x-progress-bar x-progress-bar-danger">90%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:100%;" class="x-progress-bar x-progress-bar-danger">100%</div></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>五、大小颜色，静态条纹：文字居中</h5>
+		<div class="view">
+			<table>
+				<thead><tr><th>颜色</th><th>一级</th><th>二级</th><th>三级</th><th>四级</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>首要</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:30%;" class="x-progress-bar"></div><div class="x-progress-bar-text">30%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:40%;" class="x-progress-bar"></div><div class="x-progress-bar-text">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:50%;" class="x-progress-bar"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div></td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:40%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:50%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:60%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:70%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">70%</div></div></td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:50%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:60%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:70%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:80%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">80%</div></div></td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:60%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:70%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:80%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:90%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">90%</div></div></td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:70%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-large"><div style="width:80%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped"><div style="width:90%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">90%</div></div></td>
+						<td><div class="x-progress x-progress-striped x-progress-small"><div style="width:100%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">100%</div></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<h5>五、大小颜色，动态条纹：文字居左</h5>
+		<div class="view">
+			<table>
+				<thead><tr><th>颜色</th><th>一级</th><th>二级</th><th>三级</th><th>四级</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>首要</td>
+						<td><div class="x-progress x-progress-striped x-progress-xlarge"><div style="width:30%;" class="x-progress-bar">30%</div></div></td>
+						<td><div class="x-progress x-progrex-progress-striped active activeess-large"><div style="width:40%;" class="x-progress-bar">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:50%;" class="x-progress-bar">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:60%;" class="x-progress-bar">60%</div></div></td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:40%;" class="x-progress-bar x-progress-bar-success">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:50%;" class="x-progress-bar x-progress-bar-success">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:60%;" class="x-progress-bar x-progress-bar-success">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:70%;" class="x-progress-bar x-progress-bar-success">70%</div></div></td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:50%;" class="x-progress-bar x-progress-bar-info">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:60%;" class="x-progress-bar x-progress-bar-info">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:70%;" class="x-progress-bar x-progress-bar-info">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:80%;" class="x-progress-bar x-progress-bar-info">80%</div></div></td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:60%;" class="x-progress-bar x-progress-bar-warning">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:70%;" class="x-progress-bar x-progress-bar-warning">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:80%;" class="x-progress-bar x-progress-bar-warning">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:90%;" class="x-progress-bar x-progress-bar-warning">90%</div></div></td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:70%;" class="x-progress-bar x-progress-bar-danger">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:80%;" class="x-progress-bar x-progress-bar-danger">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:90%;" class="x-progress-bar x-progress-bar-danger">90%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:100%;" class="x-progress-bar x-progress-bar-danger">100%</div></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>六、大小颜色，动态条纹：文字居中</h5>
+		<div class="view">
+			<table>
+				<thead><tr><th>颜色</th><th>一级</th><th>二级</th><th>三级</th><th>四级</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>首要</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:30%;" class="x-progress-bar"></div><div class="x-progress-bar-text">30%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:40%;" class="x-progress-bar"></div><div class="x-progress-bar-text">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:50%;" class="x-progress-bar"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:60%;" class="x-progress-bar"></div><div class="x-progress-bar-text">60%</div></div></td>
+					</tr>
+					<tr>
+						<td>成功</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:40%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">40%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:50%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:60%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:70%;" class="x-progress-bar x-progress-bar-success"></div><div class="x-progress-bar-text">70%</div></div></td>
+					</tr>
+					<tr>
+						<td>信息</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:50%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">50%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:60%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:70%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:80%;" class="x-progress-bar x-progress-bar-info"></div><div class="x-progress-bar-text">80%</div></div></td>
+					</tr>
+					<tr>
+						<td>警告</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:60%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">60%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:70%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:80%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:90%;" class="x-progress-bar x-progress-bar-warning"></div><div class="x-progress-bar-text">90%</div></div></td>
+					</tr>
+					<tr>
+						<td>危险</td>
+						<td><div class="x-progress x-progress-striped active x-progress-xlarge"><div style="width:70%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">70%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-large"><div style="width:80%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">80%</div></div></td>
+						<td><div class="x-progress x-progress-striped active"><div style="width:90%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">90%</div></div></td>
+						<td><div class="x-progress x-progress-striped active x-progress-small"><div style="width:100%;" class="x-progress-bar x-progress-bar-danger"></div><div class="x-progress-bar-text">100%</div></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h5>七、复合进度条</h5>
+		<div class="view">
+			<div class="x-progress x-progress-xlarge" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:10%;" class="x-progress-bar">10%</div>
+				<div style="width:11%;" class="x-progress-bar x-progress-bar-success">11%</div>
+				<div style="width:12%;" class="x-progress-bar x-progress-bar-info">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-warning">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-danger">14%</div>
+			</div>
+			<div class="x-progress x-progress-large" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:11%;" class="x-progress-bar">11%</div>
+				<div style="width:12%;" class="x-progress-bar x-progress-bar-success">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-info">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-warning">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-danger">15%</div>
+			</div>
+			<div class="x-progress" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:12%;" class="x-progress-bar">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-success">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-info">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-warning">15%</div>
+				<div style="width:16%;" class="x-progress-bar x-progress-bar-danger">16%</div>
+			</div>
+			<div class="x-progress x-progress-small" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:13%;" class="x-progress-bar">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-success">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-info">15%</div>
+				<div style="width:16%;" class="x-progress-bar x-progress-bar-warning">16%</div>
+				<div style="width:17%;" class="x-progress-bar x-progress-bar-danger">17%</div>
+			</div>
+		</div>
+		<h5>八、复合进度条:静态条纹</h5>
+		<div class="view">
+			<div class="x-progress x-progress-striped x-progress-xlarge" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:10%;" class="x-progress-bar">10%</div>
+				<div style="width:11%;" class="x-progress-bar x-progress-bar-success">11%</div>
+				<div style="width:12%;" class="x-progress-bar x-progress-bar-info">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-warning">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-danger">14%</div>
+			</div>
+			<div class="x-progress x-progress-striped x-progress-large" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:11%;" class="x-progress-bar">11%</div>
+				<div style="width:12%;" class="x-progress-bar x-progress-bar-success">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-info">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-warning">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-danger">15%</div>
+			</div>
+			<div class="x-progress x-progress-striped" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:12%;" class="x-progress-bar">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-success">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-info">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-warning">15%</div>
+				<div style="width:16%;" class="x-progress-bar x-progress-bar-danger">16%</div>
+			</div>
+			<div class="x-progress x-progress-striped x-progress-small" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:13%;" class="x-progress-bar">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-success">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-info">15%</div>
+				<div style="width:16%;" class="x-progress-bar x-progress-bar-warning">16%</div>
+				<div style="width:17%;" class="x-progress-bar x-progress-bar-danger">17%</div>
+			</div>
+		</div>
+		<h5>九、复合进度条:动态条纹</h5>
+		<div class="view">
+			<div class="x-progress x-progress-striped x-progress-xlarge active" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:10%;" class="x-progress-bar">10%</div>
+				<div style="width:11%;" class="x-progress-bar x-progress-bar-success">11%</div>
+				<div style="width:12%;" class="x-progress-bar x-progress-bar-info">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-warning">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-danger">14%</div>
+			</div>
+			<div class="x-progress x-progress-striped x-progress-large active" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:11%;" class="x-progress-bar">11%</div>
+				<div style="width:12%;" class="x-progress-bar x-progress-bar-success">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-info">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-warning">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-danger">15%</div>
+			</div>
+			<div class="x-progress x-progress-striped active" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:12%;" class="x-progress-bar">12%</div>
+				<div style="width:13%;" class="x-progress-bar x-progress-bar-success">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-info">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-warning">15%</div>
+				<div style="width:16%;" class="x-progress-bar x-progress-bar-danger">16%</div>
+			</div>
+			<div class="x-progress x-progress-striped x-progress-small active" style="width:calc(100% - 24px);margin-left:24px;">
+				<div style="width:13%;" class="x-progress-bar">13%</div>
+				<div style="width:14%;" class="x-progress-bar x-progress-bar-success">14%</div>
+				<div style="width:15%;" class="x-progress-bar x-progress-bar-info">15%</div>
+				<div style="width:16%;" class="x-progress-bar x-progress-bar-warning">16%</div>
+				<div style="width:17%;" class="x-progress-bar x-progress-bar-danger">17%</div>
+			</div>
+		</div>
 	</body>
 </html>
