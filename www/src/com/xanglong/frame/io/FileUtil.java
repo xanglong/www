@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xanglong.frame.exception.BizException;
+import com.xanglong.frame.util.BaseUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 /**文件处理工具类*/
@@ -77,6 +78,36 @@ public class FileUtil {
 	}
 	
 	/**
+	 * 获取文件锁：阻塞方法
+	 * @param fileChannel 文件通道
+	 * @return 文件锁
+	 * */
+	private static FileLock getFileLock(FileChannel fileChannel) {
+		while(true){  
+            try {
+            	return fileChannel.tryLock();
+			} catch (Exception e) {
+				//忽略异常栈输出
+				BaseUtil.sleep(1000);
+			}
+        }
+	}
+	
+	/**
+	 * 释放文件锁
+	 * @param fileLock 文件锁
+	 * */
+	public static void releaseFileLock(FileLock fileLock) {
+		if (fileLock != null) {
+			try {
+				fileLock.release();
+			} catch (IOException e) {
+				throw new BizException(e);
+			}
+		}
+	}
+	
+	/**
 	 * 写文本到文件
 	 * @param file 文件对象
 	 * @param text 文本
@@ -88,21 +119,24 @@ public class FileUtil {
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
+		FileLock fileLock = null;
 		try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
 			FileChannel fileChannel = randomAccessFile.getChannel();
-			FileLock fileLock = fileChannel.tryLock();
 		){
+			//并发写的锁获取阻塞
+			fileLock = getFileLock(fileChannel);
 			if (append) {//追加写入
 				randomAccessFile.seek(randomAccessFile.length());
 			} else {//覆盖写入
 				randomAccessFile.setLength(0);
 			}
 			fileChannel.write(ByteBuffer.wrap(text.getBytes()));
-			fileLock.release();
 		} catch (FileNotFoundException e) {
 			throw new BizException(e);
 		} catch (IOException e) {
 			throw new BizException(e);
+		} finally {
+			releaseFileLock(fileLock);
 		}
 	}
 	

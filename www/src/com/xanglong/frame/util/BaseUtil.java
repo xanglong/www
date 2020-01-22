@@ -2,6 +2,7 @@ package com.xanglong.frame.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xanglong.frame.Sys;
+import com.xanglong.frame.exception.BizException;
 
 public class BaseUtil {
 
@@ -71,6 +72,18 @@ public class BaseUtil {
 			key = keys[keys.length - 1];
 		}
 		return data.get(key);
+	}
+	
+	/**
+	 * 阻塞沉睡
+	 * @param millis 毫秒
+	 * */
+	public static void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			throw new BizException(e);
+		}
 	}
 
 }
