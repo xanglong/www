@@ -9,7 +9,8 @@ public enum SourceType {
 	FONT("font", "字体"),
 	VIDEO("video", "视频"),
 	AUDIO("audio", "音频"),
-	ACTION("action", "动作")
+	ACTION("action", "动作"),
+	TXT("txt", "文本"),
 	;
 
 	private String code;

@@ -40,6 +40,10 @@ public class ThrowableHandler {
 			Throwable innerThrowable = bizException.getThrowable();
 			if (innerThrowable == null) {
 				dealBizException(bizException, request, response);
+				//发送邮件
+				if (bizException.getSendMail()) {
+					MailUtil.send(bizException);
+				}
 			} else {
 				throwable = innerThrowable;
 			}
@@ -55,7 +59,7 @@ public class ThrowableHandler {
 	}
 	
 	/**
-	 * 处理业务异常
+	 * 处理系统错误
 	 * @param bizException 业务异常
 	 * @param request 请求对象
 	 * @param response 响应对象
@@ -63,6 +67,7 @@ public class ThrowableHandler {
 	 * */
 	private static void dealError(Error error, HttpServletRequest request, HttpServletResponse response) {
 		Logger.error(error);
+		//只要是系统异常就发送邮件记录下
 		MailUtil.send(error);
 		String message = error.getMessage();
 		message = StringUtil.isBlank(message) ? SystemException.E500.getMessage() : message;
@@ -70,7 +75,7 @@ public class ThrowableHandler {
 	}
 	
 	/**
-	 * 处理业务异常
+	 * 处理系统异常
 	 * @param bizException 业务异常
 	 * @param request 请求对象
 	 * @param response 响应对象
@@ -101,10 +106,6 @@ public class ThrowableHandler {
 		Config config = Sys.getConfig();
 		if (config.getLog().getIsBizException()) {
 			Logger.warn(bizException);
-		}
-		//业务异常强制发邮件
-		if (!config.getIsDebug()) {
-			MailUtil.send(bizException);
 		}
 		String code = bizException.getCode();
 		String message = bizException.getMessage();

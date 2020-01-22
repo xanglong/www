@@ -86,6 +86,14 @@ public class Source {
 					return sourceInfo;
 				}
 			}
+			//文本
+			for (TextType textType : TextType.values()) {
+				if (textType.getCode().equals(type)) {
+					sourceInfo.setSourceType(SourceType.TXT);
+					sourceInfo.setTextType(textType);
+					return sourceInfo;
+				}
+			}
 			//字体
 			for (FontType fontType : FontType.values()) {
 				if (fontType.getCode().equals(type)) {
@@ -111,7 +119,7 @@ public class Source {
 				}
 			}
 		}
-		throw new BizException(FrameException.FRAME_UNSUPPORTED_SOURCE_TYPE, type, uri);
+		throw new BizException(true, FrameException.FRAME_UNSUPPORTED_SOURCE_TYPE, type, uri);
 	}
 
 	/**
@@ -154,16 +162,20 @@ public class Source {
 					byte[] bytes = FileUtil.readByte(file);
 					//不设置文件名称在浏览器用新窗口打开就不会变成图片下载了
 					HttpUtil.responseImage(response, bytes, sourceInfo.getImageType(), null);
+				} else if (SourceType.TXT == sourceInfo.getSourceType()) {
+					String text = FileUtil.read(file);
+					//搜索引擎协议、第三方验证文件等
+					HttpUtil.responseText(response, ContentType.FORM_TEXT, text);
 				} else if (SourceType.FONT == sourceInfo.getSourceType()) {
 					HttpUtil.responseFile(response, FileUtil.readByte(file), file.getName());
 				}
 			}
 		} else {
 			if (SourceType.HTML == sourceInfo.getSourceType()) {
-				throw new BizException(SystemException.E404, filePath);
+				throw new BizException(true, SystemException.E404, filePath);
 			} else {
 				response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
-				throw new BizException(FrameException.FRAME_FILE_NULL, uri);
+				throw new BizException(true, FrameException.FRAME_FILE_NULL, uri);
 			}
 		}
 	}
