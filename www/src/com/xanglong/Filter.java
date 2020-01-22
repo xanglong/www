@@ -45,8 +45,12 @@ public class Filter implements javax.servlet.Filter {
 			new DaoManager().init();
 			//[5]注册服务
 			configManager.registerServer();
-		} catch (Throwable exception) {
-			ThrowableHandler.dealException(exception);
+		} catch (Throwable throwable) {
+			ThrowableHandler.dealException(throwable);
+			//非debug模式不打印异常栈，但是在启动的时候报错就打印
+			if (!Sys.getConfig().getIsDebug()) {
+				throwable.printStackTrace();
+			}
 			//配置加载失败的情况，整个应用退出，必须把异常处理好
 			System.exit(1);
 		}

@@ -19,6 +19,9 @@ public class SourceInfo {
 	
 	/**请求地址*/
 	private String requestURI;
+	
+	/**文本类型*/
+	private TextType textType;
 
 	public SourceType getSourceType() {
 		return sourceType;
@@ -66,6 +69,14 @@ public class SourceInfo {
 
 	public void setRequestURI(String requestURI) {
 		this.requestURI = requestURI;
+	}
+
+	public TextType getTextType() {
+		return textType;
+	}
+
+	public void setTextType(TextType textType) {
+		this.textType = textType;
 	}
 
 }

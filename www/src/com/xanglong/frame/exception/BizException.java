@@ -15,6 +15,8 @@ public class BizException extends RuntimeException {
 	private String message;
 	
 	private Throwable throwable;
+	
+	private boolean sendMail;
 
 	public String getCode() {
 		return code;
@@ -27,9 +29,23 @@ public class BizException extends RuntimeException {
 	public Throwable getThrowable() {
 		return throwable;
 	}
-
-	/**自定义异常*/
-	public BizException(IException iException, String...messages) {
+	
+	/**
+	 * 自定义异常
+	 * @param iException 异常接口
+	 * @param messages 异常参数，多个
+	 * */
+	public BizException(boolean sendMail, IException iException, String...messages) {
+		this.sendMail = sendMail;
+		constructor(iException, messages);
+	}
+	
+	/**
+	 * 自定义异常构造方法
+	 * @param iException 异常接口
+	 * @param messages 异常参数，多个
+	 * */
+	private void constructor(IException iException, String...messages) {
 		//默认异常用定义里面的异常，messages最好只是字母、输字和符号，否则国际化不动
 		this.code = iException.getCode();
 		MySession sessionData = Current.getSession();
@@ -60,9 +76,22 @@ public class BizException extends RuntimeException {
 		}
 	}
 
-	/**原生异常*/
+	/**
+	 * 自定义异常
+	 * @param iException 异常接口
+	 * @param messages 异常参数，多个
+	 * */
+	public BizException(IException iException, String...messages) {
+		this.sendMail = false;
+		constructor(iException, messages);
+	}
+
 	public BizException(Throwable throwable) {
 		this.throwable = throwable;
+	}
+
+	public boolean getSendMail() {
+		return sendMail;
 	}
 
 }
