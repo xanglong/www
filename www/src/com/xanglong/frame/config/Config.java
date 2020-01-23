@@ -65,6 +65,9 @@ public class Config {
 	/**项目工程资源目录*/
 	private String webContent;
 	
+	/**版本号*/
+	private long version;
+	
 	public boolean getIsDebug() {
 		return isDebug;
 	}
@@ -231,6 +234,14 @@ public class Config {
 
 	public void setWebContent(String webContent) {
 		this.webContent = webContent;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 }

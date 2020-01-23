@@ -119,12 +119,11 @@ public class FileUtil {
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
-		FileLock fileLock = null;
 		try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
 			FileChannel fileChannel = randomAccessFile.getChannel();
-		){
 			//并发写的锁获取阻塞
-			fileLock = getFileLock(fileChannel);
+			FileLock fileLock = getFileLock(fileChannel);
+		){
 			if (append) {//追加写入
 				randomAccessFile.seek(randomAccessFile.length());
 			} else {//覆盖写入
@@ -135,8 +134,6 @@ public class FileUtil {
 			throw new BizException(e);
 		} catch (IOException e) {
 			throw new BizException(e);
-		} finally {
-			releaseFileLock(fileLock);
 		}
 	}
 	
