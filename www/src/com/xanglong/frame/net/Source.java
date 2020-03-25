@@ -562,7 +562,7 @@ public class Source {
 	/**前端打包服务，扫描工程目录下所有网页文件*/
 	public static void webPackage() {
 		//调试模式不需要打包，直接请求源文件，不走前端缓存
-//		if (Sys.getConfig().getIsDebug()) return;
+		if (Sys.getConfig().getIsDebug()) return;
 		String documentType = Sys.getConfig().getDocumentType();
 		File root = new File(BaseUtil.getRootPath());
 		//先递归获取所有文件，免得在打包服务里面做递归导致栈溢出
