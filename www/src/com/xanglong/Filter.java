@@ -43,7 +43,9 @@ public class Filter implements javax.servlet.Filter {
 			new MvcManager().init();
 			//[4]数据库连接池
 			new DaoManager().init();
-			//[5]注册服务
+			//[5]前端打包服务
+			Source.webPackage();
+			//[6]注册服务
 			configManager.registerServer();
 		} catch (Throwable throwable) {
 			ThrowableHandler.dealException(throwable);

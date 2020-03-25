@@ -2,10 +2,16 @@ package com.xanglong.frame.net;
 
 import java.io.File;
 import java.net.HttpURLConnection;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.Compiler;
@@ -551,6 +557,55 @@ public class Source {
 			}
 		}
 		return doc.toString();
+	}
+
+	/**前端打包服务，扫描工程目录下所有网页文件*/
+	public static void webPackage() {
+		//调试模式不需要打包，直接请求源文件，不走前端缓存
+		if (Sys.getConfig().getIsDebug()) return;
+		String documentType = Sys.getConfig().getDocumentType();
+		File root = new File(BaseUtil.getRootPath());
+		//先递归获取所有文件，免得在打包服务里面做递归导致栈溢出
+		List<File> files = FileUtil.listFiles(root);
+		for (File file : files) {
+			//如果是网页文件，那么就对网页文件做一次版本打包处理
+			if (file.getName().endsWith(documentType)) {
+				String doc = FileUtil.read(file);
+				Document document = Jsoup.parse(doc);
+				//设置所有资源的版本号，让前端缓存失效
+				setSourceVersion(document);
+				//重新覆盖写入网页文件
+				FileUtil.writeCover(file, document.outerHtml());
+			}
+		}
+	}
+
+	/**
+	 * 设置资源的版本号
+	 * @param elements 元素集合
+	 * */
+	private static void setSourceVersion(Document document) {
+		long version = Sys.getConfig().getVersion();
+		Elements srcElements = document.getElementsByAttribute("src");
+		for (int i = 0; i < srcElements.size(); i++) {
+			Element element = srcElements.get(i);
+			String src = element.attr("src");
+			if (src.indexOf("?") == -1) {
+				element.attr("src", src + "?v=" + version);	
+			} else {
+				element.attr("src", src + "&v=" + version);
+			}
+		}
+		Elements linkElements = document.getElementsByTag("link");
+		for (int i = 0; i < linkElements.size(); i++) {
+			Element element = linkElements.get(i);
+			String href = element.attr("href");
+			if (href.indexOf("?") == -1) {
+				element.attr("href", href + "?v=" + version);	
+			} else {
+				element.attr("href", href + "&v=" + version);
+			}
+		}
 	}
 
 }
