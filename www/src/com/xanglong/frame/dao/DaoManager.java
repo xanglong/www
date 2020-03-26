@@ -11,6 +11,7 @@ import com.xanglong.frame.Sys;
 import com.xanglong.frame.config.Const;
 import com.xanglong.frame.config.Database;
 import com.xanglong.frame.exception.BizException;
+import com.xanglong.frame.util.StringUtil;
 import com.xanglong.i18n.zh_cn.FrameException;
 
 /**数据库连接管理类*/
@@ -18,7 +19,7 @@ public class DaoManager {
 	
 	/**数据库连接池*/
 	private static Stack<DaoConnection> connections = new Stack<>();
-
+	
 	/**
 	 * 创建连接池管理单例
 	 * */
@@ -59,6 +60,9 @@ public class DaoManager {
 		Connection connection = null;
 		try {
 			Class.forName(database.getDriver());
+			if (StringUtil.isBlank(database.getFullUrl())) {
+				new DaoManager().init();
+			}
 			connection = DriverManager.getConnection(database.getFullUrl());
 		} catch (ClassNotFoundException | SQLException e) {
 			throw new BizException(e);

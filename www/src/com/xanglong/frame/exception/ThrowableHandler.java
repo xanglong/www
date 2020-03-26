@@ -32,9 +32,7 @@ public class ThrowableHandler {
 	 * @param response 响应对象
 	 * */
 	public static void dealException(Throwable throwable, HttpServletRequest request, HttpServletResponse response) {
-		boolean isBizException = false;
-		if (throwable instanceof BizException) {
-			isBizException = true;
+		while (throwable instanceof BizException) {
 			BizException bizException = (BizException) throwable;
 			//处理系统异常抛出的错误，需要获取系统异常信息
 			Throwable innerThrowable = bizException.getThrowable();
@@ -44,11 +42,12 @@ public class ThrowableHandler {
 				if (bizException.getSendMail()) {
 					MailUtil.send(bizException);
 				}
+				break;
 			} else {
 				throwable = innerThrowable;
 			}
 		}
-		if (!isBizException && throwable instanceof Exception) {
+		if (throwable instanceof Exception) {
 			dealException((Exception) throwable, request, response);
 		} else if (throwable instanceof Error) {
 			dealError((Error) throwable, request, response);
