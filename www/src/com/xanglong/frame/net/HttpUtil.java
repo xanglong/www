@@ -458,7 +458,10 @@ public class HttpUtil {
 		ContentType contentType = requestDto.getContentType();
 		httpURLConnection.setRequestProperty(Header.CONTENT_TYPE, contentType.getCode() + "; charset=" + Const.CHARSET_STR);
 		//默认请求头添加浏览器版本信息，因为像360问答没有这个就不会返回信息
-        httpURLConnection.setRequestProperty(Header.USER_AGENT, UserAgent.Chrome62.getCode());
+		JSONObject headerParams = requestDto.getHeaderParams();
+		if (headerParams == null || !headerParams.containsKey(Header.USER_AGENT)) {
+			httpURLConnection.setRequestProperty(Header.USER_AGENT, UserAgent.Chrome62.getCode());
+		}
 		return httpURLConnection;
 	}
 	

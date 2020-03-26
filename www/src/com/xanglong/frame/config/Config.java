@@ -62,9 +62,6 @@ public class Config {
 	/**动作请求类型*/
 	private String[] actionTypes;
 	
-	/**项目工程资源目录*/
-	private String webContent;
-	
 	/**版本号*/
 	private long version;
 	
@@ -226,14 +223,6 @@ public class Config {
 
 	public void setActionTypes(String[] actionTypes) {
 		this.actionTypes = actionTypes;
-	}
-
-	public String getWebContent() {
-		return webContent;
-	}
-
-	public void setWebContent(String webContent) {
-		this.webContent = webContent;
 	}
 
 	public long getVersion() {

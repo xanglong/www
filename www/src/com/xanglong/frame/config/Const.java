@@ -4,6 +4,9 @@ import java.nio.charset.Charset;
 
 public class Const {
 
+	/**工程资源目录*/
+	public static final String WEBCONTENT = "WebContent";
+	
 	/**默认编码格式*/
 	public static final String CHARSET_STR = "UTF-8";
 	
