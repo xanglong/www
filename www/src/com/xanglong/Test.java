@@ -22,11 +22,10 @@ public class Test {
 	public static void main(String[] args) {
 		try {
 			Dao.delete("DELETE FROM ISSUES");
-			JSONArray datas1 = getData("http://jira.rd.800best.com/issues/?filter=-4&jql=Sprint%20%3D%202909%20order%20by%20created%20DESC");
-			insert(datas1);
-			JSONArray datas2 = getData("http://jira.rd.800best.com/issues/?filter=-4&jql=Sprint%20%3D%202909%20order%20by%20created%20DESC&startIndex=50");
-			insert(datas2);
-			Dao.commit();
+			for (int i = 0; i < 4; i++) {
+				insert(getData("http://jira.rd.800best.com/issues/?filter=-4&jql=Sprint%20in%20(3594%2C%202909)%20order%20by%20created%20DESC&startIndex=" + (i*50)));
+				Dao.commit();
+			}
 		} catch (Throwable throwable) {
 			ThrowableHandler.dealException(throwable);
 		}
@@ -34,12 +33,12 @@ public class Test {
 	
 	private static void insert(JSONArray datas) {
 		for (int i = 0; i < datas.size(); i ++) {
-			JSONObject data = datas.getJSONObject(i);
+			JSONObject	data = datas.getJSONObject(i);
 			String sql1 = " INSERT INTO ISSUES ( ";
 			String sql2 = " VALUES(";
 			for (String key : data.keySet()) {
 				sql1 += "`" + key + "`" + ",";
-				sql2 += "'" + data.getString(key) + "',";
+				sql2 += "'" + data.getString(key).replace("'", "\\'") + "',";
 			}
 			sql1 = sql1.substring(0, sql1.length() - 1);
 			sql2 = sql2.substring(0, sql2.length() - 1);
@@ -50,7 +49,7 @@ public class Test {
 	private static JSONArray getData(String url) {
 		RequestDto requestDto = new RequestDto();
 		JSONObject headerParams = new JSONObject();
-		headerParams.put("Cookie", "UM_distinctid=170c831b35429b-0d86a4dcfc435d-376b4502-1fa400-170c831b355477; JSESSIONID=9A253A8CD9D2A0E9B03E4EA13C8CFE59; atlassian.xsrf.token=AQUI-VC9G-11AZ-ZZAK|58bb07cca16db92ca81a39a22c35ec653b0707ff|lin");
+		headerParams.put("Cookie", "UM_distinctid=170c831b35429b-0d86a4dcfc435d-376b4502-1fa400-170c831b355477; JSESSIONID=D07FC6E4C8159C82AD59391F84451A9B; atlassian.xsrf.token=AQUI-VC9G-11AZ-ZZAK|da7238923c39aba574aa0ebc53ea9d087bf74d61|lin");
 		requestDto.setHeaderParams(headerParams);
 		requestDto.setUrl(url);
 		ResponseDto responseDto = HttpUtil.doGet(requestDto);
@@ -62,7 +61,7 @@ public class Test {
 		for (int i = 0; i < ths.size(); i++) {
 			keys.add(ths.get(i).getElementsByTag("span").html());
 		}
-		System.out.println(keys);
+//		System.out.println(keys);
 		JSONArray datas = new JSONArray();
 		Elements trs = table.child(1).children();
 		for (int i = 0; i < trs.size(); i++) {
@@ -72,7 +71,7 @@ public class Test {
 				setData(tds.get(j), data, keys.get(j));
 			}
 			datas.add(data);
-			System.out.println(data);
+//			System.out.println(data);
 		}
 		return datas;
 	}
@@ -83,10 +82,19 @@ public class Test {
 		} else if ("Key".equals(key)) {
 			data.put(key, td.child(0).html());
 		} else if ("Assignee".equals(key)) {
-			data.put(key, td.child(0).child(0).html());
+			Element child = td.child(0);
+			if (child.children().size() > 0) {
+				data.put(key, child.child(0).html());
+			} else {
+				data.put(key, child.html());
+			}
 		} else if ("Summary".equals(key)) {
 			Element p = td.child(0);
-			data.put(key, p.child(p.children().size() - 1).html());
+			int size = p.children().size();
+			if (size > 1) {
+				data.put("ParentKey", p.child(size - 2).html());
+			}
+			data.put(key, p.child(size - 1).html());
 		} else if ("Sprint".equals(key)) {
 			data.put(key, td.html());
 		} else if ("Reporter".equals(key)) {
@@ -113,13 +121,13 @@ public class Test {
 				if (!StringUtil.isBlank(time)) {
 					time = time.trim();
 					int number = Integer.parseInt(time.substring(0, time.indexOf(" ")));
-					if (time.endsWith("minutes")) {
+					if (time.contains("minute")) {
 						totalMinutes += number;
-					} else if (time.endsWith("hours")) {
+					} else if (time.contains("hour")) {
 						totalMinutes += number * 60;
-					} else if (time.endsWith("day")) {
+					} else if (time.contains("day")) {
 						totalMinutes += number * 480;
-					} else if (time.endsWith("week")) {
+					} else if (time.contains("week")) {
 						totalMinutes += number * 2400;
 					}
 				}
