@@ -363,7 +363,7 @@ public class HttpUtil {
 		JSONObject headerParams = new JSONObject();
 		Enumeration<String> headerNames = request.getHeaderNames();
 		while (headerNames.hasMoreElements()) {
-			String key = (String) headerNames.nextElement();
+			String key = headerNames.nextElement();
 			String value = request.getHeader(key);
 			headerParams.put(key, value);
 	    }
@@ -629,7 +629,7 @@ public class HttpUtil {
 		JSONObject object = new JSONObject();
 		Enumeration<String> parameterNames = request.getParameterNames();
 		while (parameterNames.hasMoreElements()) {
-			String key = (String) parameterNames.nextElement();
+			String key = parameterNames.nextElement();
 			String value = request.getParameter(key);
 			object.put(key, value);
 		}
